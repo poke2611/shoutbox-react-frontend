@@ -1,0 +1,16 @@
+    
+    .all-prods-wrapper{
+        margin: auto;
+    }
+    .all-prods{
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: 1fr 1fr;
+    }
+    .prod-desc{
+        text-align: initial;
+        display: block;
+    }
+    .prod-name{
+        display: block;
+    }
