@@ -31,7 +31,7 @@
 .wrapper{
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 15px;
 }
 
 @keyframes App-logo-spin {
@@ -40,5 +40,16 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+.page-content{
+  max-height: 75vh;
+  overflow: auto;
+}
+
+@media (max-height: 680px) {
+  .page-content {
+    max-height: 71vh;
+    overflow: auto;
   }
 }

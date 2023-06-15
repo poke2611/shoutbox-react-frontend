@@ -11,9 +11,7 @@ const PageContent = () => {
               <Product productName ={name}/>
             ))}
        </div>
-       <div className="option-wrapper">
-
-       </div>
+       
     </div>
   );
 }
