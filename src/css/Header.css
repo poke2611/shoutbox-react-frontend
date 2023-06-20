@@ -19,6 +19,7 @@
     margin: 0px 2px;
     gap: 15px;
     min-height: 15vh;
+    margin-top: -10px;
 }
 .header-sub-wrap{
     height: max-content;
@@ -26,6 +27,11 @@
     flex-flow: row;
     gap: 112px;
 }
+
+.header-sub-wrap div{
+ position: relative;
+}
+
 .brand-desc{
   display: flex;
     flex-direction: column;

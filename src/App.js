@@ -4,6 +4,8 @@ import Header from './components/Header';
 import PageContent from './components/PageContent';
 import Page1 from './components/Page1';
 import Page2 from './components/Page2';
+import Page3 from './components/Page3';
+import Page4 from './components/Page4';
 import Footer from './components/Footer';
 
 function App() {
@@ -22,10 +24,11 @@ function App() {
           <Header activePage = {activePage} onPageChange={handlePageChange} />
         </div>
         <div className ='page-content'>
-        
-          {activePage === 'page1' && <Page1 />}
+
+        <Page4 />
+         {/* {activePage === 'page1' && <Page1 />}
           {activePage === 'page2' && <Page2 />}
-          {activePage === 'page3' && <PageContent />}
+  {activePage === 'page3' && <PageContent /> }*/}
          
         </div>
         <div>
