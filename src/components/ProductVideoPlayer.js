@@ -52,11 +52,11 @@ function ProductVideoPlayer({ videoUrl }) {
     setIsHovered(false);
   };
 
-  const handlePlayerHover = (isHovered) => {
-    setIsHovered(isHovered);
+  const handlePlayerHover = (hovered) => {
+    setIsHovered(hovered);
     const player = playerRef.current;
     if (player) {
-      if (isHovered) {
+      if (hovered) {
         player.play();
       } else {
         player.pause();
@@ -72,12 +72,8 @@ function ProductVideoPlayer({ videoUrl }) {
                     videoSrc={videoUrl}
                     muted={false}
                     controls
-                    
                     ref={playerRef}
-                    playing={isHovered}
-                    hoverPaused={!isHovered}
-                   
-                   
+                    loop = {true}      
             />
         
    

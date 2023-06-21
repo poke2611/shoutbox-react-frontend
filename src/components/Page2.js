@@ -9,24 +9,9 @@ import bag from '../images/BAG.png';
 const Page2 = () => {
  // const [videos, setVideos] = ["soap", "kurta", "salwar", "top","any","many"];
   const [videos, setVideos] = useState([]);
-  const [data, setData] = useState([]);
   const [isPopupOpen, setPopupOpen] = useState(false);
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&type=P');
-        const json = await response.json();
-        console.log("results Page 1", json);
-        setData(json);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,20 +58,20 @@ const Page2 = () => {
                           <a> SHOP ALL</a>
                       </div>
                       <div className='scp-all-wrapper'>
-                      {data.map((prod, index) => (
+                      {vid.products.map((prod, index) => (
                           <div className='scp-wrapper'>
-                              <div className='scp-image-div' onClick={showPopup} style={{ backgroundImage: `url(${prod.products[0].imageUrl})`}}>
+                              <div className='scp-image-div' onClick={showPopup} style={{ backgroundImage: `url(${prod.imageUrl})`}}>
                               </div>
                               <div className='scp-desc'>
-                                  <div className='scp-brand-name'><span>{prod.products[0].brandName}</span></div>
-                                  <div className='scp-price'><span className='actual-price' >{prod.products[0].initialPrice != null ? (
-                                      <>&#x20B9;{prod.products[0].initialPrice}</>
+                                  <div className='scp-brand-name'><span>{prod.brandName}</span></div>
+                                  <div className='scp-price'><span className='actual-price' >{prod.initialPrice != null ? (
+                                      <>&#x20B9;{prod.initialPrice}</>
                                     ) : (
                                       ''
                                     )}</span>
-                                  <span className='selling-price' > &#x20B9;{prod.products[0].finalPrice}</span></div>
+                                  <span className='selling-price' > &#x20B9;{prod.finalPrice}</span></div>
                                   <div>
-                                      <span className='scp-discount'>{prod.products[0].discountPercentage}</span>
+                                      <span className='scp-discount'>{prod.discountPercentage}</span>
                                       <span className='rating'>4</span>
                                   </div>
                               </div> 

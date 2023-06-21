@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 import '../css/Header.css';
+import { NavLink } from 'react-router-dom';
 
 
-const Header = ({activePage, onPageChange}) => {
+
+const Header = () => {
 
   const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
+ const [activePage, setActivePage] = useState('page1');
 
-  const handleButtonClick = (pageName) => {
+  const handleButtonClick = (pageName) => {   
+    console.log("page chNGW", pageName);
     if (activePage !== pageName) {
-        onPageChange(pageName);
+      console.log("page chNGW", pageName);
+         setActivePage(pageName);
+         // onPageChange(pageName);
       }
   };
 
   
-
   useEffect(() => {
+    console.log("header comp", activePage);
     const fetchData = async () => {
       try {
         const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/brand?id=4');
@@ -39,13 +44,25 @@ const Header = ({activePage, onPageChange}) => {
             </div>
             <div className='brand-desc'>
                 <a> {data.brandName} </a>
-                <span>{data.brandDescription}</span>
+                <span onClick={()=>console.log("description")}>{data.brandDescription}</span>
             </div>
         </div>
         <div className='nav-wrap'>
-            <a onClick={() => handleButtonClick('page1')}>All Product</a>
-            <a onClick={() => handleButtonClick('page2')}>Videos</a>
-            <a onClick={() => handleButtonClick('page3')}>Styles</a>
+
+            <NavLink className={'nav-heading'}  exact to="/">All Products</NavLink>
+            <NavLink className={'nav-heading'}  to="/videos">Videos</NavLink>
+            <NavLink className={'nav-heading'}  to="/styles">Styles</NavLink>
+      
+            
+            {/*  
+            
+              <a className={activePage === 'page1' ? 'active' : ''}
+                         onClick={(e) => handleButtonClick('page1', e)}>All Products</a>
+            <a className={activePage === 'page2' ? 'active' : ''}
+                          onClick={(e) => handleButtonClick('page2', e)}>Videos</a>
+            <a className={activePage === 'page3' ? 'active' : ''}
+                          onClick={(e) => handleButtonClick('page3', e)}>Styles</a>
+            */}
         </div>
     </div>
   );

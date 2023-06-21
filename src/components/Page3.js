@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../css/Page3.css';
-import ProdBrandHeader from './ProdBrandHeader';
-import ProductVideoPlayer from './ProductVideoPlayer';
-import bag from '../images/BAG.png';
 
 
 const Page3 = () => {
-
+  
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -26,7 +23,6 @@ const Page3 = () => {
   }, []);
 
   
-
   return (
     <div className="page3-comp"> 
             <div className='prod-other-img'>

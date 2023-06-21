@@ -65,18 +65,26 @@
 .nav-wrap{
   display: flex;
 }
-.nav-wrap a{
+.nav-heading{
   background: #F4B4BA;
   cursor: pointer;
+  color: #000;
+  text-decoration: none;
   border-radius: 10px;
   padding: 4px;
   margin: auto;
-  /* text-align: center; */
-  font-family: 'Inter';
+  /* text-align: center;
+    */
   font-style: normal;
   width: 106px;
   /* height: 29px; */
   font-weight: 500;
   font-size: 13px;
   line-height: 20px;
+}
+
+.nav-heading.active{
+  color: #fff !important;
+  background: #E96A75 !important;
+  
 }

@@ -3,10 +3,9 @@ import Product from './Product';
 import '../css/Page1.css';
 
 const Page1 = () => {
-  const products = ["soap", "kurta", "salwar", "top"];
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +23,7 @@ const Page1 = () => {
     fetchData();
     
   }, [pageNumber]);
+  
 
   const loadMore = () => {
     setPageNumber(prevPageNumber => prevPageNumber + 1);

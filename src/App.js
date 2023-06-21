@@ -1,41 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import {Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-import PageContent from './components/PageContent';
 import Page1 from './components/Page1';
 import Page2 from './components/Page2';
-import Page3 from './components/Page3';
 import Page4 from './components/Page4';
 import Footer from './components/Footer';
 
 function App() {
-  const [activePage, setActivePage] = useState('page1');
+  const [activePage, setActivePage] = useState('/');
 
   const handlePageChange = (pageName) => {
-    setActivePage(pageName);
     console.log("pageName", pageName);
+    setActivePage(pageName);
   };
-
+ 
 
   return (
-    <div className="App">
-      <div className="wrapper">
-        <div>
-          <Header activePage = {activePage} onPageChange={handlePageChange} />
-        </div>
-        <div className ='page-content'>
+      <div className="App">
+        <div className="wrapper">
+          <div>
+            <Header  />
+          </div>
+          <div className ='page-content'>
+                <Routes>
+                  <Route path="/" element={<Page1 />} />
+                  <Route path="/videos" element={<Page2 />} />
+                  <Route path="/styles" element={<Page4 />} />             
+                </Routes>
+          </div>
+          <div>
+            <Footer />
+          </div>
 
-        <Page4 />
-         {/* {activePage === 'page1' && <Page1 />}
-          {activePage === 'page2' && <Page2 />}
-  {activePage === 'page3' && <PageContent /> }*/}
-         
-        </div>
-        <div>
-          <Footer />
+              {  
+              
+              /*  
+                {activePage === 'page1' && <Page1 />}
+                  {activePage === 'page2' && <Page2 />}
+                  {activePage === 'page3' && <Page4 /> } 
+
+                  
+              */}
+          
+          
         </div>
       </div>
-    </div>
+
   );
 }
 

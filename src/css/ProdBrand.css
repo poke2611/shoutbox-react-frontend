@@ -38,8 +38,8 @@
     height: 100%;
     left: 0;
     margin: 0;
+    border-radius: 50%;
     padding: 0;
-    position: absolute;
     top: 0;
     vertical-align: baseline;
     width: 100%;
