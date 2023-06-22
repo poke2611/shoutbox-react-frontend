@@ -1,0 +1,20 @@
+.footer-wrapper{
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    z-index: 1;
+}
+
+.option-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2px;
+    background: #ffffff;
+    margin: 0px 6px;
+}
+
+.option-wrapper a{
+    background: #F4B4BA;
+    padding: 7px;
+}
+
