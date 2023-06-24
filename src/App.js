@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { createStore } from 'redux';
+import { useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
+import rootReducer from './store/reducers';
 import {Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Page1 from './components/Page1';
@@ -7,18 +11,15 @@ import Page2 from './components/Page2';
 import Page4 from './components/Page4';
 import Footer from './components/Footer';
 
+const store = createStore(rootReducer);
+
 function App() {
-  const [activePage, setActivePage] = useState('/');
-
-  const handlePageChange = (pageName) => {
-    console.log("pageName", pageName);
-    setActivePage(pageName);
-  };
- 
-
+  const isPopupOpen = true;
+  
   return (
-      <div className="App">
-        <div className="wrapper">
+    <Provider store={store}>
+      <div className="App" >
+        <div className={`wrapper ${isPopupOpen ? 'blur' : ''}`}>
           <div>
             <Header  />
           </div>
@@ -32,21 +33,9 @@ function App() {
           <div>
             <Footer />
           </div>
-
-              {  
-              
-              /*  
-                {activePage === 'page1' && <Page1 />}
-                  {activePage === 'page2' && <Page2 />}
-                  {activePage === 'page3' && <Page4 /> } 
-
-                  
-              */}
-          
-          
         </div>
       </div>
-
+    </Provider>
   );
 }
 

@@ -46,9 +46,10 @@
   }
 }
 .page-content{
-  max-height: 75vh;
+  max-height: 100vh;
+  margin-bottom: 2px;
 }
-
+/*
 @media (max-height: 680px) {
   .page-content {
     max-height: 68vh;
@@ -59,3 +60,4 @@
   }
 
 }
+*/
