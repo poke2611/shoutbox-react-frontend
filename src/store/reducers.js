@@ -1,5 +1,7 @@
 const initialState = {
   isPopupOpen: false,
+  sortedProducts: [],
+  filteredProducts: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -9,8 +11,22 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         isPopupOpen: action.payload,
       };
-    default:
-      return state;
+    
+      case 'SORT_PRODUCTS':
+        return {
+          ...state,
+          sortedProducts: action.payload,
+        };
+        
+        case 'FILTER_PRODUCTS':
+          return {
+            ...state,
+            filteredProducts: action.payload,
+          };
+      
+      default:
+        return state;
+
   }
 };
 

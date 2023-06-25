@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 
 const Header = () => {
 
-  const [data, setData] = useState([]);
+ const [data, setData] = useState([]);
  const [activePage, setActivePage] = useState('page1');
 
   const handleButtonClick = (pageName) => {   

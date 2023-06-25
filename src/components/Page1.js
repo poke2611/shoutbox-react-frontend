@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Product from './Product';
+import { setSortedProds } from '../store/actions';
 import '../css/Page1.css';
 
 const Page1 = () => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
+  const dispatch = useDispatch();
+  const sortedProducts = useSelector(state => state.sortedProducts);
   
 
   useEffect(() => {
@@ -14,6 +18,7 @@ const Page1 = () => {
         const json = await response.json();
         console.log("results Page 1", json);
         setData(prevData => [...prevData, ...json]);
+        dispatch(setSortedProds(json));
         
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -33,7 +38,7 @@ const Page1 = () => {
   return (
     <div className="all-prods-wrapper">
        <div className="all-prods">
-          {data.map((prod, index) => (
+          {sortedProducts.map((prod, index) => (
               <Product product ={prod}/>
             ))}
        </div>

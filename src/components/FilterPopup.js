@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../css/FilterPopup.css';
 import { RiHeartLine, RiHeartFill } from 'react-icons/ri';
+import { FaSearch } from 'react-icons/fa';
+import { setFilteredProds } from '../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const FilterPopup = ({ handlePopup }) => {
@@ -9,7 +12,9 @@ const FilterPopup = ({ handlePopup }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+ // const [filteredData, setFilteredData]= useState([]);
   const isCategorySelected = (categoryId) => selectedCategories.includes(categoryId);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,12 +57,27 @@ const FilterPopup = ({ handlePopup }) => {
     category.categoryName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const filterProducts = () => {
+    console.log("sortOn");
+    fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId=196&brandId=4')
+      .then(response => response.json())
+      .then(data => {
+        console.log("filtered data", data);
+        dispatch(setFilteredProds(data));
+      })
+      .catch(error => {
+        // Handle any errors that occurred during the API request
+           console.error(error);
+      });
+      handlePopup();
+    }
+
     return (
       <div className="filter-popup">
         <div className="filter-popup-content">
           <div className="filter-header">
             <span>Filter By</span>
-            <a className='pink-font' onClick={handlePopup}>CLEAR ALL</a>
+            <a className='pink-font'>CLEAR ALL</a>
           </div>
           <div className='filter-section-wrapper'>
             <div className="filter-section-categories">
@@ -96,7 +116,7 @@ const FilterPopup = ({ handlePopup }) => {
           <div className="filter-footer">
             <a onClick={handlePopup}>CLOSE</a>
             <span>|</span>
-            <a className='pink-font'>APPLY</a>
+            <a className='pink-font' onClick={filterProducts}>APPLY</a>
           </div>
           
         </div>
