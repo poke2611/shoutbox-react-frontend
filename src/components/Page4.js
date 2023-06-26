@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import '../css/Page2.css';
 import '../css/Page4.css';
 import Page3 from './Page3';
 import ProdBrandHeader from './ProdBrandHeader';
 import bag from '../images/BAG.png';
 
-
 const Page4 = () => {
 
   const products = ["soap", "kurta", "salwar", "top","any","many"];
   const [data, setData] = useState([]);
-  //const[product, setProduct] =useState({});
+  const[product, setProduct] =useState({});
   const [isPopupOpen, setPopupOpen] = useState(false);
+  const popupRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +29,19 @@ const Page4 = () => {
     };
 
     fetchData();
+
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setPopupOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+
   }, []);
 
   const showPopup = () => {
@@ -62,11 +75,11 @@ const Page4 = () => {
                       </div>
                       <div className='scp-all-wrapper'>
                       {product.products.map((prod, index) => (
-                          <div className='scp-wrapper'>
-                              <div className='scp-image-div' onClick={showPopup} style={{ backgroundImage: `url(${prod.imageUrl})`}}>
+                          <div className='scp-wrapper' onClick={()=>{setProduct(prod); showPopup()}}>
+                              <div className='scp-image-div' style={{ backgroundImage: `url(${prod.imageUrl})`}}>
                               </div>
                               <div className='scp-desc'>
-                                  <div className='scp-brand-name'><span>{prod.brandName}</span></div>
+                                  <div className='scp-brand-name'><span>{prod.title}</span></div>
                                   <div className='scp-price'><span className='actual-price' >{prod.initialPrice != null ? (
                                       <>&#x20B9;{prod.initialPrice}</>
                                     ) : (
@@ -75,7 +88,7 @@ const Page4 = () => {
                                   <span className='selling-price' > &#x20B9;{prod.finalPrice}</span></div>
                                   <div>
                                       <span className='scp-discount'>{prod.discountPercentage}</span>
-                                      <span className='rating'>4</span>
+                                       {/*<span className='rating'>4</span> */}
                                   </div>
                               </div> 
                           </div>
@@ -89,9 +102,8 @@ const Page4 = () => {
           </div>
           {isPopupOpen && (
             <div className="popup">
-              <div className="popup-content" >
-                <Page3 />
-                <a onClick={closePopup}>Close</a>
+              <div className="popup-content" ref={popupRef}>
+                 <Page3 product={product}/>
               </div>
             </div>
           )}

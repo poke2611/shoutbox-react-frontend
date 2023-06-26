@@ -1,5 +1,10 @@
 .video-player-wrapper {
     position: relative;
+ 
+  }
+
+  .video-player-wrapper div{
+    margin: auto;
   }
   
   .react-player {

@@ -15,7 +15,6 @@ const Product = (props) => {
   useEffect(() => {
     // Effect logic here
     console.log('Component mounted',props.product.products[0].brandName);
-
     // Cleanup function
     
   }, [])
@@ -45,7 +44,7 @@ const Product = (props) => {
                 <RiHeartLine style={iconStyle} onClick={handleIconClick} />
             )}     
             
-            <a className='prod-metadata'>{props.product.products[0].description}</a>
+            <a className='prod-metadata'>{props.product.products[0].title}</a>
             <div className='price-info'><span className='actual-price' >{props.product.products[0].initialPrice != null ? (
                             <>&#x20B9;{props.product.products[0].initialPrice}</>
                           ) : (

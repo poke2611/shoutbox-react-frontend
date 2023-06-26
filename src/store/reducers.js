@@ -15,13 +15,13 @@ const rootReducer = (state = initialState, action) => {
       case 'SORT_PRODUCTS':
         return {
           ...state,
-          sortedProducts: action.payload,
+          sortedProducts: [...state.sortedProducts, ...action.payload],
         };
         
         case 'FILTER_PRODUCTS':
           return {
             ...state,
-            filteredProducts: action.payload,
+            filteredProducts: [...state.filteredProducts, ...action.payload],
           };
       
       default:

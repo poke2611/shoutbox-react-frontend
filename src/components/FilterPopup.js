@@ -59,7 +59,7 @@ const FilterPopup = ({ handlePopup }) => {
 
   const filterProducts = () => {
     console.log("sortOn");
-    fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId=196&brandId=4')
+    fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategories[0]+'&brandId=4')
       .then(response => response.json())
       .then(data => {
         console.log("filtered data", data);

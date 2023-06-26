@@ -124,3 +124,14 @@ font-size: 13px;
     line-height: 18px;
     color: #475467;
 }
+
+.buy-now{
+    width: 100%;
+    margin: auto;
+    color: #fff;
+    background: #e56d78;
+    padding: 6px 0px;
+    font-weight: 500;
+    margin-top: 15px;
+    text-decoration: none;
+}
