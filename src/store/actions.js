@@ -19,3 +19,17 @@ export const togglePopup = (isOpen) => {
       payload: filteredProds,
     };
   };
+
+  export const setSortCriteria = (sortCriteria) => {
+    return {
+      type: 'SORT_ON',
+      payload: sortCriteria,
+    };
+  };
+
+  export const setFilterCriteria = (filterCriteria) => {
+    return {
+      type: 'FILTER_ON',
+      payload: filterCriteria,
+    };
+  };

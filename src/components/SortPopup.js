@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../css/Footer.css';
-import { setSortedProds } from '../store/actions';
+import { setSortedProds, setSortCriteria } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiHeartLine, RiHeartFill } from 'react-icons/ri';
 
@@ -29,6 +29,7 @@ const SortPopup = ({handlePopup}) => {
 
   const sortProducts = (sortOn) => {
     console.log("sortOn", sortOn);
+    dispatch(setSortCriteria(sortOn));
     fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&'+sortOn+'=true')
       .then(response => response.json())
       .then(data => {

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Product from './Product';
 import Page3 from './Page3';
-import { setSortedProds } from '../store/actions';
+import { setSortedProds,setFilteredProds} from '../store/actions';
 import '../css/Page1.css';
 
 const Page1 = () => {
@@ -13,16 +13,51 @@ const Page1 = () => {
   const popupRef = useRef(null);
   const dispatch = useDispatch();
   const sortedProducts = useSelector(state => state.sortedProducts);
+  const filteredProducts = useSelector(state => state.filteredProducts);
+  const sortFlag = useSelector(state => state.sortFlag);
+  const filterFlag = useSelector(state => state.filterFlag);
+  const sortOn = useSelector(state => state.sortOn);
+  const selectedCategories = useSelector(state => state.selectedCategories);
   
 
+  let displayedProducts = data;
+  if (filterFlag && !sortFlag) {
+    displayedProducts = filteredProducts;
+  } else if(sortFlag && !filterFlag){
+    displayedProducts = sortedProducts;
+  } else if(sortFlag && filterFlag){
+    displayedProducts = sortedProducts.filter(prod => filteredProducts.includes(prod));;
+  }
+  else{
+    displayedProducts= data;
+  }
+
   useEffect(() => {
+    console.log("flags Page 1", filterFlag, sortFlag);
     const fetchData = async () => {
       try {
-        const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&page='+pageNumber);
-        const json = await response.json();
-        console.log("results Page 1", json);
-        setData(prevData => [...prevData, ...json]);
-        dispatch(setSortedProds(json));
+        const response=[];
+        if(filterFlag && !sortFlag){
+          console.log("filterFlag", filterFlag);
+          const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategories+'&brandId=4&page='+pageNumber);
+          const json = await response.json();
+          dispatch(setFilteredProds(json));
+        }
+        else if(sortFlag && !filterFlag){
+          console.log("sortFlag", sortFlag);
+          const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&'+sortOn+'=true&page='+pageNumber);
+          const json = await response.json();
+          
+          dispatch(setSortedProds(json));
+        }
+      else{
+            const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&page='+pageNumber);
+            const json = await response.json();
+            console.log("results Page 1", json);
+            setData(prevData => [...prevData, ...json]);
+        } 
+        
+       // dispatch(setSortedProds(json));
         
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -78,8 +113,8 @@ const Page1 = () => {
   return (
     <div className="all-prods-wrapper">
        <div className="all-prods">
-          {sortedProducts.map((prod, index) => (
-            <div onClick={()=>{console.log("product pipu");setProduct(prod.products[0]); showPopup()}}>
+          {displayedProducts.map((prod, index) => (
+            <div onClick={()=>{setProduct(prod.products[0]); showPopup()}}>
               <Product product ={prod} />
               </div>
             ))}

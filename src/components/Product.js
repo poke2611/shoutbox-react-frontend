@@ -29,8 +29,7 @@ const Product = (props) => {
     <div className="product-wrapper">
        <div className='prod-img'>
           <a>
-            <div className='imageContainer' style={{ backgroundImage: `url(${props.product.products[0].imageUrl})`}}>
-                
+            <div className='imageContainer' style={{ backgroundImage: `url(${props.product.products[0].imageUrl})`}}> 
             </div>
           </a>
        </div>
@@ -44,7 +43,7 @@ const Product = (props) => {
                 <RiHeartLine style={iconStyle} onClick={handleIconClick} />
             )}     
             
-            <a className='prod-metadata'>{props.product.products[0].title}</a>
+            <span className='prod-metadata'>{props.product.products[0].title}</span>
             <div className='price-info'><span className='actual-price' >{props.product.products[0].initialPrice != null ? (
                             <>&#x20B9;{props.product.products[0].initialPrice}</>
                           ) : (

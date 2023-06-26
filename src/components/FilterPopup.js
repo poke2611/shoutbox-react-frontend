@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../css/FilterPopup.css';
 import { RiHeartLine, RiHeartFill } from 'react-icons/ri';
 import { FaSearch } from 'react-icons/fa';
-import { setFilteredProds } from '../store/actions';
+import { setFilteredProds, setFilterCriteria } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -45,6 +45,7 @@ const FilterPopup = ({ handlePopup }) => {
     if (selectedCategories.includes(categoryId)) {
       setSelectedCategories(selectedCategories.filter((id) => id !== categoryId));
     } else {
+      console.log("cat", categoryId);
       setSelectedCategories([...selectedCategories, categoryId]);
     }
   };
@@ -58,7 +59,8 @@ const FilterPopup = ({ handlePopup }) => {
   );
 
   const filterProducts = () => {
-    console.log("sortOn");
+    console.log("filterON", selectedCategories);
+    dispatch(setFilterCriteria(selectedCategories[0]));
     fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategories[0]+'&brandId=4')
       .then(response => response.json())
       .then(data => {
