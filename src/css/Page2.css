@@ -49,9 +49,9 @@
 
 .scp-wrapper{
     border: 1px solid #ccc;
-    min-width: 209px;
+    min-width: 200px;
     padding: 5px;
-    height: 85px;
+    height: 75px;
     display: flex;
     flex-flow: row;
     gap: 5px;
