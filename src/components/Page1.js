@@ -20,23 +20,33 @@ const Page1 = () => {
   const selectedCategories = useSelector(state => state.selectedCategories);
   
 
-  let displayedProducts = data;
-  if (filterFlag && !sortFlag) {
-    displayedProducts = filteredProducts;
-  } else if(sortFlag && !filterFlag){
-    displayedProducts = sortedProducts;
-  } /*else if(sortFlag && filterFlag){
-    console.log("disp");
-    //displayedProducts = sortedProducts.filter(prod => filteredProducts.includes(prod));
-    displayedProducts = filteredProducts.filter(prod => sortedProducts.includes(prod));
-    console.log("disp", displayedProducts);
-  } */
-  else{
-    displayedProducts= data;
-  }
+  useEffect(() => {
 
+    let displayedProducts = data;
+
+    if (filterFlag && !sortFlag) {
+      displayedProducts = filteredProducts;
+      setData(filteredProducts);
+    }
+    if(sortFlag && !filterFlag){
+      setData(sortedProducts);
+      displayedProducts = sortedProducts;
+      
+    } /*else if(sortFlag && filterFlag){
+      console.log("disp");
+      //displayedProducts = sortedProducts.filter(prod => filteredProducts.includes(prod));
+      displayedProducts = filteredProducts.filter(prod => sortedProducts.includes(prod));
+      console.log("disp", displayedProducts);
+    } */
+    setData(displayedProducts);
+
+  },[sortOn, filterFlag, sortFlag, filteredProducts, sortedProducts])
+
+ 
   useEffect(() => {
     console.log("flags Page 1", filterFlag, sortFlag);
+
+  
     const fetchData = async () => {
       try {
         const response=[];
@@ -44,13 +54,15 @@ const Page1 = () => {
           console.log("filterFlag", filterFlag);
           const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategories+'&brandId=4&page='+pageNumber);
           const json = await response.json();
-          dispatch(setFilteredProds(json));
+          //dispatch(setFilteredProds(json));
+          setData(prevData => [...prevData, ...json]);
         }
         else if(sortFlag && !filterFlag){
           console.log("sortFlag", sortFlag);
           const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&'+sortOn+'=true&page='+pageNumber);
           const json = await response.json();
-          dispatch(setSortedProds(json));
+         // dispatch(setSortedProds(json));
+         setData(prevData => [...prevData, ...json]);
         }
       else{
             const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&page='+pageNumber);
@@ -115,7 +127,7 @@ const Page1 = () => {
   return (
     <div className="all-prods-wrapper">
        <div className="all-prods">
-          {displayedProducts.map((prod, index) => (
+          {data.map((prod, index) => (
             <div onClick={()=>{setProduct(prod.products[0]); showPopup()}}>
               <Product product ={prod} />
               </div>

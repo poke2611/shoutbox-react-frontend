@@ -3,6 +3,7 @@ const initialState = {
   filterFlag: false,
   allProducts: [],
   sortedProducts: [],
+  hightToLowSortedProducts: [],
   filteredProducts: [],
   sortFlag: false,
   sortOn: "",
@@ -23,7 +24,8 @@ const rootReducer = (state = initialState, action) => {
           ...state,
           sortFlag: true,
           filterFlag: false,
-          sortedProducts: [...state.sortedProducts, ...action.payload],
+         // sortedProducts: [...state.sortedProducts, ...action.payload],
+          sortedProducts: action.payload,
           allProducts: state.sortedProducts,
         };
         
@@ -33,7 +35,7 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             filterFlag: true,
             sortFlag: false,
-            filteredProducts: [...state.filteredProducts, ...action.payload],
+            filteredProducts: action.payload,
             allProducts: state.filteredProducts,
           };
         
