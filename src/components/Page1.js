@@ -25,9 +25,12 @@ const Page1 = () => {
     displayedProducts = filteredProducts;
   } else if(sortFlag && !filterFlag){
     displayedProducts = sortedProducts;
-  } else if(sortFlag && filterFlag){
-    displayedProducts = sortedProducts.filter(prod => filteredProducts.includes(prod));;
-  }
+  } /*else if(sortFlag && filterFlag){
+    console.log("disp");
+    //displayedProducts = sortedProducts.filter(prod => filteredProducts.includes(prod));
+    displayedProducts = filteredProducts.filter(prod => sortedProducts.includes(prod));
+    console.log("disp", displayedProducts);
+  } */
   else{
     displayedProducts= data;
   }
@@ -47,7 +50,6 @@ const Page1 = () => {
           console.log("sortFlag", sortFlag);
           const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&'+sortOn+'=true&page='+pageNumber);
           const json = await response.json();
-          
           dispatch(setSortedProds(json));
         }
       else{

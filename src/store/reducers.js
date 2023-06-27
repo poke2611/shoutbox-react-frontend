@@ -22,6 +22,7 @@ const rootReducer = (state = initialState, action) => {
         return {
           ...state,
           sortFlag: true,
+          filterFlag: false,
           sortedProducts: [...state.sortedProducts, ...action.payload],
           allProducts: state.sortedProducts,
         };
@@ -31,6 +32,7 @@ const rootReducer = (state = initialState, action) => {
           return {
             ...state,
             filterFlag: true,
+            sortFlag: false,
             filteredProducts: [...state.filteredProducts, ...action.payload],
             allProducts: state.filteredProducts,
           };
