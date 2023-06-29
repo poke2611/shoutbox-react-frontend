@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Product from './Product';
 import Page3 from './Page3';
-import { setSortedProds,setFilteredProds} from '../store/actions';
 import '../css/Page1.css';
+import Footer from './Footer';
 
 const Page1 = () => {
   const [data, setData] = useState([]);
@@ -17,7 +17,7 @@ const Page1 = () => {
   const sortFlag = useSelector(state => state.sortFlag);
   const filterFlag = useSelector(state => state.filterFlag);
   const sortOn = useSelector(state => state.sortOn);
-  const selectedCategories = useSelector(state => state.selectedCategories);
+  const selectedCategory = useSelector(state => state.selectedCategory);
   
 
   useEffect(() => {
@@ -26,18 +26,18 @@ const Page1 = () => {
 
     if (filterFlag && !sortFlag) {
       displayedProducts = filteredProducts;
-      setData(filteredProducts);
     }
     if(sortFlag && !filterFlag){
-      setData(sortedProducts);
       displayedProducts = sortedProducts;
-      
-    } /*else if(sortFlag && filterFlag){
+    } 
+    
+    if(sortFlag && filterFlag){
       console.log("disp");
+      displayedProducts = filteredProducts;
       //displayedProducts = sortedProducts.filter(prod => filteredProducts.includes(prod));
-      displayedProducts = filteredProducts.filter(prod => sortedProducts.includes(prod));
+     // displayedProducts = filteredProducts.filter(prod => sortedProducts.includes(prod));
       console.log("disp", displayedProducts);
-    } */
+    } 
     setData(displayedProducts);
 
   },[sortOn, filterFlag, sortFlag, filteredProducts, sortedProducts])
@@ -49,10 +49,15 @@ const Page1 = () => {
   
     const fetchData = async () => {
       try {
-        const response=[];
-        if(filterFlag && !sortFlag){
+        console.log("filterFlag", filterFlag);
+          const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&'+sortOn+'='+sortFlag+'&page='+pageNumber);
+          const json = await response.json();
+          //dispatch(setFilteredProds(json));
+          setData(prevData => [...prevData, ...json]);
+     
+      /*  if(filterFlag && !sortFlag){
           console.log("filterFlag", filterFlag);
-          const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategories+'&brandId=4&page='+pageNumber);
+          const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&page='+pageNumber);
           const json = await response.json();
           //dispatch(setFilteredProds(json));
           setData(prevData => [...prevData, ...json]);
@@ -64,13 +69,21 @@ const Page1 = () => {
          // dispatch(setSortedProds(json));
          setData(prevData => [...prevData, ...json]);
         }
+        else if(sortFlag && filterFlag){
+          
+          console.log("sortFlag", sortFlag);
+          const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&'+sortOn+'='+sortFlag+'&page='+pageNumber);
+          const json = await response.json();
+         // dispatch(setSortedProds(json));
+         setData(prevData => [...prevData, ...json]);
+        }
       else{
             const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&page='+pageNumber);
             const json = await response.json();
             console.log("results Page 1", json);
             setData(prevData => [...prevData, ...json]);
         } 
-        
+        */
        // dispatch(setSortedProds(json));
         
       } catch (error) {
@@ -133,9 +146,21 @@ const Page1 = () => {
               </div>
             ))}
        </div>
-       <div className='loadmore-div'>
-            <a >Load More...</a>
-        </div>
+       { data.length>0?
+          (
+            data.length>19 && (
+              <div className='loadmore-div'>
+                  <a >Load More...</a>
+              </div>
+            )
+          ):(
+            <div className='loadmore-div'>
+              <a >No Content Found</a>
+          </div>
+          )
+          
+       }
+        
         {isPopupOpen && (
             <div className="popup">
               <div className="popup-content" ref={popupRef}>
@@ -143,7 +168,7 @@ const Page1 = () => {
               </div>
             </div>
           )}
-       
+        
     </div>
   );
 }

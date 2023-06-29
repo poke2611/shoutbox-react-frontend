@@ -4,22 +4,56 @@ import Page3 from './Page3';
 import ProdBrandHeader from './ProdBrandHeader';
 import ProductVideoPlayer from './ProductVideoPlayer';
 import bag from '../images/BAG.png';
+import { useDispatch, useSelector } from 'react-redux';
+import Footer from './Footer';
 
 
 const Page2 = () => {
  // const [videos, setVideos] = ["soap", "kurta", "salwar", "top","any","many"];
   const [videos, setVideos] = useState([]);
   const [product, setProduct] = useState({});
+  const [pageNumber, setPageNumber] = useState(1);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const popupRef = useRef(null);
+
+  const sortedProducts = useSelector(state => state.sortedProducts);
+  const filteredProducts = useSelector(state => state.filteredProducts);
+  const sortFlag = useSelector(state => state.sortFlag);
+  const filterFlag = useSelector(state => state.filterFlag);
+  const sortOn = useSelector(state => state.sortOn);
+  const selectedCategory = useSelector(state => state.selectedCategory);
+  
+
+  useEffect(() => {
+
+    let displayedProducts = videos;
+
+    if (filterFlag && !sortFlag) {
+      displayedProducts = filteredProducts;
+    }
+    if(sortFlag && !filterFlag){
+      displayedProducts = sortedProducts;
+    } 
+    
+    if(sortFlag && filterFlag){
+      console.log("disp");
+      displayedProducts = filteredProducts;
+      //displayedProducts = sortedProducts.filter(prod => filteredProducts.includes(prod));
+     // displayedProducts = filteredProducts.filter(prod => sortedProducts.includes(prod));
+      console.log("disp", displayedProducts);
+    } 
+    setVideos(displayedProducts);
+
+  },[sortOn, filterFlag, sortFlag, filteredProducts, sortedProducts])
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&page=1&type=V');
+        const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
         const json = await response.json();
         console.log("results Page videos", json);
-        setVideos(json);
+        setVideos(prevData => [...prevData, ...json]);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -27,6 +61,23 @@ const Page2 = () => {
 
     fetchData();
 
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setPopupOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+
+  }, [pageNumber]);
+
+
+  useEffect(() => {
+  
     const handleClickOutside = (event) => {
       if (popupRef.current && !popupRef.current.contains(event.target)) {
         setPopupOpen(false);
@@ -104,6 +155,7 @@ const Page2 = () => {
               </div>
             </div>
           )}
+          
     </div>
   );
 }
