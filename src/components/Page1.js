@@ -52,20 +52,20 @@ const Page1 = () => {
         const response=[];
         if(filterFlag && !sortFlag){
           console.log("filterFlag", filterFlag);
-          const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategories+'&brandId=4&page='+pageNumber);
+          const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategories+'&brandId=4&page='+pageNumber);
           const json = await response.json();
           //dispatch(setFilteredProds(json));
           setData(prevData => [...prevData, ...json]);
         }
         else if(sortFlag && !filterFlag){
           console.log("sortFlag", sortFlag);
-          const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&'+sortOn+'=true&page='+pageNumber);
+          const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&'+sortOn+'=true&page='+pageNumber);
           const json = await response.json();
          // dispatch(setSortedProds(json));
          setData(prevData => [...prevData, ...json]);
         }
       else{
-            const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&page='+pageNumber);
+            const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&page='+pageNumber);
             const json = await response.json();
             console.log("results Page 1", json);
             setData(prevData => [...prevData, ...json]);

@@ -16,7 +16,7 @@ const Page2 = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&page=1&type=V');
+        const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&page=1&type=V');
         const json = await response.json();
         console.log("results Page videos", json);
         setVideos(json);
