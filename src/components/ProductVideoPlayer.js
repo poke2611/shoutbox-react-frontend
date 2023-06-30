@@ -25,6 +25,7 @@ function ProductVideoPlayer({ videoUrl , fullscreen }) {
         onReady={handlePlayerReady}
         width="80%"
         height={fullscreen ? '80%' : 'auto'}
+        playsinline
         loop = {true}
       />
     </div>
