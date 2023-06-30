@@ -61,7 +61,7 @@ const Page2 = () => {
             {videos.map((vid, index) => (
               <div className='prod-vid-wrap'>
                 <div className="video-div">
-                    <ProductVideoPlayer videoUrl={vid.link} />
+                    <ProductVideoPlayer videoUrl={vid.link} fullscreen={false}/>
                 </div>
                 <div className='scrolling-product-wrapper'>
                       <div className='shop-all'>
