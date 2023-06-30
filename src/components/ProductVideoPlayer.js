@@ -3,11 +3,12 @@ import HoverVideoPlayer from 'react-hover-video-player';
 import '../css/ProductVideoPlayer.css';
 import { useRef, useState } from 'react';
 
-function ProductVideoPlayer({ videoUrl }) {
+function ProductVideoPlayer({ videoUrl , fullscreen }) {
 
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlayerClick = () => {
+    console.log("videoUrl", videoUrl);
     setIsPlaying(!isPlaying);
   };
 
@@ -24,7 +25,8 @@ function ProductVideoPlayer({ videoUrl }) {
         playing={isPlaying}
         onReady={handlePlayerReady}
         width="80%"
-        height="80%"
+        height={fullscreen ? '80%' : 'auto'}
+        playsinline
         loop = {true}
       />
     </div>

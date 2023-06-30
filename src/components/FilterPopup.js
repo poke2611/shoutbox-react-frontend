@@ -25,7 +25,7 @@ const FilterPopup = ({ handlePopup }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/category?level=L3');
+        const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/category?level=L3');
         const json = await response.json();
         console.log("results filter", json.categories);
         setCategories(json.categories);
@@ -81,10 +81,9 @@ const handleCategorySelect = (categoryId) => {
   const filterProducts = () => {
     console.log("filterON", selectedCategory);
     dispatch(setFilterCriteria(selectedCategory));
-    
-        fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&'+sortOn+'='+sortFlag+'&type='+currentPage)
-        .then(response => response.json())
-        .then(data => {
+    fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&'+sortOn+'='+sortFlag+'&type='+currentPage)
+      .then(response => response.json())
+      .then(data => {
         console.log("filtered data", data);
         dispatch(setFilteredProds(data));
        // window.scrollTo({ top: 0, behavior: 'smooth' });

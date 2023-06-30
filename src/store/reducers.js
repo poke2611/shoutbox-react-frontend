@@ -30,7 +30,7 @@ const rootReducer = (state = initialState, action) => {
         };
         
         case 'FILTER_PRODUCTS':
-          console.log("FILTER_PRODUCTS", state.filterFlag, state.filteredProducts, action.payload );
+          console.log("FILTER_PRODUCTS", state.sortFlag, state.filterFlag, state.filteredProducts, action.payload );
           return {
             ...state,
             filterFlag: true,
@@ -56,8 +56,7 @@ const rootReducer = (state = initialState, action) => {
           return {
             ...state,
             currentPage: action.payload,
-            filterFlag: false,
-            sortFlag: false,
+            
           };
 
         case 'SET_FILTER_FLAG':
@@ -66,6 +65,13 @@ const rootReducer = (state = initialState, action) => {
           ...state,
           filterFlag: action.payload,
         };
+
+        case 'SET_SORT_FLAG':
+          console.log("SET_SORT_FLAG",  action.payload );
+          return {
+            ...state,
+            sortFlag: action.payload,
+          };
       
       default:
         return state;

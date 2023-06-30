@@ -14,7 +14,7 @@ const Header = () => {
     console.log("header comp", activePage);
     const fetchData = async () => {
       try {
-        const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/brand?id=4');
+        const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/brand?id=4');
         const json = await response.json();
         console.log("results", json[0]);
         setData(json[0]);

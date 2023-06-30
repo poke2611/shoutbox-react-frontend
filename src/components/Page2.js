@@ -50,7 +50,7 @@ const Page2 = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
+        const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
         const json = await response.json();
         console.log("results Page videos", json);
         setVideos(prevData => [...prevData, ...json]);
@@ -112,11 +112,11 @@ const Page2 = () => {
             {videos.map((vid, index) => (
               <div className='prod-vid-wrap'>
                 <div className="video-div">
-                    <ProductVideoPlayer videoUrl={vid.link} />
+                    <ProductVideoPlayer videoUrl={vid.link} fullscreen={false}/>
                 </div>
                 <div className='scrolling-product-wrapper'>
                       <div className='shop-all'>
-                          <a className='shop-all-btn'>
+                          <a className='shop-all-btn' onClick={()=> console.log("videor url", vid.link)}>
                               <img src={bag} height={30} width={30} />
                           </a>
                           <a> SHOP ALL</a>

@@ -47,3 +47,10 @@ export const togglePopup = (isOpen) => {
       payload: flag,
     };
   };
+
+  export const setSortFlag = (flag) => {
+    return {
+      type: 'SET_SORT_FLAG',
+      payload: flag,
+    };
+  };

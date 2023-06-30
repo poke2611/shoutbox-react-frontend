@@ -7,6 +7,7 @@ import Footer from './Footer';
 
 const Page1 = () => {
   const [data, setData] = useState([]);
+  const [upcomingData, setUpcomingData] = useState([]);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   const [product, setProduct] = useState({});
@@ -20,9 +21,12 @@ const Page1 = () => {
   const selectedCategory = useSelector(state => state.selectedCategory);
   
 
+  
   useEffect(() => {
-
+    setPageNumber(1);
+    setData([]);
     let displayedProducts = data;
+    
 
     if (filterFlag && !sortFlag) {
       displayedProducts = filteredProducts;
@@ -39,6 +43,8 @@ const Page1 = () => {
       console.log("disp", displayedProducts);
     } 
     setData(displayedProducts);
+    console.log("reset page", data, pageNumber);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
   },[sortOn, filterFlag, sortFlag, filteredProducts, sortedProducts])
 
@@ -50,21 +56,22 @@ const Page1 = () => {
     const fetchData = async () => {
       try {
         console.log("filterFlag", filterFlag);
-          const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&'+sortOn+'='+sortFlag+'&page='+pageNumber);
+        const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&'+sortOn+'='+sortFlag+'&page='+pageNumber);
           const json = await response.json();
           //dispatch(setFilteredProds(json));
           setData(prevData => [...prevData, ...json]);
+          setUpcomingData(json);
      
       /*  if(filterFlag && !sortFlag){
           console.log("filterFlag", filterFlag);
-          const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&page='+pageNumber);
+          const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&page='+pageNumber);
           const json = await response.json();
           //dispatch(setFilteredProds(json));
           setData(prevData => [...prevData, ...json]);
         }
         else if(sortFlag && !filterFlag){
           console.log("sortFlag", sortFlag);
-          const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&'+sortOn+'=true&page='+pageNumber);
+          const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&'+sortOn+'=true&page='+pageNumber);
           const json = await response.json();
          // dispatch(setSortedProds(json));
          setData(prevData => [...prevData, ...json]);
@@ -72,13 +79,13 @@ const Page1 = () => {
         else if(sortFlag && filterFlag){
           
           console.log("sortFlag", sortFlag);
-          const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&'+sortOn+'='+sortFlag+'&page='+pageNumber);
+          const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&'+sortOn+'='+sortFlag+'&page='+pageNumber);
           const json = await response.json();
          // dispatch(setSortedProds(json));
          setData(prevData => [...prevData, ...json]);
         }
       else{
-            const response = await fetch('http://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&page='+pageNumber);
+            const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&'+sortOn+'='+sortFlag+'&page='+pageNumber);
             const json = await response.json();
             console.log("results Page 1", json);
             setData(prevData => [...prevData, ...json]);
@@ -93,22 +100,12 @@ const Page1 = () => {
 
     fetchData();
 
-    const handleClickOutside = (event) => {
-      if (popupRef.current && !popupRef.current.contains(event.target)) {
-        setPopupOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
     
   }, [pageNumber]);
 
   useEffect(() => {
-    const handleIntersection = (entries) => {
+
+     const handleIntersection = (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           setPageNumber(prevPageNumber => prevPageNumber + 1);
@@ -126,8 +123,18 @@ const Page1 = () => {
     const target = document.querySelector('.loadmore-div');
     observer.observe(target);
 
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setPopupOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+
     return () => {
       observer.unobserve(target);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
