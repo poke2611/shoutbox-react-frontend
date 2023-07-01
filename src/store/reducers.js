@@ -72,11 +72,34 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             sortFlag: action.payload,
           };
-      
-      default:
-        return state;
 
-  }
-};
+        case 'SET_PAGE_NAME':
+          console.log("SET_PAGE_NAME",  action.payload );
+          return {
+            ...state,
+            currentPage: action.payload,
+            
+          };
 
-export default rootReducer;
+        case 'SET_FILTER_FLAG':
+        console.log("SET_FILTER_FLAG",  action.payload );
+        return {
+          ...state,
+          filterFlag: action.payload,
+        };
+
+        case 'SET_SORT_FLAG':
+          console.log("SET_SORT_FLAG",  action.payload );
+          return {
+            ...state,
+            sortFlag: action.payload,
+          };
+        
+        default:
+          return state;
+  
+    }
+  };
+  
+  export default rootReducer;
+  

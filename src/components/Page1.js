@@ -64,7 +64,7 @@ const Page1 = () => {
      
       /*  if(filterFlag && !sortFlag){
           console.log("filterFlag", filterFlag);
-          const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&page='+pageNumber);
+          const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategories+'&brandId=4&page='+pageNumber);
           const json = await response.json();
           //dispatch(setFilteredProds(json));
           setData(prevData => [...prevData, ...json]);
