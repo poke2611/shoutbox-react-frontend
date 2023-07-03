@@ -38,11 +38,11 @@
     align-items: center;
     text-align: center;
     border-radius: 50%;
-    border: 1px solid #FF305E;
+    border: 1px solid #00a9ca;
 }
 
 .shop-all a{
-    color: #FF305E;
+    color: #00a9ca;
     font-size: 12px;
     font-weight: 700;
 }
