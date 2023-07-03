@@ -49,7 +49,7 @@
   }
 
   .pink-font{
-    color: #E96A75;
+    color: #00a9ca;
     font-weight: 500;
   }
 
@@ -77,11 +77,11 @@
   }
   
   .tick.selected {
-    color: #E96A75;
+    color: #00a9ca;
   }
   
   .select-all span.selected{
-    border-color: #E96A75;
+    border-color: #00a9ca;
     color: #E96A75;
   }
   

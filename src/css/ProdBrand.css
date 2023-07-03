@@ -78,6 +78,7 @@
 .follow-span{
     font-size: 13px;
     font-weight: 700;
-    color: #f30e36;
+    /*color: #f30e36;*/
+    color: #00a9ca;
     padding-bottom: 3px;
 }
