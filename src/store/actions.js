@@ -33,3 +33,24 @@ export const togglePopup = (isOpen) => {
       payload: filterCriteria,
     };
   };
+
+  export const setPageName = (pageName) => {
+    return {
+      type: 'SET_PAGE_NAME',
+      payload: pageName,
+    };
+  };
+
+  export const setFilterFlag = (flag) => {
+    return {
+      type: 'SET_FILTER_FLAG',
+      payload: flag,
+    };
+  };
+
+  export const setSortFlag = (flag) => {
+    return {
+      type: 'SET_SORT_FLAG',
+      payload: flag,
+    };
+  };

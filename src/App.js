@@ -32,7 +32,7 @@ function App() {
           </div>
           <div>
             <Footer />
-          </div>
+        </div>
         </div>
       </div>
     </Provider>

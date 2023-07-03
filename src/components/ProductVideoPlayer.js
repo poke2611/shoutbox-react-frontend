@@ -8,6 +8,7 @@ function ProductVideoPlayer({ videoUrl , fullscreen }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlayerClick = () => {
+    console.log("videoUrl", videoUrl);
     setIsPlaying(!isPlaying);
   };
 

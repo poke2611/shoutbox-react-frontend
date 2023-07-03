@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import '../css/Header.css';
 import { NavLink } from 'react-router-dom';
-
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setPageName } from '../store/actions';
 
 const Header = () => {
 
  const [data, setData] = useState([]);
  const [activePage, setActivePage] = useState('page1');
-
-  const handleButtonClick = (pageName) => {   
-    console.log("page chNGW", pageName);
-    if (activePage !== pageName) {
-      console.log("page chNGW", pageName);
-         setActivePage(pageName);
-         // onPageChange(pageName);
-      }
-  };
-
+ const dispatch = useDispatch();
   
   useEffect(() => {
     console.log("header comp", activePage);
@@ -49,9 +39,9 @@ const Header = () => {
         </div>
         <div className='nav-wrap'>
 
-            <NavLink className={'nav-heading'}  exact to="/">All Products</NavLink>
-            <NavLink className={'nav-heading'}  to="/videos">Videos</NavLink>
-            <NavLink className={'nav-heading'}  to="/styles">Styles</NavLink>
+            <NavLink className={'nav-heading'}  onClick={()=> dispatch(setPageName("P"))} exact to="/">All Products</NavLink>
+            <NavLink className={'nav-heading'}  onClick={()=> dispatch(setPageName("V"))} to="/videos">Videos</NavLink>
+            <NavLink className={'nav-heading'}  onClick={()=> dispatch(setPageName("L"))} to="/styles">Styles</NavLink>
       
             
             {/*  

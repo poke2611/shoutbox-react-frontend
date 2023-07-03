@@ -1,25 +1,33 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import '../css/Page2.css';
 import '../css/Page4.css';
 import Page3 from './Page3';
 import ProdBrandHeader from './ProdBrandHeader';
 import bag from '../images/BAG.png';
+import Footer from './Footer';
 
 const Page4 = () => {
 
-  const products = ["soap", "kurta", "salwar", "top","any","many"];
   const [data, setData] = useState([]);
-  const[product, setProduct] =useState({});
+  const [product, setProduct] =useState({});
   const [isPopupOpen, setPopupOpen] = useState(false);
+  const [pageNumber, setPageNumber] = useState(1);
   const popupRef = useRef(null);
+  const sortedProducts = useSelector(state => state.sortedProducts);
+  const filteredProducts = useSelector(state => state.filteredProducts);
+  const sortFlag = useSelector(state => state.sortFlag);
+  const filterFlag = useSelector(state => state.filterFlag);
+  const sortOn = useSelector(state => state.sortOn);
+  const selectedCategory = useSelector(state => state.selectedCategory);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&type=L');
+        const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
         const json = await response.json();
         console.log("results Page 4", json);
-        setData(json);
+        setData(prevData => [...prevData, ...json]);
        // setProduct(json[0]);
       
         console.log("product page 4",json[0]);
@@ -43,6 +51,25 @@ const Page4 = () => {
     };
 
   }, []);
+
+  useEffect(() => {
+
+    let displayedProducts = data;
+
+    if (filterFlag && !sortFlag) {
+      displayedProducts = filteredProducts;
+    }
+    if(sortFlag && !filterFlag){
+      displayedProducts = sortedProducts;
+    } 
+    
+    if(sortFlag && filterFlag){
+      displayedProducts = filteredProducts;
+      console.log("disp", displayedProducts);
+    } 
+    setData(displayedProducts);
+
+  },[sortOn, filterFlag, sortFlag, filteredProducts, sortedProducts])
 
   const showPopup = () => {
     console.log('Div clicked!');
@@ -107,6 +134,7 @@ const Page4 = () => {
               </div>
             </div>
           )}
+          
     </div>
   );
 }
