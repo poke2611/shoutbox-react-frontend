@@ -14,6 +14,8 @@ const Page2 = () => {
   const [product, setProduct] = useState({});
   const [pageNumber, setPageNumber] = useState(1);
   const [isPopupOpen, setPopupOpen] = useState(false);
+  const [upcomingData, setUpcomingData] = useState([]);
+
   const popupRef = useRef(null);
 
   const sortedProducts = useSelector(state => state.sortedProducts);
@@ -22,38 +24,42 @@ const Page2 = () => {
   const filterFlag = useSelector(state => state.filterFlag);
   const sortOn = useSelector(state => state.sortOn);
   const selectedCategory = useSelector(state => state.selectedCategory);
-  
 
-  useEffect(() => {
 
-    let displayedProducts = videos;
-
-    if (filterFlag && !sortFlag) {
-      displayedProducts = filteredProducts;
+  const fetchInitialData = async () => {
+    try {
+      setPageNumber(1);
+      setVideos([]);
+      console.log("pagenumer", pageNumber, "if selectedCategory", selectedCategory);
+      console.log("sortOn", sortOn);
+      const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page=1');
+      const json = await response.json();
+      setVideos(json);
+      setUpcomingData(json);
+      
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
-    if(sortFlag && !filterFlag){
-      displayedProducts = sortedProducts;
-    } 
-    
-    if(sortFlag && filterFlag){
-      console.log("disp");
-      displayedProducts = filteredProducts;
-      //displayedProducts = sortedProducts.filter(prod => filteredProducts.includes(prod));
-     // displayedProducts = filteredProducts.filter(prod => sortedProducts.includes(prod));
-      console.log("disp", displayedProducts);
-    } 
-    setVideos(displayedProducts);
-
-  },[sortOn, filterFlag, sortFlag, filteredProducts, sortedProducts])
-
+  };
 
   useEffect(() => {
+    fetchInitialData();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [sortOn, filterFlag, sortFlag, selectedCategory]);
+ 
+  
+  useEffect(() => {
+
+    console.log("first called");
     const fetchData = async () => {
       try {
-        const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
-        const json = await response.json();
-        console.log("results Page videos", json);
-        setVideos(prevData => [...prevData, ...json]);
+        if(pageNumber>1){
+          const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
+          const json = await response.json();
+          console.log("results Page videos", json);
+          setVideos(prevData => [...prevData, ...json]);
+          setUpcomingData(json);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -61,6 +67,21 @@ const Page2 = () => {
 
     fetchData();
 
+  }, [pageNumber]);
+
+
+  
+  useEffect(() => {
+
+    console.log("second called");
+    
+
+  },[sortOn, filterFlag, sortFlag, filteredProducts, sortedProducts]);
+
+
+  useEffect(() => {
+    
+    console.log("third called");
     const handleClickOutside = (event) => {
       if (popupRef.current && !popupRef.current.contains(event.target)) {
         setPopupOpen(false);
@@ -148,6 +169,18 @@ const Page2 = () => {
               ))}
             </div>
           </div>
+          { videos.length>19?
+
+              (
+                upcomingData.length>0 ?
+                    <div className='loadmore-div'>
+                        <a>Load More...</a>
+                    </div>:<div className='loadmore-div'></div>
+                    ):
+                    <div className='loadmore-div'>
+                        
+                    </div>
+              }
           {isPopupOpen && (
             <div className="popup">
               <div className="popup-content" ref={popupRef}>
