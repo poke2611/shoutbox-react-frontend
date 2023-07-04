@@ -1,7 +1,11 @@
 .App {
-  text-align: center;
-  font-family: Lato, sans-serif;
-  color: #646464 !important;
+  background: #fff;
+ /* display: flex;
+  position: relative;
+  justify-content: center; */
+  color: #646464;
+  flex-direction: column;
+    font-family: Lato, sans-serif;
 }
 
 .App-logo {
@@ -33,10 +37,19 @@
 .wrapper{
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 5px;
   overflow: auto;
-  max-height: 93vh;
+  max-height: 90vh;
   margin-top: 10px;
+  position: absolute;
+  width: 100%; 
+
+}
+
+.wrapper-upper{
+  display: flex;
+  justify-content: center;
+
 }
 
 @keyframes App-logo-spin {
@@ -48,9 +61,43 @@
   }
 }
 .page-content{
-  max-height: 100vh;
+ max-height: 100vh;
   margin-bottom: 2px;
+
 }
+
+.wrapper::-webkit-scrollbar {
+  width: 0; /* set the width of the scrollbar */
+}
+
+.wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1; /* set the background color of the scrollbar track */
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+  background-color: #888; /* set the color of the scrollbar thumb */
+  border-radius: 0.25em; /* set the border radius of the scrollbar thumb */
+}
+
+@media screen and (min-width: 768px) {
+  .App{
+    background: #e0f7fad6;
+  }
+  .wrapper {
+    width: 100%;
+ 
+  }
+  .wrapper-upper{
+    width: 400px;
+    background: #fff;
+    height: 100vh;
+    position: relative;
+    margin: auto;
+
+}
+}
+
+
 /*
 @media (max-height: 680px) {
   .page-content {

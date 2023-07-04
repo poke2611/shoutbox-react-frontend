@@ -4,7 +4,7 @@ import '../css/Page2.css';
 import '../css/Page4.css';
 import Page3 from './Page3';
 import ProdBrandHeader from './ProdBrandHeader';
-import bag from '../images/BAG.png';
+import bag from '../images/bag.png';
 import Footer from './Footer';
 
 const Page4 = () => {
@@ -115,17 +115,17 @@ const Page4 = () => {
   return (
     <div className="page4-comp">
        <div >
-          <ProdBrandHeader />
-            <div>
+          
             {data.map((product, index) => (
-              <div>
+              <div className='prod-vid-wrap'>
+                <ProdBrandHeader product={product}/>
                 <div className="page4-img-container">
                     <img src={product.link} className='page4-prod-img'/>
                 </div>
                 <div className='scrolling-product-wrapper'>
                       <div className='shop-all'>
                           <a className='shop-all-btn'>
-                              <img src={bag} height={30} width={30} />
+                              <img src={bag} height={25} width={25} />
                           </a>
                           <a> SHOP ALL</a>
                       </div>
@@ -135,7 +135,7 @@ const Page4 = () => {
                               <div className='scp-image-div' style={{ backgroundImage: `url(${prod.imageUrl})`}}>
                               </div>
                               <div className='scp-desc'>
-                                  <div className='scp-brand-name'><span>{prod.title}</span></div>
+                                  <div className='scp-brand-name'><span>{(prod.title).toUpperCase()}</span></div>
                                   <div className='scp-price'><span className='actual-price' >{prod.initialPrice != null ? (
                                       <>&#x20B9;{prod.initialPrice}</>
                                     ) : (
@@ -155,7 +155,7 @@ const Page4 = () => {
               </div>
               ))}
             </div>
-          </div>
+      
           { data.length>19?
                 (
                   upcomingData.length>0 ?

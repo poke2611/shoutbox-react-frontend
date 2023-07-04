@@ -43,7 +43,7 @@ const Product = (props) => {
                 <RiHeartLine style={iconStyle} onClick={handleIconClick} />
             )}     
             
-            <span className='prod-metadata'>{props.product.products[0].title}</span>
+            <span className='prod-metadata'>{(props.product.products[0].title).toUpperCase()}</span>
             <div className='price-info'><span className='actual-price' >{props.product.products[0].initialPrice != null ? (
                             <>&#x20B9;{props.product.products[0].initialPrice}</>
                           ) : (

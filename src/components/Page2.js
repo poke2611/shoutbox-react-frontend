@@ -3,7 +3,7 @@ import '../css/Page2.css';
 import Page3 from './Page3';
 import ProdBrandHeader from './ProdBrandHeader';
 import ProductVideoPlayer from './ProductVideoPlayer';
-import bag from '../images/BAG.png';
+import bag from '../images/bag.png';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from './Footer';
 
@@ -128,17 +128,18 @@ const Page2 = () => {
   return (
     <div>
        <div className="video-comp">
-          <ProdBrandHeader />
+          
             <div>
             {videos.map((vid, index) => (
               <div className='prod-vid-wrap'>
+                <ProdBrandHeader product={vid}/>
                 <div className="video-div">
                     <ProductVideoPlayer videoUrl={vid.link} fullscreen={false}/>
                 </div>
                 <div className='scrolling-product-wrapper'>
                       <div className='shop-all'>
                           <a className='shop-all-btn' onClick={()=> console.log("videor url", vid.link)}>
-                              <img src={bag} height={30} width={30} />
+                              <img src={bag} height={25} width={25} />
                           </a>
                           <a> SHOP ALL</a>
                       </div>
@@ -148,7 +149,7 @@ const Page2 = () => {
                               <div className='scp-image-div' style={{ backgroundImage: `url(${prod.imageUrl})`}}>
                               </div>
                               <div className='scp-desc'>
-                                  <div className='scp-brand-name'><span>{prod.title}</span></div>
+                                  <div className='scp-brand-name'><span>{(prod.title).toUpperCase()}</span></div>
                                   <div className='scp-price'><span className='actual-price' >{prod.initialPrice != null ? (
                                       <>&#x20B9;{prod.initialPrice}</>
                                     ) : (
