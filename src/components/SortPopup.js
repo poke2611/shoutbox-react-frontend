@@ -8,12 +8,10 @@ import { RiHeartLine, RiHeartFill } from 'react-icons/ri';
 const SortPopup = ({handlePopup}) => {
 
   //const[sortOn, setSortOn] = useState("");
-  const[sortedData, setsortedData] = useState([]);
+  const [activeItem, setActiveItem] = useState();
   const dispatch = useDispatch();
   const popupRef = useRef(null);
-  const currentPage = useSelector(state => state.currentPage);
-  const filterFlag = useSelector(state => state.filterFlag);
-  const selectedCategory = useSelector(state => state.selectedCategory);
+  const sortOn = useSelector(state => state.sortOn);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -32,26 +30,10 @@ const SortPopup = ({handlePopup}) => {
 
   const sortProducts = (sortOn) => {
     console.log("sortOn", sortOn);
+    setActiveItem(sortOn);
     dispatch(setSortCriteria(sortOn));
-    fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&categoryId='+selectedCategory+'&type='+currentPage+'&'+sortOn+'=true')
-      .then(response => response.json())
-      .then(data => {
-        console.log("data", data)
-       setsortedData(data);
-       if(filterFlag){
-          dispatch(setSortFlag(true));  
-          dispatch(setFilteredProds(data));
-       }
-       else{
-          dispatch(setSortedProds(data));
-       }
-       
-      })
-      .catch(error => {
-        // Handle any errors that occurred during the API request
-        console.error(error);
-      });
- 
+    dispatch(setSortFlag(true));
+   
         handlePopup();
       }
 
@@ -65,8 +47,8 @@ const SortPopup = ({handlePopup}) => {
         <span>Sort By</span>
       </div>
       <ul className="sort-popup-content">
-          <li onClick={()=>sortProducts("lowToHigh")}>Price- low to high</li>
-          <li onClick={()=>sortProducts("highToLow")}>Price- high to low</li>
+          <li className={sortOn === "lowToHigh" ? "li-active" : ""} onClick={()=>sortProducts("lowToHigh")}>Price- low to high</li>
+          <li className={sortOn === "highToLow" ? "li-active" : ""} onClick={()=>sortProducts("highToLow")}>Price- high to low</li>
       </ul>
     </div>
   </div>

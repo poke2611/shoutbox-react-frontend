@@ -4,7 +4,7 @@ import '../css/Page2.css';
 import '../css/Page4.css';
 import Page3 from './Page3';
 import ProdBrandHeader from './ProdBrandHeader';
-import bag from '../images/bag.png';
+import bag from '../images/BAG.png';
 import Footer from './Footer';
 
 const Page4 = () => {
@@ -13,24 +13,48 @@ const Page4 = () => {
   const [product, setProduct] =useState({});
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
+  const [upcomingData, setUpcomingData] = useState([]);
   const popupRef = useRef(null);
-  const sortedProducts = useSelector(state => state.sortedProducts);
-  const filteredProducts = useSelector(state => state.filteredProducts);
   const sortFlag = useSelector(state => state.sortFlag);
   const filterFlag = useSelector(state => state.filterFlag);
   const sortOn = useSelector(state => state.sortOn);
   const selectedCategory = useSelector(state => state.selectedCategory);
 
+
+  const fetchInitialData = async () => {
+    try {
+      setPageNumber(1);
+      setData([]);
+      console.log("pagenumer", pageNumber, "if selectedCategory", selectedCategory, "filterCriteria");
+      console.log("sortOn", sortOn, "sortCriteria");
+      const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page=1');
+      const json = await response.json();
+      setData(json);
+      setUpcomingData(json);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchInitialData();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [sortOn, filterFlag, sortFlag, selectedCategory]);
+ 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if(pageNumber>1){
         const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?brandId=4&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
         const json = await response.json();
         console.log("results Page 4", json);
         setData(prevData => [...prevData, ...json]);
        // setProduct(json[0]);
+       setUpcomingData(json);
       
         console.log("product page 4",json[0]);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -38,38 +62,43 @@ const Page4 = () => {
 
     fetchData();
 
-    const handleClickOutside = (event) => {
-      if (popupRef.current && !popupRef.current.contains(event.target)) {
-        setPopupOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
 
   }, []);
 
   useEffect(() => {
 
-    let displayedProducts = data;
+    const handleIntersection = (entries) => {
+     entries.forEach(entry => {
+       if (entry.isIntersecting) {
+         setPageNumber(prevPageNumber => prevPageNumber + 1);
+       }
+     });
+   };
 
-    if (filterFlag && !sortFlag) {
-      displayedProducts = filteredProducts;
-    }
-    if(sortFlag && !filterFlag){
-      displayedProducts = sortedProducts;
-    } 
-    
-    if(sortFlag && filterFlag){
-      displayedProducts = filteredProducts;
-      console.log("disp", displayedProducts);
-    } 
-    setData(displayedProducts);
+   const options = {
+     root: null,
+     rootMargin: '0px',
+     threshold: 0.5, 
+   };
 
-  },[sortOn, filterFlag, sortFlag, filteredProducts, sortedProducts])
+   const observer = new IntersectionObserver(handleIntersection, options);
+   const target = document.querySelector('.loadmore-div');
+   observer.observe(target);
+
+   const handleClickOutside = (event) => {
+     if (popupRef.current && !popupRef.current.contains(event.target)) {
+       setPopupOpen(false);
+     }
+   };
+
+   document.addEventListener('mousedown', handleClickOutside);
+
+
+   return () => {
+     observer.unobserve(target);
+     document.removeEventListener('mousedown', handleClickOutside);
+   };
+ }, []);
 
   const showPopup = () => {
     console.log('Div clicked!');
@@ -126,7 +155,18 @@ const Page4 = () => {
               </div>
               ))}
             </div>
-          
+      
+          { data.length>19?
+                (
+                  upcomingData.length>0 ?
+                      <div className='loadmore-div'>
+                          <a>Load More...</a>
+                      </div>:<div className='loadmore-div'></div>
+                      ):
+                      <div className='loadmore-div'>
+                          
+                      </div>
+                }
           {isPopupOpen && (
             <div className="popup">
               <div className="popup-content" ref={popupRef}>

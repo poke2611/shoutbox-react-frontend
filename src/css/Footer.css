@@ -64,6 +64,16 @@
 .sort-popup-content li{   
     cursor: pointer;
     padding: 4px 0;
+    color: #727272;
+    font-weight: 500;
+}
+
+.sort-popup-content li:hover{   
+    font-weight: 700;
+}
+
+.li-active{
+    font-weight: 700 !important;
 }
 /*
 .sort-popup-header{
