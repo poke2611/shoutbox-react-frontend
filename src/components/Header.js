@@ -28,31 +28,13 @@ const Header = () => {
 
   return (
     <div className="header-wrapper">
-        <div className='header-sub-wrap'>
-            <div>
-                <a className='brand-logo' style={{ backgroundImage: `url(${data.logoUrl})` }}></a>
-            </div>
-            <div className='brand-desc'>
-                <a> {data.brandName} </a>
-                <span onClick={()=>console.log("description")}>{data.brandDescription}</span>
-            </div>
-        </div>
+        
         <div className='nav-wrap'>
 
             <NavLink className={'nav-heading'}  onClick={()=> dispatch(setPageName("P"))} exact to="/">All Products</NavLink>
             <NavLink className={'nav-heading'}  onClick={()=> dispatch(setPageName("V"))} to="/videos">Videos</NavLink>
             <NavLink className={'nav-heading'}  onClick={()=> dispatch(setPageName("L"))} to="/styles">Styles</NavLink>
       
-            
-            {/*  
-            
-              <a className={activePage === 'page1' ? 'active' : ''}
-                         onClick={(e) => handleButtonClick('page1', e)}>All Products</a>
-            <a className={activePage === 'page2' ? 'active' : ''}
-                          onClick={(e) => handleButtonClick('page2', e)}>Videos</a>
-            <a className={activePage === 'page3' ? 'active' : ''}
-                          onClick={(e) => handleButtonClick('page3', e)}>Styles</a>
-            */}
         </div>
     </div>
   );

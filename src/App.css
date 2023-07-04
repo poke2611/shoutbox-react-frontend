@@ -1,8 +1,11 @@
 .App {
   background: #fff;
-  display: flex;
+ /* display: flex;
   position: relative;
-  justify-content: center;
+  justify-content: center; */
+  color: #646464;
+  flex-direction: column;
+    font-family: Lato, sans-serif;
 }
 
 .App-logo {
@@ -34,12 +37,18 @@
 .wrapper{
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 5px;
   overflow: auto;
   max-height: 90vh;
   margin-top: 10px;
   position: absolute;
   width: 100%; 
+
+}
+
+.wrapper-upper{
+  display: flex;
+  justify-content: center;
 
 }
 
@@ -71,10 +80,21 @@
 }
 
 @media screen and (min-width: 768px) {
-  .wrapper {
-    width: 400px;  
-    height: 91vh;
+  .App{
+    background: #e0f7fad6;
   }
+  .wrapper {
+    width: 100%;
+ 
+  }
+  .wrapper-upper{
+    width: 400px;
+    background: #fff;
+    height: 100vh;
+    position: relative;
+    margin: auto;
+
+}
 }
 
 

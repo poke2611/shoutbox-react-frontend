@@ -13,8 +13,7 @@
     display: flex;
     flex-direction: row;
     max-width: 100%;
-    overflow: auto;
-    gap: 13px;
+    gap: 3px;
 }
 
 .shop-all{
@@ -23,35 +22,36 @@
     align-items: baseline;
     gap: 5px;
     /* width: 88px; */
-    margin-top: 12px;
+    margin-top: 11px;
     min-width: 60px;
 }
 
 .shop-all-btn{
-    height: 50px;
+    height: 43px;
     /* display: block; */
     /* padding: 7px 2px; */
     display: flex;
     justify-content: center;
     /* padding-top: 7px; */
-    width: 50px;
+    width: 43px;
     align-items: center;
     text-align: center;
     border-radius: 50%;
-    border: 2px solid #00a9ca;
+    border: 1px solid #00a9ca;
 }
 
 .shop-all a{
     color: #00a9ca;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 700;
 }
 
 .scp-wrapper{
     border: 1px solid #ccc;
-    min-width: 200px;
+    min-width: 140px;
+    width: 140px;
     padding: 5px;
-    height: 75px;
+    height: 60px;
     display: flex;
     flex-flow: row;
     gap: 5px;
@@ -70,6 +70,7 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
+    overflow: auto;
     /* position: relative; */
     padding: 5px;
 }
@@ -78,8 +79,8 @@
     flex-flow: column;
     align-items: flex-start;
     flex-grow: 3;
-    font-size: 14px;
-    gap: 3px;
+    font-size: 10px;
+    gap: 7px;
 }
 
 .rating{
@@ -120,6 +121,7 @@
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     padding: 7px 3px;
+    border: 1px solid #ccc;;
 
    /* position: absolute;
     background-color: white;
@@ -147,16 +149,16 @@
 
   }
   
-.scrolling-product-wrapper::-webkit-scrollbar {
+  .scp-all-wrapper::-webkit-scrollbar {
     width: 0; 
     height: 0;
   }
   
-  .scrolling-product-wrapper::-webkit-scrollbar-track {
+  .scp-all-wrapper::-webkit-scrollbar-track {
     background: #f1f1f1; /* set the background color of the scrollbar track */
   }
   
-  .scrolling-product-wrapper::-webkit-scrollbar-thumb {
+  .scp-all-wrapper::-webkit-scrollbar-thumb {
     background-color: #888; /* set the color of the scrollbar thumb */
     border-radius: 0.25em; /* set the border radius of the scrollbar thumb */
   }
@@ -180,9 +182,9 @@
 }
 
 .scp-brand-name{
-    line-height: 19px;
+    line-height: 15px;
     text-align: left;
-    color: #434343;
+    color: #646464;
 }
 
 .scp-brand-name span{

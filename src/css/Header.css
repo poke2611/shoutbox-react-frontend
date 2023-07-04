@@ -1,15 +1,4 @@
-.brand-logo{
-  box-sizing: border-box;
-    position: absolute;
-    width: 90px;
-    height: 90px;
-    left: 16px;
-    top: 16px;
-    border: 1px solid #B885DB;
-    border-radius: 50%;
-    background-repeat: no-repeat;
-    background-size: contain;
-}
+
 
 .header-wrapper{
   display: flex;
@@ -18,8 +7,6 @@
     /* grid-gap: 2px; */
     margin: 0px 2px;
     gap: 15px;
-    min-height: 15vh;
-    margin-top: -10px;
 }
 .header-sub-wrap{
     height: max-content;
