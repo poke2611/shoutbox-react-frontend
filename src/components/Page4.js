@@ -4,7 +4,7 @@ import '../css/Page2.css';
 import '../css/Page4.css';
 import Page3 from './Page3';
 import ProdBrandHeader from './ProdBrandHeader';
-import bag from '../images/bag.png';
+import bag from '../images/BAG.png';
 import Footer from './Footer';
 
 const Page4 = () => {
