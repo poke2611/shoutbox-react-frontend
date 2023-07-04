@@ -17,6 +17,7 @@
     background: #00a9ca;
     color: #fff;
     padding: 7px;
+    cursor: pointer;
 }
 
 .sort-popup{
@@ -31,6 +32,7 @@
     display: flex;
     align-items: flex-end;
     justify-content: center;
+   
 }
 
 .sort-popup-content{   
@@ -89,3 +91,16 @@
     padding: 15px 5px;
 
 }
+
+
+@media screen and (min-width: 768px) {
+    .footer-wrapper {
+        width: 401px;
+    }
+    
+.sort-popup{
+    margin: auto;
+    max-width: 400px;
+
+}
+  }

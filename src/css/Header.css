@@ -73,8 +73,8 @@
   border-radius: 10px;
   padding: 4px;
   margin: auto;
-  /* text-align: center;
-    */
+   text-align: center;
+    
   font-style: normal;
   width: 106px;
   /* height: 29px; */
@@ -88,3 +88,5 @@
   background: #107a8f !important;
   
 }
+
+
