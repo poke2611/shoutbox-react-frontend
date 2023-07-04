@@ -6,7 +6,7 @@ const initialState = {
   hightToLowSortedProducts: [],
   filteredProducts: [],
   sortFlag: false,
-  sortOn: "lowToHigh",
+  sortOn: "",
   currentPage: "P",
   selectedCategory: "",
 };

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../css/FilterPopup.css';
-import { RiHeartLine, RiHeartFill } from 'react-icons/ri';
-import { FaSearch } from 'react-icons/fa';
 import { setFilteredProds, setFilterCriteria, setFilterFlag } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,18 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 const FilterPopup = ({ handlePopup }) => {
 
   const dispatch = useDispatch();
-  const currentPage = useSelector(state => state.currentPage);
   const categorySelected = useSelector(state => state.selectedCategory);
-
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(categorySelected);
   const [selectAll, setSelectAll] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
- // const [filteredData, setFilteredData]= useState([]);
- // const isCategorySelected = (categoryId) => selectedCategories.includes(categoryId);
- const sortFlag = useSelector(state => state.sortFlag);
- const sortOn = useSelector(state => state.sortOn);
-
+ 
+  const sortFlag = useSelector(state => state.sortFlag);
+  const sortOn = useSelector(state => state.sortOn);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,18 +75,8 @@ const handleCategorySelect = (categoryId) => {
   const filterProducts = () => {
     console.log("filterON", selectedCategory);
     dispatch(setFilterCriteria(selectedCategory));
-    fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&'+sortOn+'='+sortFlag+'&type='+currentPage)
-      .then(response => response.json())
-      .then(data => {
-        console.log("filtered data", data);
-        dispatch(setFilteredProds(data));
-       // window.scrollTo({ top: 0, behavior: 'smooth' });
-      })
-      .catch(error => {
-        // Handle any errors that occurred during the API request
-           console.error(error);
-      });
-       
+    dispatch(setFilterFlag(true));
+   
       handlePopup();
     }
 
