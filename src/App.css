@@ -6,6 +6,9 @@
   color: #646464;
   flex-direction: column;
     font-family: Lato, sans-serif;
+    max-height: 100vh;
+    overflow:hidden;
+    text-align: center;
 }
 
 .App-logo {
@@ -36,14 +39,11 @@
 
 .wrapper{
   display: flex;
-  flex-direction: column;
-  gap: 5px;
-  overflow: auto;
-  max-height: 90vh;
-  margin-top: 10px;
-  position: absolute;
-  width: 100%; 
-
+    flex-direction: column;
+    gap: 5px;
+    overflow: auto;
+    max-height: 93vh;
+    width: 100%; 
 }
 
 .wrapper-upper{
@@ -85,7 +85,7 @@
   }
   .wrapper {
     width: 100%;
- 
+    max-height: 92vh;
   }
   .wrapper-upper{
     width: 400px;

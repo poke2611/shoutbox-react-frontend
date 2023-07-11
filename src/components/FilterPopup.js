@@ -91,19 +91,10 @@ const handleCategorySelect = (categoryId) => {
             <div className="filter-section-categories">
                 <ul>
                     <li className="active">Categories</li>
-                    <li>Price Range</li>
                 </ul>
             </div>
             <div className="filter-section">
-                <div className="search-bar">
-                  <input
-                      className='filter-search'
-                      type="text"
-                      placeholder="Search categories..."
-                      value={searchQuery}
-                      onChange={handleSearch}
-                  />
-                </div>
+                
                 {filteredCategories.map((cat) => (
                   <div key={cat.id} className={`category-item ${selectedCategory === cat.id ? 'selected' : ''}`} onClick={() => handleCategorySelect(cat.id)}>
                     {selectedCategory === cat.id ? <span className="tick selected">&#10003;</span> : <span className="tick" />}
@@ -112,7 +103,17 @@ const handleCategorySelect = (categoryId) => {
                 
                 ))}
 
-             {/* <div className="category-item select-all" onClick={handleSelectAll}>
+             {/*
+             <div className="search-bar">
+                  <input
+                      className='filter-search'
+                      type="text"
+                      placeholder="Search categories..."
+                      value={searchQuery}
+                      onChange={handleSearch}
+                  />
+                </div> 
+             <div className="category-item select-all" onClick={handleSelectAll}>
                     <span className={selectAll ? 'tick selected' : 'tick'}>{selectAll?(<>&#10003;</>):''}</span>
                     Select All
                 </div>

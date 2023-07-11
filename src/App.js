@@ -20,9 +20,10 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App" >
-        <FixedHeader  />
         <div className='wrapper-upper'>
+          
           <div className="wrapper">
+            <FixedHeader  />
             <div>
               <Header  />
             </div>

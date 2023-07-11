@@ -20,7 +20,10 @@
     background: #00a9ca;
     color: #fff;
     padding: 7px;
+    display: flex;
     cursor: pointer;
+    justify-content: center;
+    gap: 5px;
 }
 
 .sort-popup{
@@ -117,3 +120,12 @@
 
 }
   }
+
+  .blue-dot{
+    height: 4px;
+    background: #00344ce3;
+    display: block;
+    border-radius: 50%;
+    width: 4px;
+    border: 1px solid #00344ce3;
+}

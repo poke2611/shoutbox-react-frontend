@@ -12,6 +12,8 @@ const Footer = () => {
   const [isFilterPopupOpen, setFilterPopupOpen] = useState(false);
   const dispatch = useDispatch();
   const reduxIsPopupOpen = useSelector(state => state.isPopupOpen);
+  const sortFlag = useSelector(state => state.sortFlag);
+  const filterFlag = useSelector(state => state.filterFlag);
 
   const handlePopupToggle = () => {
     setPopupOpen(!isPopupOpen);
@@ -27,8 +29,8 @@ const Footer = () => {
     <div>
       <div className="footer-wrapper">
           <div className="option-wrapper">
-              <a onClick={handlePopupToggle}>Sort</a>
-              <a onClick={handleFilterPopup}>Filter</a>
+              <a onClick={handlePopupToggle}>Sort{sortFlag?<span className='blue-dot'></span>:''}</a>
+              <a onClick={handleFilterPopup}>Filter{filterFlag?<span className='blue-dot'></span>:''}</a>
           </div>
       </div>
       {isPopupOpen && (

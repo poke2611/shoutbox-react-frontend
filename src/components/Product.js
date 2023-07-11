@@ -8,7 +8,8 @@ const Product = (props) => {
   
   const [isClicked, setIsClicked] = useState(false);
 
-  const handleIconClick = () => {
+  const handleIconClick = (event) => {
+    event.stopPropagation();
     setIsClicked(!isClicked);
   };
 

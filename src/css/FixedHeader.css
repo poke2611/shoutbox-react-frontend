@@ -1,6 +1,7 @@
 .fh-brand-logo{
   /* border-radius: 50%; */
   width: 65px;
+  cursor: pointer;
 }
 
 .icons-div{
@@ -16,6 +17,7 @@
   .fixed-header-wrapper{
       background-color: #ffffff;
       margin-bottom: 25px; 
+     
     }
 }
 
@@ -38,6 +40,7 @@
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   padding: 0px 6px;
   padding-right: 15px;
+  margin-bottom: 8px;
 }
 
 .fixed-header-sub-wrap{
