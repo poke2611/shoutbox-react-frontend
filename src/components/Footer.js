@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { togglePopup } from '../store/actions';
 import SortPopup from './SortPopup';
 import FilterPopup from './FilterPopup';
-import { setPageName } from '../store/actions';
 
 
 const Footer = () => {

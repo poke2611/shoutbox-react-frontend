@@ -4,7 +4,7 @@ import Page3 from './Page3';
 import ProdBrandHeader from './ProdBrandHeader';
 import ProductVideoPlayer from './ProductVideoPlayer';
 import bag from '../images/BAG.png';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Footer from './Footer';
 
 

@@ -9,6 +9,8 @@ const initialState = {
   sortOn: "lowToHigh",
   currentPage: "P",
   selectedCategory: "",
+  brandID: "",
+
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -73,14 +75,6 @@ const rootReducer = (state = initialState, action) => {
             sortFlag: action.payload,
           };
 
-        case 'SET_PAGE_NAME':
-          console.log("SET_PAGE_NAME",  action.payload );
-          return {
-            ...state,
-            currentPage: action.payload,
-            
-          };
-
         case 'SET_FILTER_FLAG':
         console.log("SET_FILTER_FLAG",  action.payload );
         return {
@@ -93,6 +87,13 @@ const rootReducer = (state = initialState, action) => {
           return {
             ...state,
             sortFlag: action.payload,
+          };
+
+        case 'SET_BRAND_ID':
+          console.log("SET_BRAND_ID",  action.payload );
+          return {
+            ...state,
+            brandID: action.payload,
           };
         
         default:
