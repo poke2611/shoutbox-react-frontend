@@ -29,7 +29,7 @@ const Page1 = () => {
       setData([]);
       console.log("pagenumer", pageNumber, "if selectedCategory", selectedCategory, "filterCriteria");
       console.log("sortOn", sortOn, "sortCriteria");
-      const response = await fetch(`https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId=${selectedCategory}&brandId=4&${sortOn}=${sortFlag}&page=1`);
+      const response = await fetch(`https://cliptocart.co.in/content?categoryId=${selectedCategory}&brandId=4&${sortOn}=${sortFlag}&page=1`);
       const json = await response.json();
       setData(json);
       
@@ -53,7 +53,7 @@ const Page1 = () => {
         if(pageNumber>1){
           console.log("pagenumer",pageNumber, "if selectedCategory", selectedCategory, "filterCriteria");
           console.log("sortOn", sortOn, "sortCriteria");
-         const response = await fetch('https://ec2-13-126-233-244.ap-south-1.compute.amazonaws.com:8080/content?categoryId='+selectedCategory+'&brandId=4&'+sortOn+'='+sortFlag+'&page='+pageNumber);
+         const response = await fetch('https://cliptocart.co.in/content?categoryId='+selectedCategory+'&brandId=4&'+sortOn+'='+sortFlag+'&page='+pageNumber);
           const json = await response.json();
           //dispatch(setFilteredProds(json));
           setData(prevData => [...prevData, ...json]);
