@@ -61,7 +61,6 @@ const Page1 = () => {
 
         }
      
-        
       } catch (error) {
         console.error('Error fetching data:', error);
       }

@@ -4,7 +4,7 @@ import '../css/Page3.css';
 
 const Page3 = (props) => {
 
-  
+
   return (
     <div className="page3-comp"> 
             <div className='prod-other-img'>
@@ -78,7 +78,8 @@ const Page3 = (props) => {
                 </div>
                 
             </div>
-            <a className='buy-now' href={props.product.productUrl}>Buy Now</a>
+            <a className='buy-now' href='https://kamikubi.com/cart/add?id=42841423184061&quantity=1'>Buy Now</a>
+            {/*<a className='buy-now' href={props.product.productUrl}>Buy Now</a> */}
         
     </div>
   );

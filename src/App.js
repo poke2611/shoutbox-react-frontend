@@ -16,6 +16,7 @@ const store = createStore(rootReducer);
 
 function App() {
   const isPopupOpen = true;
+
   
   return (
     <Provider store={store}>
@@ -29,9 +30,9 @@ function App() {
             </div>
             <div className ='page-content'>
                   <Routes>
-                    <Route path="/" element={<Page1 />} />
-                    <Route path="/videos" element={<Page2 />} />
-                    <Route path="/styles" element={<Page4 />} />             
+                    <Route path={`/`} element={<Page1 />} />
+                    <Route path={`/videos`} element={<Page2 />} />
+                    <Route path={`/styles`} element={<Page4 />} />             
                   </Routes>
             </div>
             <div>
