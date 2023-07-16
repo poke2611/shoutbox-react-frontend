@@ -1,0 +1,25 @@
+.all-prods-wrapper{
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.loadmore-div{
+    margin-top: 8px;
+    padding: 2px;
+    text-align: center;
+}
+
+.loadmore-div a{
+    font-size: 13px;
+    color: #00a9ca;
+    
+}
+    /*color: #ff9797; */
+
+
+
+.loadmore-div a:hover{
+    font-size: 14px;
+    color: #f15353;
+}

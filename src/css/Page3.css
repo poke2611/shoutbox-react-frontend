@@ -1,0 +1,138 @@
+.page3-comp {
+    display: flex;
+    flex-flow: column;
+    margin: 5px 10px;
+    gap: 5px;
+}
+.prod-cover-img{
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+}
+
+.prod-other-img{
+    display: flex;
+    flex-flow: row;
+    gap: 5px;
+}
+
+.partition-line{
+    border-top: 1px solid #ccc;
+    width: 100%;
+    /* margin: 5px 0px; */
+    margin-top: 8px;
+}
+
+.page3-prod-info{
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 5px;
+}
+
+.page3-brand-name{
+    display: inline-block;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.page3-prod-detail{
+    font-size: 13px;
+    color: #696767;
+    display: block;
+    line-height: 18px;
+}
+
+.page3-rating{
+    border: 1px solid #ccc;
+    padding: 1px 10px;
+    font-size: 13px;
+}
+
+.page3-prod-img{
+    width: 100%;
+    height: auto;
+    border-radius: 7px;
+}
+
+.page3-actual-price{
+    text-decoration: line-through;
+    color:#535353;
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.page3-selling-price{
+    font-weight: 800;
+font-size: 13px;
+}
+
+.product-info-wrapper {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    gap: 10px;
+}
+
+.taxes{
+    font-size: 12px;
+    color: #00cf00;
+}
+
+.page3-heading{
+    display: block;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 28px;
+}
+
+.product-info-sub-wrapper{
+    display: grid;
+    grid-gap: 13px;
+    grid-template-columns: 1fr 1fr;
+}
+.product-info-sub-wrapper div{
+    display: flex;
+    flex-flow: column;
+    gap: 5px;
+}
+.page3-sub-wrapper{
+    display: flex;
+    flex-flow: column;
+    gap: 2px;
+}
+
+.info-heading{
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    color: #475467;
+}
+
+.info-value{
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    color: #262d37;
+}
+
+.page3-desc-span{
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    color: #475467;
+}
+
+.buy-now{
+    width: 100%;
+    margin: auto;
+    color: #fff;
+    background: #00a9ca;
+    padding: 6px 0px;
+    font-weight: 500;
+    margin-top: 15px;
+    text-decoration: none;
+    text-align: center;
+}
