@@ -25,6 +25,7 @@ const Product = (props) => {
                     float: 'right',
                     cursor:'pointer'
                   }
+                 
 
   return (
     <div className="product-wrapper">

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../css/FixedHeader.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import bag from '../images/shopping-bag.png';
 import heart from '../images/heart.png';
 import search from '../images/loupe.png';
 import persona from '../images/user.png';
+import Cookies from 'js-cookie';
 
 
 const FixedHeader = () => {
@@ -39,7 +41,7 @@ const FixedHeader = () => {
                     <img src={search} width={20} height={20}/>
                     <img src={heart} width={20} height={20}/>
                     <img src={persona} width={20} height={20}/>
-                    <img src={bag} width={20} height={20}/>
+                    <NavLink to={`/cart/${Cookies.get('cartIdentifier')}`}><img src={bag} width={20} height={20}/></NavLink>
                 </div>
             </div>
             {/*<div className='fh-brand-desc'>

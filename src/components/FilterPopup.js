@@ -12,9 +12,6 @@ const FilterPopup = ({ handlePopup }) => {
   const [selectedCategory, setSelectedCategory] = useState(categorySelected);
   const [selectAll, setSelectAll] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
- 
-  const sortFlag = useSelector(state => state.sortFlag);
-  const sortOn = useSelector(state => state.sortOn);
 
   useEffect(() => {
     const fetchData = async () => {

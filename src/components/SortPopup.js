@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../css/Footer.css';
-import { setSortedProds, setSortCriteria, setSortFlag, setFilteredProds } from '../store/actions';
+import { setSortCriteria, setSortFlag} from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiHeartLine, RiHeartFill } from 'react-icons/ri';
 

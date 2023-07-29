@@ -95,8 +95,17 @@
     margin: auto;
 
 }
+.cart-wrapper{
+  width: 400px;
 }
 
+}
+
+.cart-wrapper{
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+}
 
 /*
 @media (max-height: 680px) {

@@ -32,8 +32,8 @@ const Header = () => {
         
         <div className='nav-wrap'>
 
-        <NavLink className={'nav-heading'} exact to={`/`}>All Products</NavLink>
-        <NavLink className={'nav-heading'} to={`/videos`}>Videos</NavLink>
+     { /*  <NavLink className={'nav-heading'} exact to={`/`}>All Products</NavLink> */}
+        <NavLink className={'nav-heading'} to={`/`}>Videos</NavLink>
         <NavLink className={'nav-heading'} to={`/styles`}>Styles</NavLink>
       
         </div>

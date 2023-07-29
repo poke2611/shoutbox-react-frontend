@@ -124,6 +124,7 @@ const Page2 = () => {
     setPopupOpen(false);
   };
 
+  
 
   return (
     <div>
