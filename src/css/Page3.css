@@ -129,7 +129,7 @@ font-size: 13px;
     width: 100%;
     margin: auto;
     color: #fff;
-    background: #00a9ca;
+    background: #2e2601b8;
     padding: 6px 0px;
     font-weight: 500;
     margin-top: 15px;
@@ -137,6 +137,9 @@ font-size: 13px;
     text-align: center;
 }
 
+.disabled{
+    background: #2e260170 !important;
+}
 .checkout-btn-wrapper{
     display: flex;
     gap: 9px;

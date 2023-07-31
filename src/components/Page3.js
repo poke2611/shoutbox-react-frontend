@@ -17,6 +17,7 @@ const Page3 = (props) => {
   const [variants, setVariants] = useState([]);
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
+  const [isAddToCartDisabled, setIsAddToCartDisabled] = useState(true);
   const sizeAbbreviations = {
     Extra_Small: 'XS',
     Small: 'S',
@@ -32,9 +33,12 @@ const Page3 = (props) => {
      L: 'Large',
      XL: 'Extra_Large'
   };
-
+  const cartCookie = Cookies.get('cart');
+  const itemParams = cartCookie && cartCookie.length>0?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}`).join('&'):'';
+  const apiUrl = cartCookie && cartCookie.length > 0 ? 'https://theaayna.com/cart/add?'+itemParams+'&note=Powered_By_C2C' : 'https://theaayna.com/cart';
 
   useEffect(() => {
+
     getVariantOptions();
   console.log("productr", props.product);
     // Retrieve cart items from the cookie when the product page is loaded
@@ -45,7 +49,7 @@ const Page3 = (props) => {
 
   const getVariantOptions = async () => {
     try {
-     const response = await fetch('https://cliptocart.co.in/shopify/product/'+ props.product.shopifyProductId );
+     const response = await fetch('https://cliptocart.co.in/shopify/product/8424914125111' );
       const productData = await response.json();
       const variants = productData.product.variants;
       setVariants(variants);
@@ -66,59 +70,25 @@ const Page3 = (props) => {
 
   const handleAddToCart = () => {
     const variantId =  getVariantId();
-    console.log("variantId", variantId);
-    setAddedToCart(true);
-   // const variantId = getVariantId();
-    let cartIdentifier = Cookies.get('cartIdentifier');
-   
-    if (!cartIdentifier) {
-      console.log("inside if", cartIdentifier);
-      const url = "https://cliptocart.co.in/cart";
-      const payload = {
-        "cartItems": [
-            
-            {
-                "product": {
-                    "id": props.product.id,
-                },
-                "variantId": variantId,
-                "quantity": 5
-            }
-        ]
+    const newCartItem = {
+      productId: props.product.id,
+      variantId: variantId, // Assuming you have a way to get the selected variant ID
+      quantity: 1, // You can set the quantity based on user input or any other logic
+      addedToCart: true,
     };
-      fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // You can add additional headers here, such as authorization tokens
-        },
-        body: JSON.stringify(payload)
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Handle the response data here
-            console.log(data);
-            dispatch(setCartIdentifier(data.id));
-  
-            // Set the cartIdentifier from the API response into cookies
-            Cookies.set('cartIdentifier', data.id, { expires: 7 });
-            const updatedCartItems = [props.product];
-           
-            setCart(updatedCartItems);
-            Cookies.set('cart', JSON.stringify(updatedCartItems), { expires: 7 });
-           
-            })
-      .catch(error => {
-        // Handle any errors that occurred during the fetch
-        console.error("Error:", error);
-      });
-    }
-    else{
+
+   if(cartCookie){
+    console.log("inside if", cartCookie);
+    const existingCartItem = cartCookie.find(
+      (item) =>
+        item.productId === newCartItem.productId
+     //    && item.variantId === newCartItem.variantId
+    );
+
+    if (!existingCartItem) {
+      cartCookie.push(newCartItem);
+      saveCartToCookieOrState(cartCookie);  
+
       const url = "https://cliptocart.co.in/cart";
       const payload = {
         "id": Cookies.get('cartIdentifier'),
@@ -152,16 +122,73 @@ const Page3 = (props) => {
         
             console.log(data);
             const existingCartItems = getCartItemsFromCookies();
-
+  
             const updatedCartItems = [...existingCartItems, props.product];
-        
-            Cookies.set('cart', JSON.stringify(updatedCartItems), { expires: 7 });    
+            setCart(updatedCartItems);
+          //  Cookies.set('cart', JSON.stringify(updatedCartItems), { expires: 7 });    
             })
       .catch(error => {
         // Handle any errors that occurred during the fetch
         console.error("Error:", error);
       });
-    }  
+    }
+  
+   }
+   else{
+
+    console.log("inside else", cartCookie);
+    cartCookie.push(newCartItem);
+    saveCartToCookieOrState(cartCookie);  
+
+    const url = "https://cliptocart.co.in/cart";
+    const payload = {
+      "cartItems": [
+          
+          {
+              "product": {
+                  "id": props.product.id,
+              },
+              "variantId": variantId,
+              "quantity": 5
+          }
+      ]
+  };
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // You can add additional headers here, such as authorization tokens
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Handle the response data here
+          console.log(data);
+          dispatch(setCartIdentifier(data.id));
+
+          // Set the cartIdentifier from the API response into cookies
+          Cookies.set('cartIdentifier', data.id, { expires: 7 });
+          const updatedCartItems = [props.product];
+         
+          setCart(updatedCartItems);
+     //     Cookies.set('cart', JSON.stringify(updatedCartItems), { expires: 7 });
+         
+          })
+    .catch(error => {
+      // Handle any errors that occurred during the fetch
+      console.error("Error:", error);
+    });
+
+   }
+
+   setAddedToCart(true);
+    
   };
 
   const getCartItemsFromCookies = () => {
@@ -171,12 +198,13 @@ const Page3 = (props) => {
 
   const handleSizeSelection = (size) => {
     setSelectedSize(size);
+    setIsAddToCartDisabled(!size || !selectedColor);
   };
-
  
   
   const handleColorSelection = (color) => {
     setSelectedColor(color);
+    setIsAddToCartDisabled(!selectedSize || !color);
   };
 
   const getVariantId = () => {
@@ -187,6 +215,10 @@ const Page3 = (props) => {
     return selectedVariant.id;
   };
   
+  const saveCartToCookieOrState = (updatedCart) => {
+
+    Cookies.set('cart', JSON.stringify(updatedCart), { expires: 7 });
+  };
 
   return (
     <div className="page3-comp"> 
@@ -285,12 +317,13 @@ const Page3 = (props) => {
             <div className='checkout-btn-wrapper'>
             {addedToCart ? (
                 // If added to cart, show "View Cart" link
-                <NavLink className='buy-now' to={`/cart/${Cookies.get('cartIdentifier')}`}>
+                <a href={apiUrl}>
                   View Cart
-                </NavLink>
+                </a>
               ) : (
                 // If not added to cart, show "Add to Cart" button
-                <a className='buy-now' onClick={handleAddToCart}>
+                <a className={`buy-now ${isAddToCartDisabled ? 'disabled' : ''}`} 
+                 disabled={isAddToCartDisabled} onClick={handleAddToCart} >
                   Add to Cart
                 </a>
               )}

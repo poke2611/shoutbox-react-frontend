@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import bag from '../images/shopping-bag.png';
 import heart from '../images/heart.png';
-import search from '../images/loupe.png';
+import search from '../images/search-interface-symbol.png';
 import persona from '../images/user.png';
 import Cookies from 'js-cookie';
 
@@ -14,12 +14,16 @@ const FixedHeader = () => {
  const [data, setData] = useState([]);
  const [activePage, setActivePage] = useState('page1');
  const dispatch = useDispatch();
+ const cartCookie = Cookies.get('cart');
+ console.log("cartCookie", cartCookie);
+ const itemParams = cartCookie && cartCookie.length>0?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}`).join('&'):'';
+ const apiUrl = cartCookie && cartCookie.length > 0 ? 'https://theaayna.com/cart/add?'+itemParams+'&note=Powered_By_C2C' : 'https://theaayna.com/cart';
   
   useEffect(() => {
     console.log("header comp", activePage);
     const fetchData = async () => {
       try {
-        const response = await fetch('https://cliptocart.co.in/brand?id=4');
+        const response = await fetch('https://cliptocart.co.in/brand?id=15');
         const json = await response.json();
         console.log("results", json[0]);
         setData(json[0]);
@@ -41,7 +45,7 @@ const FixedHeader = () => {
                     <img src={search} width={20} height={20}/>
                     <img src={heart} width={20} height={20}/>
                     <img src={persona} width={20} height={20}/>
-                    <NavLink to={`/cart/${Cookies.get('cartIdentifier')}`}><img src={bag} width={20} height={20}/></NavLink>
+                    <a href= {apiUrl}><img src={bag} width={20} height={20}/></a>
                 </div>
             </div>
             {/*<div className='fh-brand-desc'>

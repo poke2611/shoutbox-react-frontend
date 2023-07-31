@@ -5,7 +5,7 @@
   justify-content: center; */
   color: #646464;
   flex-direction: column;
-    font-family: Lato, sans-serif;
+    font-family: "Source Sans Pro", sans-serif;;
     max-height: 100vh;
     overflow:hidden;
     text-align: center;
@@ -81,7 +81,7 @@
 
 @media screen and (min-width: 768px) {
   .App{
-    background: #e0f7fad6;
+    background: #f9f9f9;
   }
   .wrapper {
     width: 100%;
