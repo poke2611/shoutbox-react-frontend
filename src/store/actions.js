@@ -54,3 +54,29 @@ export const togglePopup = (isOpen) => {
       payload: id,
     };
   };
+
+  export const setCart = (product) => {
+    return {
+      type: 'SET_CART',
+      payload: product,
+    };
+  };
+
+  export const handleRemoveItem = (id) => {
+    return {
+      type: 'REMOVE_ITEM',
+      payload: id,
+    };
+  };
+
+  export const handleCheckout = () => {
+    return {
+      type: 'CHECKOUT',
+    };
+  };
+
+  export const setCartIdentifier = (id) => {
+    return {
+      type: 'SET_CART_IDENTIFIER',
+    };
+  };

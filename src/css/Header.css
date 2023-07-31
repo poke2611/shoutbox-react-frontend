@@ -30,7 +30,7 @@
 
 .brand-desc span{
   text-align: initial !important;
-  font-family: 'Inter';
+  font-family: 'prata',serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -42,7 +42,7 @@
   margin-block-start: 1em;
   color: #101828;
     line-height: 28px;
-    font-family: 'Inter';
+    font-family: 'prata',serif;
     /* font-style: normal; */
     font-weight: 600;
     font-size: 18px;
@@ -51,9 +51,11 @@
 
 .nav-wrap{
   display: flex;
+  gap: 15px;
+  margin: 0px 10px;
 }
 .nav-heading{
-  background: #00a9ca;
+  background: #2e2601b8;
   cursor: pointer;
   color: #fff;
   text-decoration: none;
@@ -63,7 +65,7 @@
    text-align: center;
     
   font-style: normal;
-  width: 106px;
+  width: 100%;
   /* height: 29px; */
   font-weight: 500;
   font-size: 13px;
@@ -72,7 +74,7 @@
 
 .nav-heading.active{
   color: #fff !important;
-  background: #107a8f !important;
+  background: #2e2601e6 !important;
   
 }
 

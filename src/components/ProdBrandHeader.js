@@ -5,22 +5,7 @@ const ProdBrandHeader = (props) => {
 
     const [data, setData] = useState([]);
   
-    useEffect(() => {
-                    
-                    console.log("prod comp", props);
-        const fetchData = async () => {
-          try {
-            const response = await fetch('https://cliptocart.co.in/brand?id=4');
-            const json = await response.json();
-            console.log("results", json[0]);
-            setData(json[0]);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-    
-        fetchData();
-      }, []);
+   
 
   return (
     <div className="bheader-wrapper">

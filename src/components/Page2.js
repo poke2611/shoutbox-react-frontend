@@ -32,7 +32,7 @@ const Page2 = () => {
       setVideos([]);
       console.log("pagenumer", pageNumber, "if selectedCategory", selectedCategory);
       console.log("sortOn", sortOn);
-      const response = await fetch('https://cliptocart.co.in/content?brandId=4&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page=1');
+      const response = await fetch('https://cliptocart.co.in/content?brandId=15&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page=1');
       const json = await response.json();
       setVideos(json);
       setUpcomingData(json);
@@ -54,7 +54,7 @@ const Page2 = () => {
     const fetchData = async () => {
       try {
         if(pageNumber>1){
-          const response = await fetch('https://cliptocart.co.in/content?brandId=4&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
+          const response = await fetch('https://cliptocart.co.in/content?brandId=15&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
           const json = await response.json();
           console.log("results Page videos", json);
           setVideos(prevData => [...prevData, ...json]);
@@ -68,15 +68,6 @@ const Page2 = () => {
     fetchData();
 
   }, [pageNumber]);
-
-
-  
-  useEffect(() => {
-
-    console.log("second called");
-    
-
-  },[sortOn, filterFlag, sortFlag, filteredProducts, sortedProducts]);
 
 
   useEffect(() => {
@@ -97,22 +88,6 @@ const Page2 = () => {
   }, [pageNumber]);
 
 
-  useEffect(() => {
-  
-    const handleClickOutside = (event) => {
-      if (popupRef.current && !popupRef.current.contains(event.target)) {
-        setPopupOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-
-  }, []);
-
   const showPopup = () => {
     console.log('Div clicked!');
     setPopupOpen(true);   
@@ -124,6 +99,42 @@ const Page2 = () => {
     setPopupOpen(false);
   };
 
+  useEffect(() => {
+
+     const handleIntersection = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setPageNumber(prevPageNumber => prevPageNumber + 1);
+        }
+      });
+    };
+
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5, 
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, options);
+    const target = document.querySelector('.loadmore-div');
+    observer.observe(target);
+
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setPopupOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+
+    return () => {
+      observer.unobserve(target);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  
 
   return (
     <div>

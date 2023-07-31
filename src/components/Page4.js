@@ -27,7 +27,7 @@ const Page4 = () => {
       setData([]);
       console.log("pagenumer", pageNumber, "if selectedCategory", selectedCategory, "filterCriteria");
       console.log("sortOn", sortOn, "sortCriteria");
-      const response = await fetch('https://cliptocart.co.in/content?brandId=4&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page=1');
+      const response = await fetch('https://cliptocart.co.in/content?brandId=15&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page=1');
       const json = await response.json();
       setData(json);
       setUpcomingData(json);
@@ -46,7 +46,7 @@ const Page4 = () => {
     const fetchData = async () => {
       try {
         if(pageNumber>1){
-        const response = await fetch('https://cliptocart.co.in/content?brandId=4&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
+        const response = await fetch('https://cliptocart.co.in/content?brandId=15&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
         const json = await response.json();
         console.log("results Page 4", json);
         setData(prevData => [...prevData, ...json]);

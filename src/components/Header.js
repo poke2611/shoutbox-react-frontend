@@ -14,7 +14,7 @@ const Header = () => {
     console.log("header comp", activePage);
     const fetchData = async () => {
       try {
-        const response = await fetch('https://cliptocart.co.in/brand?id=4');
+        const response = await fetch('https://cliptocart.co.in/brand?id=15');
         const json = await response.json();
         console.log("Header", json[0]);
         setID(json[0].id);
@@ -32,8 +32,8 @@ const Header = () => {
         
         <div className='nav-wrap'>
 
-        <NavLink className={'nav-heading'} exact to={`/`}>All Products</NavLink>
-        <NavLink className={'nav-heading'} to={`/videos`}>Videos</NavLink>
+     { /*  <NavLink className={'nav-heading'} exact to={`/`}>All Products</NavLink> */}
+        <NavLink className={'nav-heading'} to={`/`}>Videos</NavLink>
         <NavLink className={'nav-heading'} to={`/styles`}>Styles</NavLink>
       
         </div>

@@ -1,7 +1,8 @@
 .fh-brand-logo{
   /* border-radius: 50%; */
-  width: 65px;
+  width: 50px;
   cursor: pointer;
+  margin: 5px 3px;
 }
 
 .icons-div{
@@ -65,7 +66,7 @@
 
 .brand-desc span{
   text-align: initial !important;
-  font-family: 'Inter';
+  font-family: 'prata',serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -77,38 +78,14 @@
   margin-block-start: 1em;
   color: #101828;
     line-height: 28px;
-    font-family: 'Inter';
+    font-family: 'prata', serif;
     /* font-style: normal; */
     font-weight: 600;
     font-size: 18px;
     line-height: 28px;
 }
 
-.nav-wrap{
-  display: flex;
-}
-.nav-heading{
-  background: #00a9ca;
-  cursor: pointer;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 10px;
-  padding: 4px;
-  margin: auto;
-   text-align: center;
-    
-  font-style: normal;
-  width: 106px;
-  /* height: 29px; */
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 20px;
-}
 
-.nav-heading.active{
-  color: #fff !important;
-  background: #107a8f !important;
-  
-}
+
 
 

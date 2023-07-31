@@ -19,6 +19,10 @@ function ProductVideoPlayer({ videoUrl , fullscreen }) {
 
   return (
     <div className='video-player-wrapper' onClick={handlePlayerClick}>
+
+      {!isPlaying && (
+          <div className='play-button'></div>
+      )}
       <ReactPlayer
         
         url={videoUrl} // Replace with your video URL

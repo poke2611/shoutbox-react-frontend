@@ -10,7 +10,9 @@ const initialState = {
   currentPage: "P",
   selectedCategory: "",
   brandID: "",
-
+  items: [],
+  itemId:"",
+  cartID:""
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -75,27 +77,35 @@ const rootReducer = (state = initialState, action) => {
             sortFlag: action.payload,
           };
 
-        case 'SET_FILTER_FLAG':
-        console.log("SET_FILTER_FLAG",  action.payload );
-        return {
-          ...state,
-          filterFlag: action.payload,
-        };
-
-        case 'SET_SORT_FLAG':
-          console.log("SET_SORT_FLAG",  action.payload );
-          return {
-            ...state,
-            sortFlag: action.payload,
-          };
-
         case 'SET_BRAND_ID':
           console.log("SET_BRAND_ID",  action.payload );
           return {
             ...state,
             brandID: action.payload,
           };
+
+        case 'SET_CART':
+          console.log("SET_CART",  action.payload );
+          return {
+            ...state,
+            items: [...state.sortedProducts, ...action.payload],
+          };
         
+        case 'REMOVE_ITEM':
+          console.log("REMOVE_ITEM",  action.payload );
+          return {
+            ...state,
+            brandID: action.payload,
+          };
+
+        case 'SET_CART_IDENTIFIER':
+          console.log("SET_CART_IDENTIFIER",  action.payload );
+          return {
+            ...state,
+            cartID: action.payload,
+          };
+          
+
         default:
           return state;
   

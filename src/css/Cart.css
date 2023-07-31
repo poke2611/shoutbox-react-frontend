@@ -1,0 +1,42 @@
+.cart{
+    position: fixed;
+    top: 76px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    z-index: 999;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin: auto;
+  
+}
+
+.checkout-btns{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 26px;
+    margin: 12px 6px;
+}
+
+
+.checkout-btns a{
+    background: #00a9ca;
+    color: #fff;
+    padding: 7px;
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    gap: 5px;
+}
+
+@media screen and (min-width: 768px) {
+    
+  .cart{
+  
+    width: 400px;
+    
+  }
+  
+  }
