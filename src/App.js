@@ -43,11 +43,7 @@ function App() {
             </div> 
           </div>
         </div>
-        <div className='cart-wrapper'>
-               <Routes> 
-                  <Route path={`/cart/:cartID`} element={<Cart />} />          
-              </Routes>
-          </div>
+       
       </div>
 
   );

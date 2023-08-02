@@ -33,7 +33,10 @@ const Page3 = (props) => {
      L: 'Large',
      XL: 'Extra_Large'
   };
-  const cartCookie = JSON.parse(Cookies.get('cart'));
+ let cartCookie = Cookies.get('cart');
+ if(cartCookie){
+  cartCookie = JSON.parse(cartCookie);
+ }
   console.log("cartCookie", cartCookie);
   const itemParams = (cartCookie!=undefined && cartCookie.length>0)?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}`).join('&'):'';
   const apiUrl = cartCookie!=undefined && cartCookie.length > 0 ? 'https://theaayna.com/cart/add?'+itemParams+'&note=Powered_By_C2C' : 'https://theaayna.com/cart';
