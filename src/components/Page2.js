@@ -15,11 +15,10 @@ const Page2 = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [upcomingData, setUpcomingData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const popupRef = useRef(null);
 
-  const sortedProducts = useSelector(state => state.sortedProducts);
-  const filteredProducts = useSelector(state => state.filteredProducts);
   const sortFlag = useSelector(state => state.sortFlag);
   const filterFlag = useSelector(state => state.filterFlag);
   const sortOn = useSelector(state => state.sortOn);
@@ -93,11 +92,11 @@ const Page2 = () => {
     setPopupOpen(true);   
   };
 
-  const closePopup = () => {
-   
-    console.log('popup closed clicked!');
-    setPopupOpen(false);
+  const handleVideoReady = () => {
+    console.log("handleVideoReady");
+    setIsLoading(false);
   };
+ 
 
   useEffect(() => {
 
@@ -139,13 +138,16 @@ const Page2 = () => {
   return (
     <div>
        <div className="video-comp">
-          
+
+       {isLoading ? (
+        <div>Loading...</div>
+      ) : (         
             <div>
             {videos.map((vid, index) => (
               <div className='prod-vid-wrap'>
                 <ProdBrandHeader product={vid}/>
                 <div className="video-div">
-                    <ProductVideoPlayer videoUrl={vid.link} fullscreen={false}/>
+                    <ProductVideoPlayer videoUrl={vid.link} fullscreen={false} onReady={handleVideoReady}/>
                 </div>
                 <div className='scrolling-product-wrapper'>
                       <div className='shop-all'>
@@ -180,6 +182,7 @@ const Page2 = () => {
               </div>
               ))}
             </div>
+            )}
           </div>
           { videos.length>19?
 

@@ -63,16 +63,20 @@ const handleCategorySelect = (categoryId) => {
   );
 
   const handleClearAll = () => {
+    dispatch(setFilterFlag(false)); 
     dispatch(setFilterCriteria(""));
     setSelectedCategory("");
-    dispatch(setFilterFlag(false)); 
+   
   };
 
 
   const filterProducts = () => {
     console.log("filterON", selectedCategory);
     dispatch(setFilterCriteria(selectedCategory));
-    dispatch(setFilterFlag(true));
+    if(selectedCategory!=''){
+      dispatch(setFilterFlag(true));
+    }
+   
    
       handlePopup();
     }

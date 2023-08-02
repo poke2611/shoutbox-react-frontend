@@ -35,3 +35,20 @@
     left: 0;
   }
   
+  /* New CSS for the mute button */
+.mute-button {
+  position: absolute;
+    bottom: 11px;
+    left: 41px;
+    background: #ffffffb3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* Style for the mute button when it's clicked */
