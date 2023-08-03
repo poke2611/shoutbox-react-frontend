@@ -14,13 +14,17 @@ const FixedHeader = () => {
  const [data, setData] = useState([]);
  const [activePage, setActivePage] = useState('page1');
  const dispatch = useDispatch();
- const cartCookie = Cookies.get('cart');
+ let cartCookie = Cookies.get('cart');
+ if(cartCookie){
+  cartCookie = JSON.parse(cartCookie);
+ }
  console.log("cartCookie", cartCookie);
- const itemParams = cartCookie && cartCookie.length>0?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}`).join('&'):'';
- const apiUrl = cartCookie && cartCookie.length > 0 ? 'https://theaayna.com/cart/add?'+itemParams+'&note=Powered_By_C2C' : 'https://theaayna.com/cart';
+ const itemParams = (cartCookie!=undefined && cartCookie.length>0)?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}`).join('&'):'';
+ const apiUrl = (cartCookie!=undefined && cartCookie.length>0) ? 'https://theaayna.com/cart/add?'+itemParams+'&note=Powered_By_C2C' : 'https://theaayna.com/cart';
   
   useEffect(() => {
     console.log("header comp", activePage);
+    Cookies.remove('cart');
     const fetchData = async () => {
       try {
         const response = await fetch('https://cliptocart.co.in/brand?id=15');

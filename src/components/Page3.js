@@ -33,14 +33,18 @@ const Page3 = (props) => {
      L: 'Large',
      XL: 'Extra_Large'
   };
-  const cartCookie = Cookies.get('cart');
-  const itemParams = cartCookie && cartCookie.length>0?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}`).join('&'):'';
-  const apiUrl = cartCookie && cartCookie.length > 0 ? 'https://theaayna.com/cart/add?'+itemParams+'&note=Powered_By_C2C' : 'https://theaayna.com/cart';
+ let cartCookie = Cookies.get('cart');
+ if(cartCookie){
+  cartCookie = JSON.parse(cartCookie);
+ }
+  console.log("cartCookie", cartCookie);
+  const itemParams = (cartCookie!=undefined && cartCookie.length>0)?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}`).join('&'):'';
+  const apiUrl = cartCookie!=undefined && cartCookie.length > 0 ? 'https://theaayna.com/cart/add?'+itemParams+'&note=Powered_By_C2C' : 'https://theaayna.com/cart';
 
   useEffect(() => {
 
     getVariantOptions();
-  console.log("productr", props.product);
+    console.log("productr", props.product);
     // Retrieve cart items from the cookie when the product page is loaded
     const existingCartItems = getCartItemsFromCookies();
     setCart(existingCartItems);
@@ -49,35 +53,38 @@ const Page3 = (props) => {
 
   const getVariantOptions = async () => {
     try {
-     const response = await fetch('https://cliptocart.co.in/shopify/product/8424914125111' );
+     const response = await fetch('https://cliptocart.co.in/shopify/product/'+props.product.shopifyProductId );
       const productData = await response.json();
       const variants = productData.product.variants;
       setVariants(variants);
-     
+      if(variants.length==1){
+        setIsAddToCartDisabled(false);
+      }
       // Get the unique sizes and colors from the variants data
       const availableSizes = variants.map((variant) => variant.option1)
         .filter((size, index, self) => self.indexOf(size) === index);
-      const availableColors = variants.map((variant) => variant.option2)
-        .filter((color, index, self) => self.indexOf(color) === index);
-      console.log("availableColors",availableSizes, availableColors);
-      setSize(availableSizes.map((size) => sizeAbbreviations[size]));
+        const availableColors = variants.map((variant) => variant.option2)
+        .filter((color, index, self) => color !== null && self.indexOf(color) === index);
+      console.log("availableColors",availableSizes, availableColors.length);
+      setSize(availableSizes);
       setColors(availableColors);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
-
-  const handleAddToCart = () => {
+  const handleAddToCart = (event) => {
+    event.preventDefault();
     const variantId =  getVariantId();
+    console.log("variantId", variantId);
     const newCartItem = {
       productId: props.product.id,
       variantId: variantId, // Assuming you have a way to get the selected variant ID
       quantity: 1, // You can set the quantity based on user input or any other logic
       addedToCart: true,
     };
-
-   if(cartCookie){
+ 
+   if(cartCookie!= undefined){
     console.log("inside if", cartCookie);
     const existingCartItem = cartCookie.find(
       (item) =>
@@ -135,10 +142,10 @@ const Page3 = (props) => {
   
    }
    else{
-
-    console.log("inside else", cartCookie);
-    cartCookie.push(newCartItem);
-    saveCartToCookieOrState(cartCookie);  
+    let cart=[];
+    console.log("inside else", cart);
+    cart.push(newCartItem);
+    saveCartToCookieOrState(cart);  
 
     const url = "https://cliptocart.co.in/cart";
     const payload = {
@@ -186,7 +193,6 @@ const Page3 = (props) => {
     });
 
    }
-
    setAddedToCart(true);
     
   };
@@ -198,7 +204,14 @@ const Page3 = (props) => {
 
   const handleSizeSelection = (size) => {
     setSelectedSize(size);
-    setIsAddToCartDisabled(!size || !selectedColor);
+    
+    if(colors.length>0){
+      setIsAddToCartDisabled(!size || !selectedColor);
+    }
+    else{
+      setIsAddToCartDisabled(false);
+    }
+    
   };
  
   
@@ -208,15 +221,34 @@ const Page3 = (props) => {
   };
 
   const getVariantId = () => {
-    const selectedVariant = variants.find(
-      (variant) =>
-        variant.option1 === sizeFullforms[selectedSize] && variant.option2 === selectedColor);
+    let selectedVariant ='';
+    if(variants.length === 1){
+      console.log("length =1 ")
+      selectedVariant = variants[0];
+    }
+    else if(selectedSize==''){
+      console.log("selectedSize=='' ");
+      selectedVariant = variants.find(
+        (variant) =>
+        variant.option2 === selectedColor);
+    }
+    else if(selectedColor==''){
+      console.log("selectedColor=='' ");
+      selectedVariant = variants.find(
+        (variant) =>
+        variant.option1 === selectedSize);
+    }
+    else{
+      selectedVariant = variants.find(
+        (variant) =>
+          variant.option1 === selectedSize && variant.option2 === selectedColor);
+    }
+    
     console.log("selectedVariant",selectedVariant);
     return selectedVariant.id;
   };
   
   const saveCartToCookieOrState = (updatedCart) => {
-
     Cookies.set('cart', JSON.stringify(updatedCart), { expires: 7 });
   };
 
@@ -284,26 +316,43 @@ const Page3 = (props) => {
                     <span className='page3-desc-span'>{props.product.description}</span>
                   </div>
                   <div className='partition-line'></div>
-                  <div className='page3-product-desc'>
+                  {
+                    variants.length==1?'':
+                    <div className='page3-product-desc'>
                     <span className='page3-heading'>Select Variant</span>
                     <div className='variant-div'>
-                      <span className='page3-sub-heading'>Size</span>
-                      <div className='size-list'>
-                        {size.map((x)=>
-                        <a className={selectedSize === x ? 'selected' : ''} 
-                           onClick={() => handleSizeSelection(x)}>{x}</a>)}
-                      </div>
-                      <span className='page3-sub-heading'>Color</span>
-                      <div className='color-list'>
-                        {colors.map((x)=>
-                        <a style={{background: ""+x+""}}
-                          className={selectedColor === x ? 'selected' : ''} 
-                          onClick={() => handleColorSelection(x)}></a>)}
-                      </div>
+                    {
+                      size.length>1?
+                      <>
+                          <span className='page3-sub-heading'>Size</span>
+                          <div className='size-list'>
+                              {size.map((x)=>
+                              <a className={selectedSize === x ? 'selected' : ''} 
+                                onClick={() => handleSizeSelection(x)}>{x}</a>)}
+                          </div>
+                          </>:''
+                        
+                      }   
+                      
+                      {
+                        colors.length>1?
+                        <>
+                            <span className='page3-sub-heading'>Color</span>
+                            <div className='color-list'>
+                              {colors.map((x)=>
+                              <a style={{background: ""+x+""}}
+                                className={selectedColor === x ? 'selected' : ''} 
+                                onClick={() => handleColorSelection(x)}></a>)}
+                             </div>
+                          </>:''
+                      }
+                     
                      
                     </div>
                     
                   </div>
+                  }
+                  
                   
                     {/*
                     <div className='page3-material'>
@@ -317,13 +366,13 @@ const Page3 = (props) => {
             <div className='checkout-btn-wrapper'>
             {addedToCart ? (
                 // If added to cart, show "View Cart" link
-                <a href={apiUrl}>
+                <a  className='buy-now' href={apiUrl}>
                   View Cart
                 </a>
               ) : (
                 // If not added to cart, show "Add to Cart" button
                 <a className={`buy-now ${isAddToCartDisabled ? 'disabled' : ''}`} 
-                 disabled={isAddToCartDisabled} onClick={handleAddToCart} >
+                 disabled={isAddToCartDisabled} onClick={(e)=>handleAddToCart(e)} >
                   Add to Cart
                 </a>
               )}
