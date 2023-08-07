@@ -3,15 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../css/Page3.css';
 import { NavLink, useHistory } from 'react-router-dom';
 import { setCartIdentifier } from '../store/actions';
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'
+import Carousel from './Carousel';;
+//import { Carousel } from 'react-responsive-carousel';
 
 
 const Page3 = (props) => {
 
   const cartID = useSelector(state => state.cartID);
   const [cart, setCart] = useState([]);
+  const [images, setImages] = useState([]);
   const [addedToCart, setAddedToCart] = useState(false);
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   const [colors, setColors] = useState([]);
   const [size, setSize] = useState([]);
   const [variants, setVariants] = useState([]);
@@ -41,6 +45,29 @@ const Page3 = (props) => {
   const itemParams = (cartCookie!=undefined && cartCookie.length>0)?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}`).join('&'):'';
   const apiUrl = cartCookie!=undefined && cartCookie.length > 0 ? 'https://theaayna.com/cart/add?'+itemParams+'&note=Powered_By_C2C' : 'https://theaayna.com/cart';
 
+
+  useEffect(() => {
+    console.log("api call");
+    const fetchData = async () => {
+      try {
+          const response = await fetch('https://cliptocart.co.in/content?productId='+props.product.id);
+          const json = await response.json();
+          console.log("page 3", json);
+          const imgs= json.filter(prod=> prod.type=='P').map(prod=> prod.link);
+          console.log("imgs",imgs );
+          setImages(imgs);
+          setIsLoading(false);
+
+         
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+    
+  }, []);
+
   useEffect(() => {
 
     getVariantOptions();
@@ -56,6 +83,9 @@ const Page3 = (props) => {
      const response = await fetch('https://cliptocart.co.in/shopify/product/'+props.product.shopifyProductId );
       const productData = await response.json();
       const variants = productData.product.variants;
+      console.log(productData.product.images.length,"productData.product.images",productData.product.images);
+
+      
       setVariants(variants);
       if(variants.length==1){
         setIsAddToCartDisabled(false);
@@ -253,14 +283,21 @@ const Page3 = (props) => {
   };
 
   return (
+
     <div className="page3-comp"> 
+            <a className='close-popup-btn' onClick={props.onClose}>x</a>
             <div className='prod-other-img'>
-                <div>
-                      <img src={props.product.imageUrl} className='page3-prod-img'/>
-                </div>
-                <div>
-                    <img src={props.product.imageUrl} className='page3-prod-img'/>
-                </div>
+              
+              <Carousel images={images} />
+                {/*<Carousel showThumbs={false} showIndicators={images.length > 1}>
+                    {
+                      images.map((image, index) => (
+                        <div key={index}>
+                          <img src={image.src} alt={image.handle} />
+                        </div>
+                      ))
+                    }
+                  </Carousel> */}
             </div>
             <div className='page3-prod-info'>
                 <div className='page3-brand-name'>{props.product.brandName}</div>

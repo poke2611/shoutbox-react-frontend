@@ -132,8 +132,7 @@ const Page4 = () => {
                       <div className='scp-all-wrapper'>
                       {product.products.map((prod, index) => (
                           <div className='scp-wrapper' onClick={()=>{setProduct(prod); showPopup()}}>
-                              <div className='scp-image-div' style={{ backgroundImage: `url(${prod.imageUrl})`}}>
-                              </div>
+                               <img className='scp-image-div' src={prod.imageUrl} height={30}  />
                               <div className='scp-desc'>
                                   <div className='scp-brand-name'><span>{(prod.title).toUpperCase()}</span></div>
                                   <div className='scp-price'><span className='actual-price' >{prod.initialPrice != null ? (
