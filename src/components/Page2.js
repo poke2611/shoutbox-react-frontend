@@ -133,7 +133,7 @@ const Page2 = () => {
     return () => {
       observer.unobserve(target);
     };
-  }, [pageNumber]);
+  }, []);
 
   useEffect(() => {
      
