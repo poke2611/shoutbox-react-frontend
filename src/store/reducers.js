@@ -1,4 +1,5 @@
 const initialState = {
+  iconColor:'#393434',
   brandID:'15',
   isPopupOpen: false,
   filterFlag: false,

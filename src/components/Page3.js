@@ -4,7 +4,8 @@ import '../css/Page3.css';
 import { NavLink, useHistory } from 'react-router-dom';
 import { setCartIdentifier } from '../store/actions';
 import Cookies from 'js-cookie'
-import Carousel from './Carousel';;
+import Carousel from './Carousel';
+import bag from '../images/foot-Bag.png';
 //import { Carousel } from 'react-responsive-carousel';
 
 
@@ -43,8 +44,8 @@ const Page3 = (props) => {
  }
   console.log("cartCookie", cartCookie);
   const itemParams = (cartCookie!=undefined && cartCookie.length>0)?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}&items[][properties][POWERED_BY]=C2C`).join('&'):'';
-  const apiUrl = cartCookie!=undefined && cartCookie.length > 0 ? 'https://theaayna.com/cart/add?'+itemParams+'&note=Powered_By_C2C' : 'https://theaayna.com/cart';
-  https://kamikubi.com/cart/add?items[][id]=42841423184061&items[][quantity]=1&items[][properties][POWERED_BY]=C2C&items[][id]=42841422659773&items[][quantity]=3&items[][properties][POWERED_BY]=C2C
+  const apiUrl = cartCookie!=undefined && cartCookie.length > 0 ? 'https://theaayna.com/cart/add?'+itemParams : 'https://theaayna.com/cart';
+  
 
   useEffect(() => {
     console.log("api call");
@@ -285,7 +286,7 @@ const Page3 = (props) => {
   return (
 
     <div className="page3-comp"> 
-            <a className='close-popup-btn' onClick={props.onClose}>x</a>
+            
             <div className='prod-other-img'>
               
               <Carousel images={images} />
@@ -409,12 +410,14 @@ const Page3 = (props) => {
               ) : (
                 // If not added to cart, show "Add to Cart" button
                 <a className={`buy-now ${isAddToCartDisabled ? 'disabled' : ''}`} 
-                 disabled={isAddToCartDisabled} onClick={(e)=>handleAddToCart(e)} >
+                 disabled={isAddToCartDisabled} onClick={(e)=>isAddToCartDisabled?'':handleAddToCart(e)} >
                   Add to Cart
                 </a>
+                
               )}
 
               <a className='buy-now' href='https://kamikubi.com/cart/add?id=42841423184061&quantity=1'>Buy Now</a>
+              <a className='cart-count' onClick={cartCookie ? console.log("cartCookie.length",cartCookie.length):console.log("cartCookie not there",0)}  data-count={cartCookie ? cartCookie.length : 0}><img src={bag} height={20} width={20} /></a>
             </div>
             {/*<a className='buy-now' href={props.product.productUrl}>Buy Now</a> */}
         

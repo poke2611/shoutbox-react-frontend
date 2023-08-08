@@ -237,6 +237,7 @@ const Page2 = () => {
           {isPopupOpen && (
             <div className="popup">
               <div className="popup-content" ref={popupRef}>
+              <div className='close-popup-btn'><a className='' onClick={closePopup}>x</a></div>
                 <Page3 product={product} onClose={closePopup}/>
               </div>
             </div>

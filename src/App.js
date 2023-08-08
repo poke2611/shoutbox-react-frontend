@@ -34,13 +34,13 @@ function App() {
                   <Routes>
                    
                     <Route path={`/`} element={<Page2 />} />
+                    <Route path={`/styles`} element={<Page4 />} />
+                    <Route path={`/`} element={<Page2 />} />
                     <Route path={`/styles`} element={<Page4 />} />   
                            
                   </Routes>
             </div>
-            <div>
-              <Footer />
-            </div> 
+            
           </div>
         </div>
        

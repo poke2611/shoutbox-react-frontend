@@ -3,29 +3,25 @@ import '../css/Header.css';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBrandId } from '../store/actions';
+import sort from '../images/sort.png';
+import filter from '../images/filter.png';
+import SortPopup from './SortPopup';
+import FilterPopup from './FilterPopup';
 
 const Header = () => {
 
- const [id, setID] = useState([]);
- const [activePage, setActivePage] = useState('page1');
+ const [isPopupOpen, setPopupOpen] = useState(false);
+ const [isFilterPopupOpen, setFilterPopupOpen] = useState(false);
  const dispatch = useDispatch();
-  
-  useEffect(() => {
-    console.log("header comp", activePage);
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://cliptocart.co.in/brand?id=15');
-        const json = await response.json();
-        console.log("Header", json[0]);
-        setID(json[0].id);
-        setBrandId(json[0].id);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
 
-    fetchData();
-  }, []);
+  const handlePopupToggle = () => {
+    setPopupOpen(!isPopupOpen);
+  };
+
+  const handleFilterPopup = () => {
+    setFilterPopupOpen(!isFilterPopupOpen);
+  //  dispatch(togglePopup(!isPopupOpen));
+  };
 
   return (
     <div className="header-wrapper">
@@ -33,10 +29,18 @@ const Header = () => {
         <div className='nav-wrap'>
 
      { /*  <NavLink className={'nav-heading'} exact to={`/`}>All Products</NavLink> */}
-        <NavLink className={'nav-heading'} to={`/`}>Videos</NavLink>
-        <NavLink className={'nav-heading'} to={`/styles`}>Styles</NavLink>
-      
+          <NavLink className={'nav-heading'} to={`/`}>Videos</NavLink>
+          <NavLink className={'nav-heading'} to={`/styles`}>Styles</NavLink>
+          <a className={'sort-icon'} onClick={handlePopupToggle}><img src={sort} width={20} height={20}/></a>
+          <a className={'filter-icon'} onClick={handleFilterPopup}><img src={filter} width={20} height={20}/></a>
         </div>
+
+        {isPopupOpen && (
+            <SortPopup handlePopup={handlePopupToggle}/>
+          )}
+      {isFilterPopupOpen && (
+            <FilterPopup handlePopup={handleFilterPopup}/>
+          )}
     </div>
   );
 }

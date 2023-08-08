@@ -11,9 +11,14 @@ const FilterPopup = ({ handlePopup }) => {
   const brandID = useSelector(state => state.brandID);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(categorySelected);
-  const [selectAll, setSelectAll] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState("Categories");
+  const priceRangeOptions = ["Under 999", "Under 1499", "Under 1999"];
+  const [creatorOptions, setCreatorOptions] = useState(["Creator 1", "Creator 2", "Creator 3"]);
+  const contentTypeOptions = ["Creator Looks", "In Depth Reviews", "How to Style"];
+  const [selectedPriceRange, setSelectedPriceRange] = useState("");
+  const [selectedCreator, setSelectedCreator] = useState("");
+  const [selectedContentType, setSelectedContentType] = useState("");
 
 
   useEffect(() => {
@@ -79,10 +84,20 @@ const handleCategorySelect = (categoryId) => {
     if(selectedCategory!=''){
       dispatch(setFilterFlag(true));
     }
-   
-   
       handlePopup();
     }
+
+    const handlePriceRangeSelect = (option) => {
+      setSelectedPriceRange(option);
+    };
+  
+    const handleCreatorSelect = (option) => {
+      setSelectedCreator(option);
+    };
+  
+    const handleContentTypeSelect = (option) => {
+      setSelectedContentType(option);
+    };
 
     return (
       <div className="filter-popup">
@@ -112,23 +127,50 @@ const handleCategorySelect = (categoryId) => {
                 
                 ))
               )}
-            {activeTab === "Price Range" && (
+             {activeTab === "Price Range" && (
               <div className="price-range-content">
-                 
+                {priceRangeOptions.map(option => (
+                  <div
+                    key={option}
+                    className={`category-item ${selectedPriceRange === option ? 'selected' : ''}`}
+                    onClick={() => handlePriceRangeSelect(option)}
+                  >
+                    {selectedPriceRange === option ? <span className="tick selected">&#10003;</span> : <span className="tick" />}
+                    {option}
+                  </div>
+                ))}
               </div>
             )}
                
-           {activeTab === "Creator" && (
+            {activeTab === "Creator" && (
               <div className="creator-content">
-                {/* Render price range content */}
+                {creatorOptions.map(option => (
+                  <div
+                    key={option}
+                    className={`category-item ${selectedCreator === option ? 'selected' : ''}`}
+                    onClick={() => handleCreatorSelect(option)}
+                  >
+                    {selectedCreator === option ? <span className="tick selected">&#10003;</span> : <span className="tick" />}
+                    {option}
+                  </div>
+                ))}
               </div>
-           )}
+            )}
 
-          {activeTab === "Content Type" && (
-              <div className="content-type-div">
-                {/* Render price range content */}
-              </div>
-          )}
+            {activeTab === "Content Type" && (
+                <div className="content-type-div">
+                  {contentTypeOptions.map(option => (
+                    <div
+                      key={option}
+                      className={`category-item ${selectedContentType === option ? 'selected' : ''}`}
+                      onClick={() => handleContentTypeSelect(option)}
+                    >
+                      {selectedContentType === option ? <span className="tick selected">&#10003;</span> : <span className="tick" />}
+                      {option}
+                    </div>
+                  ))}
+                </div>
+             )}
 
              {/*
              <div className="search-bar">
