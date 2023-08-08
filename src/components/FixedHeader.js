@@ -19,9 +19,9 @@ const FixedHeader = () => {
   cartCookie = JSON.parse(cartCookie);
  }
  console.log("cartCookie", cartCookie);
- const itemParams = (cartCookie!=undefined && cartCookie.length>0)?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}`).join('&'):'';
- const apiUrl = (cartCookie!=undefined && cartCookie.length>0) ? 'https://theaayna.com/cart/add?'+itemParams+'&note=Powered_By_C2C' : 'https://theaayna.com/cart';
-  
+ const itemParams = (cartCookie!=undefined && cartCookie.length>0)?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}&items[][properties][POWERED_BY]=C2C`).join('&'):'';
+  const apiUrl = cartCookie!=undefined && cartCookie.length > 0 ? 'https://theaayna.com/cart/add?'+itemParams : 'https://theaayna.com/cart';
+    
   useEffect(() => {
     console.log("header comp", activePage);
     Cookies.remove('cart');

@@ -3,7 +3,7 @@
  /* display: flex;
   position: relative;
   justify-content: center; */
-  color: #646464;
+  color: #222222;
   flex-direction: column;
     font-family: "Source Sans Pro", sans-serif;;
     max-height: 100vh;
@@ -42,7 +42,7 @@
     flex-direction: column;
     gap: 5px;
     overflow: auto;
-    max-height: 93vh;
+    max-height: 100vh;
     width: 100%; 
 }
 

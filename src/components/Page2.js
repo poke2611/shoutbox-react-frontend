@@ -183,7 +183,7 @@ const Page2 = () => {
               <div className='prod-vid-wrap'>
                 <ProdBrandHeader creator={vid.creator}/>
                 <div className="video-div">
-                    <ProductVideoPlayer videoUrl={vid.link} fullscreen={false} onReady={handleVideoReady}/>
+                    <ProductVideoPlayer videoUrl={vid.link} fullscreen={false} onReady={handleVideoReady} prodImg={vid.products[0].imageUrl}/>
                 </div>
                 <div className='scrolling-product-wrapper'>
                       <div className='shop-all' onClick={()=> toggleCatalog(vid)}>
@@ -237,6 +237,7 @@ const Page2 = () => {
           {isPopupOpen && (
             <div className="popup">
               <div className="popup-content" ref={popupRef}>
+              <div className='close-popup-btn'><a className='' onClick={closePopup}>x</a></div>
                 <Page3 product={product} onClose={closePopup}/>
               </div>
             </div>

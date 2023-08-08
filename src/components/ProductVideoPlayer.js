@@ -8,7 +8,7 @@ import mute from '../images/mute.png';
 import sound from '../images/speaker.png';
 
 
-function ProductVideoPlayer({ videoUrl , fullscreen, onReady }) {
+function ProductVideoPlayer({ videoUrl , fullscreen, onReady, prodImg}) {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -33,6 +33,7 @@ function ProductVideoPlayer({ videoUrl , fullscreen, onReady }) {
   const handleScroll = () => {
     // Get the current scroll position
     console.log("handleScroll")
+    
     const scrollY = window.scrollY;
     // Pause the video when scrolling up
     if (scrollY > 0 && isPlaying) {
@@ -76,6 +77,13 @@ function ProductVideoPlayer({ videoUrl , fullscreen, onReady }) {
         playsinline
         loop = {true}
         muted={muteFlag}
+        config={{
+          file: {
+            attributes: {
+              poster: prodImg
+            }
+          }
+        }}
       />
       <a className={`mute-button`} onClick={(e)=>handleMuteToggle(e)}>
         {muteFlag ? <img src={mute} width={25} height={25}/> : <img src={sound} width={25} height={25}/>}
