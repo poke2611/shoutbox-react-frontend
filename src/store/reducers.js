@@ -1,4 +1,5 @@
 const initialState = {
+  brandID:'15',
   isPopupOpen: false,
   filterFlag: false,
   allProducts: [],
@@ -9,7 +10,6 @@ const initialState = {
   sortOn: "lowToHigh",
   currentPage: "P",
   selectedCategory: "",
-  brandID: "",
   items: [],
   itemId:"",
   cartID:"",

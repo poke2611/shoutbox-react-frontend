@@ -15,11 +15,12 @@ const Page2 = () => {
   const [videos, setVideos] = useState([]);
   const [video, setVideo] = useState([]);
   const [product, setProduct] = useState({});
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(0);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isCatOpen, setCatOpen] = useState(false);
   const [upcomingData, setUpcomingData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const brandID = useSelector(state => state.brandID);
 
   const popupRef = useRef(null);
   const catRef = useRef(null);
@@ -36,12 +37,13 @@ const Page2 = () => {
       setPageNumber(1);
       setVideos([]);
       console.log("pagenumer", pageNumber, "if selectedCategory", selectedCategory);
-      console.log("sortOn", sortOn);
-      const response = await fetch('https://cliptocart.co.in/content?brandId=15&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page=1');
+      console.log("brandID", brandID);
+      const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page=1');
       const json = await response.json();
       setVideos(json);
       setUpcomingData(json);
-      
+      setIsLoading(false);
+      console.log("setIsLoading(false);");
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -54,10 +56,11 @@ const Page2 = () => {
  
   
   useEffect(() => {
-
+/*
     const fetchData = async () => {
       try {
         if(pageNumber>1){
+          console.log("pageNumber", pageNumber);
           const response = await fetch('https://cliptocart.co.in/content?brandId=15&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
           const json = await response.json();
           console.log("results Page videos", json);
@@ -70,7 +73,7 @@ const Page2 = () => {
     };
 
     fetchData();
-
+ */
   }, [pageNumber]);
 
 
@@ -95,7 +98,7 @@ const Page2 = () => {
   };
 
   const toggleCatalog = (vid) => {
-    console.log('Div clicked!', vid);
+    console.log('Div toggleCatalogclicked!', vid);
     setVideo(vid);
     setCatOpen(!isCatOpen);   
   };
@@ -111,7 +114,8 @@ const Page2 = () => {
  
 
   useEffect(() => {
-
+    console.log("prevPageNumber", pageNumber);
+    
      const handleIntersection = (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -119,7 +123,7 @@ const Page2 = () => {
         }
       });
     };
-
+    console.log("current", pageNumber);
     const options = {
       root: null,
       rootMargin: '0px',
@@ -148,6 +152,23 @@ const Page2 = () => {
      document.removeEventListener('mousedown', handleClickOutside);
    };
  }, []);
+
+ const getMoreData = async () => {
+  
+    try {
+      if(pageNumber>1){
+        console.log("pageNumber", pageNumber);
+        const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
+        const json = await response.json();
+        console.log("results Page videos", json);
+        setVideos(prevData => [...prevData, ...json]);
+        setUpcomingData(json);
+        
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+ }
   
 
   return (
@@ -202,18 +223,17 @@ const Page2 = () => {
             </div>
             )}
           </div>
-          { videos.length>19?
-
-              (
-                upcomingData.length>0 ?
-                    <div className='loadmore-div'>
-                        <a>Load More...</a>
-                    </div>:<div className='loadmore-div'></div>
-                    ):
-                    <div className='loadmore-div'>
-                        
+          { 
+          videos.length>0?
+            (
+              upcomingData.length>0 ?
+                  <div className='loadmore-div'>
+                      <a onClick={getMoreData}>Load More...</a>
+                  </div>:<div className='loadmore-div'></div>
+              ):
+                    <div className='loadmore-div'>                        
                     </div>
-              }
+          }
           {isPopupOpen && (
             <div className="popup">
               <div className="popup-content" ref={popupRef}>
@@ -224,12 +244,11 @@ const Page2 = () => {
 
           {isCatOpen && (
             <div className="popup">
-              <div className="popup-content" ref={catRef}>
-                <Catalog video={video} onClose={closePopup}/>
+              <div className="cat-popup-content" ref={catRef}>
+                <Catalog video={video} onClose={toggleCatalog}/>
               </div>
             </div>
           )}
-          
     </div>
   );
 }

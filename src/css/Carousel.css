@@ -1,20 +1,16 @@
-/* Carousel.css */
 
-/* Container for the carousel */
 .carousel-wrapper {
     width: 100%;
     margin: 0 auto;
   }
   
-  /* Style for each carousel slide */
+  
   .carousel-slide {
     display: flex;
-    justify-content: center; /* Center the image horizontally */
-    align-items: center; /* Center the image vertically */
-   /*  height: 300px; Adjust the height of the carousel slide as per your requirement */
+    justify-content: center; 
+    align-items: center; 
   }
-  
-  /* Style for the carousel image */
+ 
   .carousel-slide img {
     max-width: 100%;
     max-height: 100%;

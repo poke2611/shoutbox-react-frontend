@@ -32,7 +32,9 @@ const Catalog = (props) => {
   return (
     <div className="product-catalog-wrapper"> 
         <div className='prods-div'>
-            <div className='catalog-heading'><span>Products in Videos</span></div>
+            <div className='catalog-heading'>
+                <span>Products in Videos</span>
+                <a className={"close-catalog-btn"} onClick={props.onClose}>x</a></div>
             <div className='prods-scroll-div'>
              
               {  video.products.map((prod)=> (
@@ -43,11 +45,13 @@ const Catalog = (props) => {
                 
             </div>
         </div>
-        <div className='sim-prods-div'>
-            <div className='catalog-heading'><span>Similar Products</span></div>
-            <div className='sim-prods-scroll-div'></div>
-        </div>
-
+        {  
+         video.similarProducts!=null&&video.similarProducts.length>0?
+                <div className='sim-prods-div'>
+                    <div className='catalog-heading'><span>Similar Products</span></div>
+                    <div className='sim-prods-scroll-div'></div>
+                </div>:''
+        }   
         {isPopupOpen && (
             <div className="popup">
               <div className="popup-content" ref={popupRef}>

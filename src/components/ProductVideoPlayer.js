@@ -75,7 +75,6 @@ function ProductVideoPlayer({ videoUrl , fullscreen, onReady }) {
         height={fullscreen ? '80%' : 'auto'}
         playsinline
         loop = {true}
-        loading="lazy"
         muted={muteFlag}
       />
       <a className={`mute-button`} onClick={(e)=>handleMuteToggle(e)}>

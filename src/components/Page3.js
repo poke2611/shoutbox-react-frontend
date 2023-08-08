@@ -42,9 +42,9 @@ const Page3 = (props) => {
   cartCookie = JSON.parse(cartCookie);
  }
   console.log("cartCookie", cartCookie);
-  const itemParams = (cartCookie!=undefined && cartCookie.length>0)?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}`).join('&'):'';
+  const itemParams = (cartCookie!=undefined && cartCookie.length>0)?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}&items[][properties][POWERED_BY]=C2C`).join('&'):'';
   const apiUrl = cartCookie!=undefined && cartCookie.length > 0 ? 'https://theaayna.com/cart/add?'+itemParams+'&note=Powered_By_C2C' : 'https://theaayna.com/cart';
-
+  https://kamikubi.com/cart/add?items[][id]=42841423184061&items[][quantity]=1&items[][properties][POWERED_BY]=C2C&items[][id]=42841422659773&items[][quantity]=3&items[][properties][POWERED_BY]=C2C
 
   useEffect(() => {
     console.log("api call");
