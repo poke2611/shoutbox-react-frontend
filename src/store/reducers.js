@@ -1,4 +1,5 @@
 const initialState = {
+  brandID:'15',
   isPopupOpen: false,
   filterFlag: false,
   allProducts: [],
@@ -9,10 +10,10 @@ const initialState = {
   sortOn: "lowToHigh",
   currentPage: "P",
   selectedCategory: "",
-  brandID: "",
   items: [],
   itemId:"",
-  cartID:""
+  cartID:"",
+  muteFlag: false
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -75,6 +76,13 @@ const rootReducer = (state = initialState, action) => {
           return {
             ...state,
             sortFlag: action.payload,
+          };
+
+          case 'SET_MUTE_FLAG':
+          console.log("MUTE_FLAG",  action.payload );
+          return {
+            ...state,
+            muteFlag: action.payload,
           };
 
         case 'SET_BRAND_ID':

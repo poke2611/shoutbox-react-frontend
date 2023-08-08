@@ -48,6 +48,13 @@ export const togglePopup = (isOpen) => {
     };
   };
 
+  export const setMuteFlag = (flag) => {
+    return {
+      type: 'SET_MUTE_FLAG',
+      payload: flag,
+    };
+  };
+
   export const setBrandId = (id) => {
     return {
       type: 'SET_BRAND_ID',

@@ -190,3 +190,10 @@ font-size: 13px;
 .color-list a.selected {
   border: 2px solid #6bb2ff;
 }
+
+.close-popup-btn{
+    text-align: right;
+    margin-right: 10px;
+    font-weight: 500;
+    font-size: 16px;
+}

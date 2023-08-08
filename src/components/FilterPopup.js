@@ -8,15 +8,18 @@ const FilterPopup = ({ handlePopup }) => {
 
   const dispatch = useDispatch();
   const categorySelected = useSelector(state => state.selectedCategory);
+  const brandID = useSelector(state => state.brandID);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(categorySelected);
   const [selectAll, setSelectAll] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState("Categories");
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://cliptocart.co.in/category?brandId=4');
+        const response = await fetch('https://cliptocart.co.in/category?brandId='+brandID);
         const json = await response.json();
         console.log("results filter", json.categories);
         setCategories(json.categories);
@@ -90,19 +93,42 @@ const handleCategorySelect = (categoryId) => {
           </div>
           <div className='filter-section-wrapper'>
             <div className="filter-section-categories">
-                <ul>
-                    <li className="active">Categories</li>
-                </ul>
+            <ul>
+                <li className={activeTab === "Categories" ? "active" : ""} onClick={() => setActiveTab("Categories")}>Categories</li>
+                <li className={activeTab === "Price Range" ? "active" : ""} onClick={() => setActiveTab("Price Range")}>Price Range</li>
+                <li className={activeTab === "Creator" ? "active" : ""} onClick={() => setActiveTab("Creator")}>Creator</li>
+                <li className={activeTab === "Content Type" ? "active" : ""} onClick={() => setActiveTab("Content Type")}>Content Type</li>
+            </ul>
+
             </div>
             <div className="filter-section">
-                
-                {filteredCategories.map((cat) => (
+
+            {activeTab === "Categories" && (
+                 filteredCategories.map((cat) => (
                   <div key={cat.id} className={`category-item ${selectedCategory === cat.id ? 'selected' : ''}`} onClick={() => handleCategorySelect(cat.id)}>
                     {selectedCategory === cat.id ? <span className="tick selected">&#10003;</span> : <span className="tick" />}
                     {cat.categoryName}
                   </div>
                 
-                ))}
+                ))
+              )}
+            {activeTab === "Price Range" && (
+              <div className="price-range-content">
+                 
+              </div>
+            )}
+               
+           {activeTab === "Creator" && (
+              <div className="creator-content">
+                {/* Render price range content */}
+              </div>
+           )}
+
+          {activeTab === "Content Type" && (
+              <div className="content-type-div">
+                {/* Render price range content */}
+              </div>
+          )}
 
              {/*
              <div className="search-bar">

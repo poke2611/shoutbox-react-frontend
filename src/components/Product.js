@@ -4,18 +4,19 @@ import '../css/Product.css';
 import { RiHeartLine, RiHeartFill } from 'react-icons/ri';
 
 
-const Product = (props) => {
+const Product = (prod) => {
   
   const [isClicked, setIsClicked] = useState(false);
-
+  const product = prod.product;
   const handleIconClick = (event) => {
+    console.log("product.brandName", product);
     event.stopPropagation();
     setIsClicked(!isClicked);
   };
 
   useEffect(() => {
     // Effect logic here
-    console.log('Component mounted',props.product.products[0].brandName);
+    console.log('Component mounted',product.brandName);
     // Cleanup function
     
   }, [])
@@ -31,13 +32,13 @@ const Product = (props) => {
     <div className="product-wrapper">
        <div className='prod-img'>
           <a>
-            <div className='imageContainer' style={{ backgroundImage: `url(${props.product.products[0].imageUrl})`}}> 
+            <div className='imageContainer' style={{ backgroundImage: `url(${product.imageUrl})`}}> 
             </div>
           </a>
        </div>
        
        <div className='prod-desc'>
-            <a className='prod-name'>{props.product.products[0].brandName}</a> 
+            <a className='prod-name'>{product.brandName}</a> 
             
             {isClicked ? (
                 <RiHeartFill style={iconStyle} onClick={handleIconClick} />
@@ -45,14 +46,14 @@ const Product = (props) => {
                 <RiHeartLine style={iconStyle} onClick={handleIconClick} />
             )}     
             
-            <span className='prod-metadata'>{(props.product.products[0].title).toUpperCase()}</span>
-            <div className='price-info'><span className='actual-price' >{props.product.products[0].initialPrice != null ? (
-                            <>&#x20B9;{props.product.products[0].initialPrice}</>
+            <span className='prod-metadata'>{product.title}</span>
+            <div className='price-info'><span className='actual-price' >{product.initialPrice != null ? (
+                            <>&#x20B9;{product.initialPrice}</>
                           ) : (
                             ''
                           )}</span>
-                        <span className='selling-price' > &#x20B9;{props.product.products[0].finalPrice}</span>
-                        <span className='dis-per'>{" "}{props.product.products[0].discountPercentage}</span>
+                        <span className='selling-price' > &#x20B9;{product.finalPrice}</span>
+                        <span className='dis-per'>{" "}{product.discountPercentage}</span>
             </div>
        </div>
        
