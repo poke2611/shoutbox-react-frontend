@@ -49,6 +49,8 @@ const Page2 = () => {
     }
   };
 
+  
+
   useEffect(() => {
     fetchInitialData();
     window.scrollTo({ top: 0, behavior: 'smooth' });

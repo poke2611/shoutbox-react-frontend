@@ -132,13 +132,13 @@ font-size: 13px;
     background: #555555;
     padding: 6px 0px;
     font-weight: 500;
-    
+    border-radius: 10px;
     text-decoration: none;
     text-align: center;
 }
 
 .disabled{
-    background: #2e260170 !important;
+    background: #5555558c !important;
 }
 .checkout-btn-wrapper{
     display: flex;

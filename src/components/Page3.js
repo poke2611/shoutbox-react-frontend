@@ -16,21 +16,19 @@ const Page3 = (props) => {
   const [images, setImages] = useState([]);
   const [addedToCart, setAddedToCart] = useState(false);
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
   const [colors, setColors] = useState([]);
   const [size, setSize] = useState([]);
   const [variants, setVariants] = useState([]);
+  const [selctedVariant, setSelectedVariant] = useState('');
+  const [varId, setVariantId] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [isAddToCartDisabled, setIsAddToCartDisabled] = useState(true);
-  const sizeAbbreviations = {
-    Extra_Small: 'XS',
-    Small: 'S',
-    Medium: 'M',
-    Large: 'L',
-    Extra_Large:'XL'
-    // Add other size mappings here
-  };
+  const [selectedVariantPrices, setSelectedVariantPrices] = useState({
+    actualPrice: props.product.initialPrice,
+    sellingPrice: props.product.finalPrice,
+  });
+  
   const sizeFullforms = {
      XS: 'Extra_Small',
      S: 'Small',
@@ -46,6 +44,17 @@ const Page3 = (props) => {
   const itemParams = (cartCookie!=undefined && cartCookie.length>0)?cartCookie.map((item) => `items[][id]=${item.variantId}&items[][quantity]=${item.quantity}&items[][properties][POWERED_BY]=C2C`).join('&'):'';
   const apiUrl = cartCookie!=undefined && cartCookie.length > 0 ? 'https://theaayna.com/cart/add?'+itemParams : 'https://theaayna.com/cart';
   
+  const getVariantPrices = (selectedVariant) => {
+    console.log("getVariantPrices",selectedVariant );
+    if (selectedVariant) {
+      return {
+        actualPrice: selectedVariant.compare_at_price ,
+        sellingPrice: selectedVariant.price,
+      };
+    }
+  
+    return selectedVariantPrices;
+  };
 
   useEffect(() => {
     console.log("api call");
@@ -57,7 +66,7 @@ const Page3 = (props) => {
           const imgs= json.filter(prod=> prod.type=='P').map(prod=> prod.link);
           console.log("imgs",imgs );
           setImages(imgs);
-          setIsLoading(false);
+          
 
          
       } catch (error) {
@@ -106,7 +115,12 @@ const Page3 = (props) => {
 
   const handleAddToCart = (event) => {
     event.preventDefault();
-    const variantId =  getVariantId();
+    let variantId= varId;
+   if(varId==''){
+     variantId =  getVariantId();
+   }
+    
+  console.log("cartCookie", cartCookie);
     console.log("variantId", variantId);
     const newCartItem = {
       productId: props.product.id,
@@ -224,7 +238,6 @@ const Page3 = (props) => {
     });
 
    }
-   setAddedToCart(true);
     
   };
 
@@ -235,47 +248,49 @@ const Page3 = (props) => {
 
   const handleSizeSelection = (size) => {
     setSelectedSize(size);
-    
+   
     if(colors.length>0){
       setIsAddToCartDisabled(!size || !selectedColor);
     }
     else{
       setIsAddToCartDisabled(false);
     }
-    
+    setVariantId(getVariantId(size,selectedColor));
   };
  
   
   const handleColorSelection = (color) => {
     setSelectedColor(color);
+    setVariantId(getVariantId(color,selectedSize))
     setIsAddToCartDisabled(!selectedSize || !color);
   };
 
-  const getVariantId = () => {
+  const getVariantId = (size, color) => {
     let selectedVariant ='';
     if(variants.length === 1){
       console.log("length =1 ")
       selectedVariant = variants[0];
     }
-    else if(selectedSize==''){
-      console.log("selectedSize=='' ");
+    else if(size==''){
+      console.log("selectedSize=='' ",size );
       selectedVariant = variants.find(
         (variant) =>
-        variant.option2 === selectedColor);
+        variant.option2 === color);
     }
-    else if(selectedColor==''){
-      console.log("selectedColor=='' ");
+    else if(color==''){
+      console.log("selectedColor=='' ",selectedSize,);
       selectedVariant = variants.find(
         (variant) =>
-        variant.option1 === selectedSize);
+        variant.option1 === size);
     }
     else{
       selectedVariant = variants.find(
         (variant) =>
-          variant.option1 === selectedSize && variant.option2 === selectedColor);
+          variant.option1 === size && variant.option2 === color);
     }
-    
-    console.log("selectedVariant",selectedVariant);
+    setSelectedVariant(selectedVariant);
+    setSelectedVariantPrices(getVariantPrices(selectedVariant));
+    console.log("selectedVariant",selectedVariant,"prices", getVariantPrices(selectedVariant) );
     return selectedVariant.id;
   };
   
@@ -305,12 +320,12 @@ const Page3 = (props) => {
                 <div className='page3-prod-detail'>{props.product.title}</div>
                 {/* <div className='page3-rating'>4</div> */}
                 <div className='partition-line'></div>
-                <div className='page3-price-info'><span className='page3-actual-price' >{props.product.initialPrice != null ? (
-                        <>&#x20B9;{props.product.initialPrice}</>
+                <div className='page3-price-info'><span className='page3-actual-price' >{selectedVariantPrices.actualPrice != null ? (
+                        <>&#x20B9;{selectedVariantPrices.actualPrice}</>
                       ) : (
                         ''
                       )}</span>
-                    <span className='page3-selling-price' > &#x20B9;{props.product.finalPrice}</span>
+                    <span className='page3-selling-price' > &#x20B9;{selectedVariantPrices.sellingPrice}</span>
                     <span className='page3-dis-per'>{" "}{props.product.discountPercentage}</span>
                 </div>
                 <div className='taxes'>Inclusive of all taxes</div>
@@ -402,22 +417,12 @@ const Page3 = (props) => {
                 
             </div>
             <div className='checkout-btn-wrapper'>
-            {addedToCart ? (
-                // If added to cart, show "View Cart" link
-                <a  className='buy-now' href={apiUrl}>
-                  View Cart
-                </a>
-              ) : (
-                // If not added to cart, show "Add to Cart" button
-                <a className={`buy-now ${isAddToCartDisabled ? 'disabled' : ''}`} 
+              <a className='buy-now' href={'https://theaayna.com/cart/add?id='+varId+'&quantity=1'}>Buy Now</a>
+              <a className={`buy-now ${isAddToCartDisabled ? 'disabled' : ''}`} 
                  disabled={isAddToCartDisabled} onClick={(e)=>isAddToCartDisabled?'':handleAddToCart(e)} >
                   Add to Cart
                 </a>
-                
-              )}
-
-              <a className='buy-now' href='https://kamikubi.com/cart/add?id=42841423184061&quantity=1'>Buy Now</a>
-              <a className='cart-count' onClick={cartCookie ? console.log("cartCookie.length",cartCookie.length):console.log("cartCookie not there",0)}  data-count={cartCookie ? cartCookie.length : 0}><img src={bag} height={20} width={20} /></a>
+              <a className='cart-count' href={apiUrl} data-count={cartCookie ? cartCookie.length : 0}><img src={bag} height={20} width={20} /></a>
             </div>
             {/*<a className='buy-now' href={props.product.productUrl}>Buy Now</a> */}
         

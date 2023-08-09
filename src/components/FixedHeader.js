@@ -42,7 +42,7 @@ const FixedHeader = () => {
   return (
     <div className="fixed-header-wrapper">
         <div className='fixed-header-sub-wrap'>
-                 <a className='fh-brand-logo' href="https://kamikubi.com/">
+                 <a className='fh-brand-logo' href="https://theaayna.com/">
                     <img  src={data.logoUrl} className='fh-brand-image'/>
                 </a>
                 <div className='icons-div'>
