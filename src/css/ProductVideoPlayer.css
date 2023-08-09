@@ -1,6 +1,7 @@
 .video-player-wrapper {
     position: relative;
- 
+    width: 65%;
+    margin: auto;
   }
 
   .video-player-wrapper div{
@@ -35,11 +36,11 @@
     left: 0;
   }
   
-  /* New CSS for the mute button */
+  /* New CSS for the mute button #C0C0C0 */
 .mute-button {
   position: absolute;
-    bottom: 12px;
-    left: 46px;
+    bottom: 10px;
+    left: 30px;
     cursor: pointer;
     z-index: 1;
 

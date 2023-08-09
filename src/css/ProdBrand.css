@@ -58,13 +58,17 @@
 
 .prod-brand-title{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .pbt{
     display: flex;
     align-items: center;
-    gap: 15px;
+    flex-flow: column;
+    justify-content: center;
 }
 
 .prod-brand-name{
@@ -88,4 +92,20 @@
     /*color: #f30e36;*/
     color: #00a9ca;
     padding-bottom: 3px;
+}
+
+.followers-div{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+}
+
+.followers-div span{
+    font-size: 13px;
+    color: #847b7b;
+    /* color: #847b7b; */
+    /* font-family: 'Inter'; */
+    /* font-weight: 600; */
+    font-family: sans-serif;
 }
