@@ -64,20 +64,21 @@ const rootReducer = (state = initialState, action) => {
           console.log("SET_PRICE_RANGE",  action.payload );
           return {
             ...state,
-            selectedPriceRange: action.payload,
+            selectedPriceRange: action.payload!=undefined? action.payload:'',
           };
 
         case 'SET_CREATOR':
+          console.log("SET_CREATOR",  action.payload );
           return {
             ...state,
-            selectedCreator: action.payload,
+            selectedCreator: action.payload!=undefined? action.payload:'',
           };
 
         case 'SET_CONTENT_TYPE':
           console.log("SET_CONTENT_TYPE",  action.payload );
           return {
             ...state,
-            selectedContentType: action.payload,
+            selectedContentType:action.payload!=undefined? action.payload:'',
           };
 
         case 'SET_PAGE_NAME':

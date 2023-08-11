@@ -49,7 +49,13 @@ const Catalog = (props) => {
          video.similarProducts!=null&&video.similarProducts.length>0?
                 <div className='sim-prods-div'>
                     <div className='catalog-heading'><span>Similar Products</span></div>
-                    <div className='sim-prods-scroll-div'></div>
+                    <div className='sim-prods-scroll-div'>
+                        {  video.similarProducts.map((prod)=> (
+                            <div onClick={()=>{setProduct(prod); showPopup()}}>
+                                <Product product ={prod} />
+                            </div>
+                            ))}
+                    </div>
                 </div>:''
         }   
         {isPopupOpen && (

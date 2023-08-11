@@ -18,6 +18,10 @@ const FilterPopup = ({ handlePopup }) => {
 
   const dispatch = useDispatch();
   const categorySelected = useSelector(state => state.selectedCategory);
+  const slctdPriceRange = useSelector(state => state.selectedPriceRange);
+  const slctdCreator = useSelector(state => state.selectedCreator);
+  const slctdContentType = useSelector(state => state.selectedContentType);
+  console.log("prop variables", categorySelected,slctdPriceRange,slctdCreator, slctdContentType);
   const brandID = useSelector(state => state.brandID);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(categorySelected);
@@ -25,10 +29,10 @@ const FilterPopup = ({ handlePopup }) => {
   const [activeTab, setActiveTab] = useState("Categories");
   const priceRangeOptions = ["Under 999", "Under 1499", "Under 1999"];
   const [creatorOptions, setCreatorOptions] = useState([]);
-  const contentTypeOptions = ["Creator Looks", "In Depth Reviews", "How to Style"];
-  const [selectedPriceRange, setSelectedPriceRange] = useState("");
-  const [selectedCreator, setSelectedCreator] = useState("");
-  const [selectedContentType, setSelectedContentType] = useState("");
+  const contentTypeOptions = {'Creator Looks':'PRODUCT_REEL', 'In Depth Reviews':'PRODUCT_REVIEW', 'How to Style':'HOW_TO_STYLE'};
+  const [selectedPriceRange, setSelectedPriceRange] = useState(slctdPriceRange);
+  const [selectedCreator, setSelectedCreator] = useState(slctdCreator);
+  const [selectedContentType, setSelectedContentType] = useState(slctdContentType);
 
 
   useEffect(() => {
@@ -111,7 +115,7 @@ const handleCategorySelect = (categoryId) => {
 
 
   const filterProducts = () => {
-    console.log("filterON", selectedCategory);
+    console.log("filterON", selectedCategory, selectedPriceRange, );
     dispatch(setFilterCriteria(selectedCategory));
     dispatch(setPriceRange(selectedPriceRange));
     dispatch(setCreator(selectedCreator));
@@ -123,7 +127,7 @@ const handleCategorySelect = (categoryId) => {
     }
 
     const handlePriceRangeSelect = (option) => {
-     
+     console.log("preceRnage",option.split(' ')[1] );
       if (selectedPriceRange === option) {
         setSelectedPriceRange("");
       } else {
@@ -141,7 +145,7 @@ const handleCategorySelect = (categoryId) => {
     };
   
     const handleContentTypeSelect = (option) => {
-     
+     console.log("contentyoe", option);
       if (selectedContentType === option) {
         setSelectedContentType("");
       } else {
@@ -181,11 +185,11 @@ const handleCategorySelect = (categoryId) => {
               <div className="price-range-content">
                 {priceRangeOptions.map(option => (
                   <div
-                    key={option}
-                    className={`category-item ${selectedPriceRange === option ? 'selected' : ''}`}
-                    onClick={() => handlePriceRangeSelect(option)}
+                    key={option.split(' ')[1] }
+                    className={`category-item ${selectedPriceRange === option.split(' ')[1]  ? 'selected' : ''}`}
+                    onClick={() => handlePriceRangeSelect(option.split(' ')[1] )}
                   >
-                    {selectedPriceRange === option ? <span className="tick selected">&#10003;</span> : <span className="tick" />}
+                    {selectedPriceRange === option.split(' ')[1]  ? <span className="tick selected">&#10003;</span> : <span className="tick" />}
                     {option}
                   </div>
                 ))}
@@ -217,7 +221,7 @@ const handleCategorySelect = (categoryId) => {
 
             {activeTab === "Content Type" && (
                 <div className="content-type-div">
-                  {contentTypeOptions.map(option => (
+                  {Object.keys(contentTypeOptions).map(option => (
                     <div
                       key={option}
                       className={`category-item ${selectedContentType === option ? 'selected' : ''}`}
