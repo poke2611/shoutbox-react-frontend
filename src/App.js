@@ -4,7 +4,7 @@ import { createStore } from 'redux';
 import { useSelector } from 'react-redux';
 import { Provider } from 'react-redux';
 import rootReducer from './store/reducers';
-import {Routes, Route, useParams } from 'react-router-dom';
+import {Routes, Route, useParams, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import FixedHeader from './components/FixedHeader';
 import Page1 from './components/Page1';
@@ -13,10 +13,19 @@ import Page4 from './components/Page4';
 import Cart from './components/Cart';
 import Footer from './components/Footer';
 import Cookies from 'js-cookie';
+import ReactGA from 'react-ga';
 
 
+ReactGA.initialize('GA_MEASUREMENT_ID');
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Send a virtual pageview to Google Analytics
+    ReactGA.pageview(location.pathname);
+  }, [location]);
+  
   const isPopupOpen = true;
  // const cartID = useSelector(state => state.cartID);
 
