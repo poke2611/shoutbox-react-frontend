@@ -1,5 +1,8 @@
 const initialState = {
-  iconColor:'#393434',
+  iconColor:'##252525',
+  selectedCreator:'',
+  selectedContentType:'',
+  selectedPriceRange:'',
   brandID:'15',
   isPopupOpen: false,
   filterFlag: false,
@@ -55,6 +58,26 @@ const rootReducer = (state = initialState, action) => {
           return {
             ...state,
             selectedCategory: action.payload,
+          };
+          
+        case 'SET_PRICE_RANGE':
+          console.log("SET_PRICE_RANGE",  action.payload );
+          return {
+            ...state,
+            selectedPriceRange: action.payload,
+          };
+
+        case 'SET_CREATOR':
+          return {
+            ...state,
+            selectedCreator: action.payload,
+          };
+
+        case 'SET_CONTENT_TYPE':
+          console.log("SET_CONTENT_TYPE",  action.payload );
+          return {
+            ...state,
+            selectedContentType: action.payload,
           };
 
         case 'SET_PAGE_NAME':

@@ -94,9 +94,13 @@ const Page3 = (props) => {
       const productData = await response.json();
       const variants = productData.product.variants;
       console.log(productData.product.images.length,"productData.product.images",productData.product.images);
-
+      setSelectedVariantPrices({
+        actualPrice: variants[0].compare_at_price ,
+        sellingPrice: variants[0].price,
+      })
       
       setVariants(variants);
+
       if(variants.length==1){
         setIsAddToCartDisabled(false);
       }

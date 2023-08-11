@@ -38,8 +38,8 @@
 }
 
 .page3-prod-detail{
-    font-size: 13px;
-    color: #696767;
+    font-size: 14px;
+    color: #3d3d3d;
     display: block;
     line-height: 18px;
 }
@@ -65,7 +65,7 @@
 
 .page3-selling-price{
     font-weight: 800;
-font-size: 13px;
+font-size: 14px;
 }
 
 .product-info-wrapper {
@@ -119,10 +119,10 @@ font-size: 13px;
 }
 
 .page3-desc-span{
-    font-weight: 400;
+    font-weight: 500;
     font-size: 13px;
     line-height: 18px;
-    color: #475467;
+    color: #3d3d3d;
 }
 
 .buy-now{

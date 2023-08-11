@@ -87,3 +87,21 @@ export const togglePopup = (isOpen) => {
       type: 'SET_CART_IDENTIFIER',
     };
   };
+
+  export const setPriceRange = (price) => {
+    return {
+      type: 'SET_PRICE_RANGE',
+    };
+  };
+
+  export const setCreator = (creator) => {
+    return {
+      type: 'SET_CREATOR',
+    };
+  };
+
+  export const setContentType = (content) => {
+    return {
+      type: 'SET_CONTENT_TYPE',
+    };
+  };
