@@ -9,6 +9,7 @@
         border: 1px solid #ccc;
         display: flex;
          flex-direction: column;
+         max-width: 160px;
     }
 
     .prod-desc{
@@ -45,7 +46,7 @@
     .imageContainer{
         background-repeat: no-repeat;
         background-size: cover;
-        height: 200px;
+        height: 210px;
         width: 100%;
     }
 

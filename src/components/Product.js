@@ -40,11 +40,11 @@ const Product = (prod) => {
        <div className='prod-desc'>
             <a className='prod-name'>{product.brandName}</a> 
             
-            {isClicked ? (
+            {/*isClicked ? (
                 <RiHeartFill style={iconStyle} onClick={handleIconClick} />
             ) : (
                 <RiHeartLine style={iconStyle} onClick={handleIconClick} />
-            )}     
+            )*/}     
             
             <span className='prod-metadata'>{product.title}</span>
             <div className='price-info'><span className='actual-price' >{product.initialPrice != null ? (

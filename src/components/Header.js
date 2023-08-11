@@ -31,8 +31,8 @@ const Header = () => {
      { /*  <NavLink className={'nav-heading'} exact to={`/`}>All Products</NavLink> */}
           <NavLink className={'nav-heading'} to={`/`}>Videos</NavLink>
           <NavLink className={'nav-heading'} to={`/styles`}>Styles</NavLink>
-          <a className={'sort-icon'} onClick={handlePopupToggle}><img src={sort} width={20} height={20}/></a>
-          <a className={'filter-icon'} onClick={handleFilterPopup}><img src={filter} width={20} height={20}/></a>
+          <a className={'sort-icon'} onClick={handlePopupToggle}><img src={sort} alt="sort"width={28} height={26}/></a>
+          <a className={'filter-icon'} onClick={handleFilterPopup}><img src={filter} alt="filter" width={24} height={24}/></a>
         </div>
 
         {isPopupOpen && (

@@ -1,24 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import '../css/FilterPopup.css';
-import { setFilteredProds, setFilterCriteria, setFilterFlag } from '../store/actions';
+import { setPriceRange, setCreator, setContentType, setFilterCriteria, setFilterFlag } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import instagram from '../images/instagram.png';
 
+function formatFollowerCount(count) {
+  console.log("formatFollowerCount", formatFollowerCount);
+  if (count >= 1000000) {
+    return (count / 1000000).toFixed(1).replace('.0', '') + "m";
+  } else if (count >= 1000) {
+    return (count / 1000).toFixed(1).replace('.0', '') + "k";
+  }
+  return count.toString();
+}
 
 const FilterPopup = ({ handlePopup }) => {
 
   const dispatch = useDispatch();
   const categorySelected = useSelector(state => state.selectedCategory);
+  const slctdPriceRange = useSelector(state => state.selectedPriceRange);
+  const slctdCreator = useSelector(state => state.selectedCreator);
+  const slctdContentType = useSelector(state => state.selectedContentType);
+  console.log("prop variables", categorySelected,slctdPriceRange,slctdCreator, slctdContentType);
   const brandID = useSelector(state => state.brandID);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(categorySelected);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState("Categories");
   const priceRangeOptions = ["Under 999", "Under 1499", "Under 1999"];
-  const [creatorOptions, setCreatorOptions] = useState(["Creator 1", "Creator 2", "Creator 3"]);
-  const contentTypeOptions = ["Creator Looks", "In Depth Reviews", "How to Style"];
-  const [selectedPriceRange, setSelectedPriceRange] = useState("");
-  const [selectedCreator, setSelectedCreator] = useState("");
-  const [selectedContentType, setSelectedContentType] = useState("");
+  const [creatorOptions, setCreatorOptions] = useState([]);
+  const contentTypeOptions = {'Creator Looks':'PRODUCT_REEL', 'In Depth Reviews':'PRODUCT_REVIEW', 'How to Style':'HOW_TO_STYLE'};
+  const [selectedPriceRange, setSelectedPriceRange] = useState(slctdPriceRange);
+  const [selectedCreator, setSelectedCreator] = useState(slctdCreator);
+  const [selectedContentType, setSelectedContentType] = useState(slctdContentType);
 
 
   useEffect(() => {
@@ -33,7 +47,19 @@ const FilterPopup = ({ handlePopup }) => {
       }
     };
 
+    const fetchCreatorData = async () => {
+      try {
+        const response = await fetch('https://cliptocart.co.in/creator?brandId='+brandID);
+        const json = await response.json();
+        console.log("results filter", json.categories);
+        setCreatorOptions(json);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
     fetchData();
+    fetchCreatorData();
   }, []);
 
   
@@ -59,7 +85,11 @@ const handleCategorySelect = (categoryId) => {
 */
 
   const handleCategorySelect = (categoryId) => {
-    setSelectedCategory(categoryId);
+    if (selectedCategory === categoryId) {
+      setSelectedCategory("");
+    } else {
+      setSelectedCategory(categoryId);
+    }
   };
 
   const handleSearch = (event) => {
@@ -73,14 +103,23 @@ const handleCategorySelect = (categoryId) => {
   const handleClearAll = () => {
     dispatch(setFilterFlag(false)); 
     dispatch(setFilterCriteria(""));
+    dispatch(setPriceRange(""));
+    dispatch(setCreator(""));
+    dispatch(setContentType(""));
     setSelectedCategory("");
+    setSelectedCreator("");
+    setSelectedContentType("");
+    setSelectedPriceRange("");
    
   };
 
 
   const filterProducts = () => {
-    console.log("filterON", selectedCategory);
+    console.log("filterON", selectedCategory, selectedPriceRange, );
     dispatch(setFilterCriteria(selectedCategory));
+    dispatch(setPriceRange(selectedPriceRange));
+    dispatch(setCreator(selectedCreator));
+    dispatch(setContentType(selectedContentType));
     if(selectedCategory!=''){
       dispatch(setFilterFlag(true));
     }
@@ -88,15 +127,30 @@ const handleCategorySelect = (categoryId) => {
     }
 
     const handlePriceRangeSelect = (option) => {
-      setSelectedPriceRange(option);
+     console.log("preceRnage",option.split(' ')[1] );
+      if (selectedPriceRange === option) {
+        setSelectedPriceRange("");
+      } else {
+        setSelectedPriceRange(option);
+      }
     };
   
     const handleCreatorSelect = (option) => {
-      setSelectedCreator(option);
+      
+      if (selectedCreator === option) {
+        setSelectedCreator("");
+      } else {
+        setSelectedCreator(option);
+      }
     };
   
     const handleContentTypeSelect = (option) => {
-      setSelectedContentType(option);
+     console.log("contentyoe", option);
+      if (selectedContentType === option) {
+        setSelectedContentType("");
+      } else {
+        setSelectedContentType(option);
+      }
     };
 
     return (
@@ -131,11 +185,11 @@ const handleCategorySelect = (categoryId) => {
               <div className="price-range-content">
                 {priceRangeOptions.map(option => (
                   <div
-                    key={option}
-                    className={`category-item ${selectedPriceRange === option ? 'selected' : ''}`}
-                    onClick={() => handlePriceRangeSelect(option)}
+                    key={option.split(' ')[1] }
+                    className={`category-item ${selectedPriceRange === option.split(' ')[1]  ? 'selected' : ''}`}
+                    onClick={() => handlePriceRangeSelect(option.split(' ')[1] )}
                   >
-                    {selectedPriceRange === option ? <span className="tick selected">&#10003;</span> : <span className="tick" />}
+                    {selectedPriceRange === option.split(' ')[1]  ? <span className="tick selected">&#10003;</span> : <span className="tick" />}
                     {option}
                   </div>
                 ))}
@@ -146,12 +200,20 @@ const handleCategorySelect = (categoryId) => {
               <div className="creator-content">
                 {creatorOptions.map(option => (
                   <div
-                    key={option}
-                    className={`category-item ${selectedCreator === option ? 'selected' : ''}`}
-                    onClick={() => handleCreatorSelect(option)}
+                    key={option.id}
+                    className={`creator category-item ${selectedCreator === option.id ? 'selected' : ''}`}
+                    onClick={() => handleCreatorSelect(option.id)}
                   >
-                    {selectedCreator === option ? <span className="tick selected">&#10003;</span> : <span className="tick" />}
-                    {option}
+                    {selectedCreator === option.id ? <span className="tick selected">&#10003;</span> : <span className="tick" />}
+                     <div className='creator-div'>
+                        <img className='creator-logo-img' src={option.displayPictureUrl} width={50} height={50}/>
+                        <div>
+                            <span>{option.firstName}</span>
+                            <span  className='handle-span'>@{option.instagramHandle}</span>
+                            <span className='insta-span'><img src={instagram} width={12} height={12}/>{formatFollowerCount(option.instagramFollowers)}</span>
+                        </div>
+                        
+                      </div>
                   </div>
                 ))}
               </div>
@@ -159,7 +221,7 @@ const handleCategorySelect = (categoryId) => {
 
             {activeTab === "Content Type" && (
                 <div className="content-type-div">
-                  {contentTypeOptions.map(option => (
+                  {Object.keys(contentTypeOptions).map(option => (
                     <div
                       key={option}
                       className={`category-item ${selectedContentType === option ? 'selected' : ''}`}

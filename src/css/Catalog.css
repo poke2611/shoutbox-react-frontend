@@ -7,6 +7,17 @@
     max-width: 100%;
     gap: 3px;
 }
+
+.sim-prods-scroll-div{
+    position: relative;
+    padding: 3px;
+    padding-left: 15px;
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    gap: 3px;
+}
+
 .catalog-heading{
     padding: 8px 15px;
     text-align: left;

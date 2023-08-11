@@ -30,15 +30,17 @@ const Page2 = () => {
   const filterFlag = useSelector(state => state.filterFlag);
   const sortOn = useSelector(state => state.sortOn);
   const selectedCategory = useSelector(state => state.selectedCategory);
-
+  const selectedPriceRange = useSelector(state => state.selectedPriceRange);
+  const selectedCreator = useSelector(state => state.selectedCreator);
+  const selectedContentType = useSelector(state => state.selectedContentType);
 
   const fetchInitialData = async () => {
     try {
-      setPageNumber(1);
+     
       setVideos([]);
       console.log("pagenumer", pageNumber, "if selectedCategory", selectedCategory);
       console.log("brandID", brandID);
-      const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page=1');
+      const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&lessThanPrice='+selectedPriceRange+'&creatorId='+selectedCreator+'&contentCategory='+selectedContentType+'&page=1');
       const json = await response.json();
       setVideos(json);
       setUpcomingData(json);
@@ -160,7 +162,7 @@ const Page2 = () => {
     try {
       if(pageNumber>1){
         console.log("pageNumber", pageNumber);
-        const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
+        const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&lessThanPrice='+selectedPriceRange+'&creatorId='+selectedCreator+'&contentCategory='+selectedContentType+'&page='+pageNumber);
         const json = await response.json();
         console.log("results Page videos", json);
         setVideos(prevData => [...prevData, ...json]);

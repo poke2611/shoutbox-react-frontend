@@ -23,13 +23,14 @@ function App() {
   return (
    
       <div className="App" >
-        <div className='wrapper-upper'>
-          
-          <div className="wrapper">
-            <FixedHeader  />
+        <FixedHeader  />
             <div>
               <Header  />
             </div>
+        <div className='wrapper-upper'>
+          
+          <div className="wrapper">
+            
             <div className ='page-content'>
                   <Routes>
                    

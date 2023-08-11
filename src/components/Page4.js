@@ -5,6 +5,7 @@ import '../css/Page4.css';
 import Page3 from './Page3';
 import ProdBrandHeader from './ProdBrandHeader';
 import bag from '../images/BAG.png';
+import Carousel from './Carousel';
 import Footer from './Footer';
 
 const Page4 = () => {
@@ -17,17 +18,20 @@ const Page4 = () => {
   const popupRef = useRef(null);
   const sortFlag = useSelector(state => state.sortFlag);
   const filterFlag = useSelector(state => state.filterFlag);
+  const brandID = useSelector(state => state.brandID);
   const sortOn = useSelector(state => state.sortOn);
   const selectedCategory = useSelector(state => state.selectedCategory);
-
+  const selectedPriceRange = useSelector(state => state.selectedPriceRange);
+  const selectedCreator = useSelector(state => state.selectedCreator);
+  const selectedContentType = useSelector(state => state.selectedContentType);
 
   const fetchInitialData = async () => {
     try {
-      setPageNumber(1);
+    
       setData([]);
       console.log("pagenumer", pageNumber, "if selectedCategory", selectedCategory, "filterCriteria");
       console.log("sortOn", sortOn, "sortCriteria");
-      const response = await fetch('https://cliptocart.co.in/content?brandId=15&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page=1');
+      const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&lessThanPrice='+selectedPriceRange+'&creatorId='+selectedCreator+'&contentCategory='+selectedContentType+'&page=1');
       const json = await response.json();
       setData(json);
       setUpcomingData(json);
@@ -46,7 +50,7 @@ const Page4 = () => {
     const fetchData = async () => {
       try {
         if(pageNumber>1){
-        const response = await fetch('https://cliptocart.co.in/content?brandId=15&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&page='+pageNumber);
+          const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&lessThanPrice='+selectedPriceRange+'&creatorId='+selectedCreator+'&contentCategory='+selectedContentType+'&page='+pageNumber);
         const json = await response.json();
         console.log("results Page 4", json);
         setData(prevData => [...prevData, ...json]);
