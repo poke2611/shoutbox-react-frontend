@@ -32,7 +32,8 @@ function App() {
   return (
    
       <div className="App" >
-        <FixedHeader  />
+        
+            <FixedHeader  />
             <div>
               <Header  />
             </div>
@@ -42,12 +43,9 @@ function App() {
             
             <div className ='page-content'>
                   <Routes>
-                   
                     <Route path={`/`} element={<Page2 />} />
                     <Route path={`/styles`} element={<Page4 />} />
-                    <Route path={`/`} element={<Page2 />} />
-                    <Route path={`/styles`} element={<Page4 />} />   
-                           
+                    
                   </Routes>
             </div>
             

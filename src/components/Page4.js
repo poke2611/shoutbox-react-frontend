@@ -7,15 +7,20 @@ import ProdBrandHeader from './ProdBrandHeader';
 import bag from '../images/BAG.png';
 import Carousel from './Carousel';
 import Footer from './Footer';
+import Catalog from './Catalog';
 
 const Page4 = () => {
 
   const [data, setData] = useState([]);
   const [product, setProduct] =useState({});
   const [images, setImages] =useState({});
+  const catRef = useRef(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   const [upcomingData, setUpcomingData] = useState([]);
+  const [isCatOpen, setCatOpen] = useState(false);
+  
+  const [catProduct, setCatProduct] = useState(false);
   const popupRef = useRef(null);
   const sortFlag = useSelector(state => state.sortFlag);
   const filterFlag = useSelector(state => state.filterFlag);
@@ -79,7 +84,11 @@ const Page4 = () => {
     fetchData();
   }, []);
 
- 
+  const toggleCatalog = (product) => {
+    console.log('Div toggleCatalogclicked!', product);
+    setCatProduct(product);
+    setCatOpen(!isCatOpen);   
+  };
 
   useEffect(() => {
 
@@ -117,13 +126,11 @@ const Page4 = () => {
  }, []);
 
   const showPopup = () => {
-    console.log('Div clicked!');
+  
     setPopupOpen(true);   
   };
 
   const closePopup = () => {
-   
-    console.log('popup closed clicked!');
     setPopupOpen(false);
   };
 
@@ -141,11 +148,11 @@ const Page4 = () => {
                    
                 </div>
                 <div className='scrolling-product-wrapper'>
-                      <div className='shop-all'>
+                  <div className='shop-all' onClick={()=> toggleCatalog(product)}>
                           <a className='shop-all-btn'>
                               <img src={bag} height={25} width={25} />
                           </a>
-                          <a> SHOP ALL</a>
+                          <a> View Products</a>
                       </div>
                       <div className='scp-all-wrapper'>
                       {product.products.map((prod, index) => (
@@ -188,7 +195,16 @@ const Page4 = () => {
           {isPopupOpen && (
             <div className="popup">
               <div className="popup-content" ref={popupRef}>
-                 <Page3 product={product}/>
+              <div className='close-popup-btn'><a className='' onClick={closePopup}>x</a></div>
+                 <Page3 product={product}  onClose={closePopup}/>
+              </div>
+            </div>
+          )}
+
+        {isCatOpen && (
+            <div className="popup">
+              <div className="cat-popup-content" ref={catRef}>
+                <Catalog video={catProduct} onClose={toggleCatalog}/>
               </div>
             </div>
           )}
