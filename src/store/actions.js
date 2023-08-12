@@ -91,17 +91,20 @@ export const togglePopup = (isOpen) => {
   export const setPriceRange = (price) => {
     return {
       type: 'SET_PRICE_RANGE',
+      payload: price,
     };
   };
 
   export const setCreator = (creator) => {
     return {
       type: 'SET_CREATOR',
+      payload: creator,
     };
   };
 
   export const setContentType = (content) => {
     return {
       type: 'SET_CONTENT_TYPE',
+      payload: content,
     };
   };

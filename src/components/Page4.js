@@ -12,6 +12,7 @@ const Page4 = () => {
 
   const [data, setData] = useState([]);
   const [product, setProduct] =useState({});
+  const [images, setImages] =useState({});
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   const [upcomingData, setUpcomingData] = useState([]);
@@ -34,6 +35,18 @@ const Page4 = () => {
       const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&lessThanPrice='+selectedPriceRange+'&creatorId='+selectedCreator+'&contentCategory='+selectedContentType+'&page=1');
       const json = await response.json();
       setData(json);
+      var imageLinksArray = [];
+
+      json.forEach(item => {
+        item.imgArray = []; // Initialize an array for links within the item
+        Object.keys(item).forEach(key => {
+          if (key.startsWith('link') && item[key] !== null) {
+            item.imgArray.push(item[key]);
+          }
+        });
+      });
+        console.log("imageLinksArray", json);
+     // setImages(imageLinksArray);
       setUpcomingData(json);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -63,11 +76,10 @@ const Page4 = () => {
         console.error('Error fetching data:', error);
       }
     };
-
     fetchData();
-
-
   }, []);
+
+ 
 
   useEffect(() => {
 
@@ -122,9 +134,11 @@ const Page4 = () => {
           
             {data.map((product, index) => (
               <div className='prod-vid-wrap'>
-                <ProdBrandHeader product={product}/>
+                <ProdBrandHeader  creator={product.creator}/>
                 <div className="page4-img-container">
-                    <img src={product.link} className='page4-prod-img'/>
+                 
+                    <Carousel className='page4-prod-img' images={product.imgArray} />
+                   
                 </div>
                 <div className='scrolling-product-wrapper'>
                       <div className='shop-all'>
@@ -137,6 +151,7 @@ const Page4 = () => {
                       {product.products.map((prod, index) => (
                           <div className='scp-wrapper' onClick={()=>{setProduct(prod); showPopup()}}>
                                <img className='scp-image-div' src={prod.imageUrl} height={30}  />
+                              
                               <div className='scp-desc'>
                                   <div className='scp-brand-name'><span>{(prod.title).toUpperCase()}</span></div>
                                   <div className='scp-price'><span className='actual-price' >{prod.initialPrice != null ? (

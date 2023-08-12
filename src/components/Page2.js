@@ -60,8 +60,9 @@ const Page2 = () => {
  
   
   useEffect(() => {
-/*
-    const fetchData = async () => {
+
+    console.log("pageNumber", pageNumber);
+  /*  const fetchData = async () => {
       try {
         if(pageNumber>1){
           console.log("pageNumber", pageNumber);
@@ -76,8 +77,8 @@ const Page2 = () => {
       }
     };
 
-    fetchData();
- */
+    fetchData();*/
+ 
   }, [pageNumber]);
 
 
@@ -165,6 +166,7 @@ const Page2 = () => {
         const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&lessThanPrice='+selectedPriceRange+'&creatorId='+selectedCreator+'&contentCategory='+selectedContentType+'&page='+pageNumber);
         const json = await response.json();
         console.log("results Page videos", json);
+       // setPageNumber(prevPageNumber => prevPageNumber + 1);
         setVideos(prevData => [...prevData, ...json]);
         setUpcomingData(json);
         

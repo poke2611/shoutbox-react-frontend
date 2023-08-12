@@ -115,7 +115,7 @@ const handleCategorySelect = (categoryId) => {
 
 
   const filterProducts = () => {
-    console.log("filterON", selectedCategory, selectedPriceRange, );
+    console.log("filterON", selectedCategory, "selectedPriceRange",selectedPriceRange, "selectedCreator",selectedCreator );
     dispatch(setFilterCriteria(selectedCategory));
     dispatch(setPriceRange(selectedPriceRange));
     dispatch(setCreator(selectedCreator));
@@ -136,7 +136,6 @@ const handleCategorySelect = (categoryId) => {
     };
   
     const handleCreatorSelect = (option) => {
-      
       if (selectedCreator === option) {
         setSelectedCreator("");
       } else {
