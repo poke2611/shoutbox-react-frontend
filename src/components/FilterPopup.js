@@ -208,7 +208,7 @@ const handleCategorySelect = (categoryId) => {
                      <div className='creator-div'>
                         <img className='creator-logo-img' src={option.displayPictureUrl} width={50} height={50}/>
                         <div>
-                            <span>{option.firstName}</span>
+                            <span>{option.lastName!=null?option.firstName+' '+option.lastName:option.firstName}</span>
                             <span  className='handle-span'>@{option.instagramHandle}</span>
                             <span className='insta-span'><img src={instagram} width={12} height={12}/>{formatFollowerCount(option.instagramFollowers)}</span>
                         </div>
