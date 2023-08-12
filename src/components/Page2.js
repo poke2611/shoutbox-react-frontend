@@ -6,6 +6,7 @@ import ProductVideoPlayer from './ProductVideoPlayer';
 import Catalog from './Catalog';
 import bag from '../images/BAG.png';
 import star from '../images/star.png';
+import loader from '../images/down-arrow.png';
 import { useSelector, useDispatch } from 'react-redux';
 import Footer from './Footer';
 
@@ -234,7 +235,7 @@ const Page2 = () => {
             (
               upcomingData.length>0 ?
                   <div className='loadmore-div'>
-                      <a onClick={getMoreData}>Load More...</a>
+                      <a onClick={getMoreData}><img src={loader} height={30} width={30}/></a>
                   </div>:<div className='loadmore-div'></div>
               ):
                     <div className='loadmore-div'>                        
