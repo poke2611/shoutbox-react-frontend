@@ -1,5 +1,6 @@
 const initialState = {
   iconColor:'##252525',
+  pageNumber: 1,
   selectedCreator:'',
   selectedContentType:'',
   selectedPriceRange:'',

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import instagram from '../images/instagram.png';
 
 function formatFollowerCount(count) {
-  console.log("formatFollowerCount", formatFollowerCount);
+ 
   if (count >= 1000000) {
     return (count / 1000000).toFixed(1).replace('.0', '') + "m";
   } else if (count >= 1000) {
@@ -116,13 +116,13 @@ const handleCategorySelect = (categoryId) => {
 
   const filterProducts = () => {
     console.log("filterON", selectedCategory, "selectedPriceRange",selectedPriceRange, "selectedCreator",selectedCreator );
-    dispatch(setPriceRange(selectedPriceRange));
     dispatch(setFilterCriteria(selectedCategory));
-   
+    dispatch(setPriceRange(selectedPriceRange));
     dispatch(setCreator(selectedCreator));
     dispatch(setContentType(selectedContentType));
+    
     if(selectedCategory!=''||selectedPriceRange!=''||selectedCreator!=''||selectedContentType!=''){
-      dispatch(setFilterFlag(true));
+      dispatch(setFilterFlag(true)); 
     }
       handlePopup();
     }
@@ -146,10 +146,10 @@ const handleCategorySelect = (categoryId) => {
   
     const handleContentTypeSelect = (option) => {
      console.log("contentyoe", option);
-      if (selectedContentType === option) {
+      if (selectedContentType === contentTypeOptions[option]) {
         setSelectedContentType("");
       } else {
-        setSelectedContentType(option);
+        setSelectedContentType(contentTypeOptions[option]);
       }
     };
 
@@ -208,7 +208,7 @@ const handleCategorySelect = (categoryId) => {
                      <div className='creator-div'>
                         <img className='creator-logo-img' src={option.displayPictureUrl} width={50} height={50}/>
                         <div>
-                            <span>{option.firstName}</span>
+                            <span>{option.lastName!=null?option.firstName+' '+option.lastName:option.firstName}</span>
                             <span  className='handle-span'>@{option.instagramHandle}</span>
                             <span className='insta-span'><img src={instagram} width={12} height={12}/>{formatFollowerCount(option.instagramFollowers)}</span>
                         </div>
@@ -224,10 +224,10 @@ const handleCategorySelect = (categoryId) => {
                   {Object.keys(contentTypeOptions).map(option => (
                     <div
                       key={option}
-                      className={`category-item ${selectedContentType === option ? 'selected' : ''}`}
+                      className={`category-item ${selectedContentType === contentTypeOptions[option] ? 'selected' : ''}`}
                       onClick={() => handleContentTypeSelect(option)}
                     >
-                      {selectedContentType === option ? <span className="tick selected">&#10003;</span> : <span className="tick" />}
+                      {selectedContentType === contentTypeOptions[option] ? <span className="tick selected">&#10003;</span> : <span className="tick" />}
                       {option}
                     </div>
                   ))}

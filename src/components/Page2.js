@@ -39,13 +39,14 @@ const Page2 = () => {
     try {
      
       setVideos([]);
-      console.log("pagenumer", pageNumber, "if selectedCategory", selectedCategory);
+      console.log("pagenumer fetchInitial Data", pageNumber, "if selectedCategory", selectedCategory);
       console.log("brandID", brandID);
       const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&lessThanPrice='+selectedPriceRange+'&creatorId='+selectedCreator+'&contentCategory='+selectedContentType+'&page=1');
       const json = await response.json();
       setVideos(json);
       setUpcomingData(json);
       setIsLoading(false);
+      setPageNumber(1);
       console.log("setIsLoading(false);");
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -57,12 +58,12 @@ const Page2 = () => {
   useEffect(() => {
     fetchInitialData();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [sortOn, filterFlag, sortFlag, selectedCategory]);
+  }, [sortOn, filterFlag, sortFlag, selectedCategory, selectedPriceRange, selectedCreator, selectedContentType]);
  
   
   useEffect(() => {
 
-    console.log("pageNumber", pageNumber);
+    //console.log("pageNumber", pageNumber);
   /*  const fetchData = async () => {
       try {
         if(pageNumber>1){
