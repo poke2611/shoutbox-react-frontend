@@ -24,8 +24,8 @@ const formattedFollowerCount = formatFollowerCount(props.creator.instagramFollow
                 </a>
                 <div className='prod-brand-title'>
                     <div className='pbt'>
-                       
-                        <span className='prod-brand-name'>{props.creator.firstName}</span>
+                    
+                        <span className='prod-brand-name'>{props.creator.lastName!=null?props.creator.firstName+' '+props.creator.lastName:props.creator.firstName}</span>
                         <div className='uploaded-time'>
                            <span> @{props.creator.instagramHandle} </span>
                         </div>
