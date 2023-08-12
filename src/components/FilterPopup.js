@@ -116,11 +116,12 @@ const handleCategorySelect = (categoryId) => {
 
   const filterProducts = () => {
     console.log("filterON", selectedCategory, "selectedPriceRange",selectedPriceRange, "selectedCreator",selectedCreator );
-    dispatch(setFilterCriteria(selectedCategory));
     dispatch(setPriceRange(selectedPriceRange));
+    dispatch(setFilterCriteria(selectedCategory));
+   
     dispatch(setCreator(selectedCreator));
     dispatch(setContentType(selectedContentType));
-    if(selectedCategory!=''){
+    if(selectedCategory!=''||selectedPriceRange!=''||selectedCreator!=''||selectedContentType!=''){
       dispatch(setFilterFlag(true));
     }
       handlePopup();
