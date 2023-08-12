@@ -4,6 +4,7 @@ import '../css/ProductVideoPlayer.css';
 import React, { useState, useRef, useEffect } from 'react';
 import { setMuteFlag } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import play from '../images/play-button.png';
 import mute from '../images/mute.png';
 import sound from '../images/speaker.png';
 
@@ -65,7 +66,10 @@ function ProductVideoPlayer({ videoUrl , fullscreen, onReady, prodImg}) {
     <div className='video-player-wrapper' onClick={handlePlayerClick}>
 
       {!isPlaying && (
-          <div className='play-button'></div>
+          <div className='play-button'>
+              <img src={play} width={40} height={40}/>
+          </div>
+        
       )}
       <ReactPlayer
         
@@ -86,7 +90,7 @@ function ProductVideoPlayer({ videoUrl , fullscreen, onReady, prodImg}) {
         }}
       />
       <a className={`mute-button`} onClick={(e)=>handleMuteToggle(e)}>
-        {muteFlag ? <img src={mute} width={25} height={25}/> : <img src={sound} width={25} height={25}/>}
+        {muteFlag ? <img src={mute} width={20} height={20}/> : <img src={sound} width={20} height={20}/>}
       </a>
     </div>
   );
