@@ -8,25 +8,24 @@
     margin: auto;
   }
 
-  .play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    z-index: 1;
-  }
   
-  .play-button::before {
-    content: '';
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.play-button::before {
+  content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 0;
     height: 0;
-    border-style: solid;
-    border-width: 28px 0 28px 45px;
-    border-color: transparent transparent transparent #ffffffc4;
 }
   
   
@@ -40,7 +39,7 @@
 .mute-button {
   position: absolute;
     bottom: 10px;
-    left: 30px;
+    right: 28px;
     cursor: pointer;
     z-index: 1;
 

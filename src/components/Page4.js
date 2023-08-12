@@ -7,14 +7,20 @@ import ProdBrandHeader from './ProdBrandHeader';
 import bag from '../images/BAG.png';
 import Carousel from './Carousel';
 import Footer from './Footer';
+import Catalog from './Catalog';
 
 const Page4 = () => {
 
   const [data, setData] = useState([]);
   const [product, setProduct] =useState({});
+  const [images, setImages] =useState({});
+  const catRef = useRef(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   const [upcomingData, setUpcomingData] = useState([]);
+  const [isCatOpen, setCatOpen] = useState(false);
+  
+  const [catProduct, setCatProduct] = useState(false);
   const popupRef = useRef(null);
   const sortFlag = useSelector(state => state.sortFlag);
   const filterFlag = useSelector(state => state.filterFlag);
@@ -34,6 +40,18 @@ const Page4 = () => {
       const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&lessThanPrice='+selectedPriceRange+'&creatorId='+selectedCreator+'&contentCategory='+selectedContentType+'&page=1');
       const json = await response.json();
       setData(json);
+      var imageLinksArray = [];
+
+      json.forEach(item => {
+        item.imgArray = []; // Initialize an array for links within the item
+        Object.keys(item).forEach(key => {
+          if (key.startsWith('link') && item[key] !== null) {
+            item.imgArray.push(item[key]);
+          }
+        });
+      });
+        console.log("imageLinksArray", json);
+     // setImages(imageLinksArray);
       setUpcomingData(json);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -63,11 +81,14 @@ const Page4 = () => {
         console.error('Error fetching data:', error);
       }
     };
-
     fetchData();
-
-
   }, []);
+
+  const toggleCatalog = (product) => {
+    console.log('Div toggleCatalogclicked!', product);
+    setCatProduct(product);
+    setCatOpen(!isCatOpen);   
+  };
 
   useEffect(() => {
 
@@ -105,13 +126,11 @@ const Page4 = () => {
  }, []);
 
   const showPopup = () => {
-    console.log('Div clicked!');
+  
     setPopupOpen(true);   
   };
 
   const closePopup = () => {
-   
-    console.log('popup closed clicked!');
     setPopupOpen(false);
   };
 
@@ -122,21 +141,24 @@ const Page4 = () => {
           
             {data.map((product, index) => (
               <div className='prod-vid-wrap'>
-                <ProdBrandHeader product={product}/>
+                <ProdBrandHeader  creator={product.creator}/>
                 <div className="page4-img-container">
-                    <img src={product.link} className='page4-prod-img'/>
+                 
+                    <Carousel className='page4-prod-img' images={product.imgArray} />
+                   
                 </div>
                 <div className='scrolling-product-wrapper'>
-                      <div className='shop-all'>
+                  <div className='shop-all' onClick={()=> toggleCatalog(product)}>
                           <a className='shop-all-btn'>
                               <img src={bag} height={25} width={25} />
                           </a>
-                          <a> SHOP ALL</a>
+                          <a> View Products</a>
                       </div>
                       <div className='scp-all-wrapper'>
                       {product.products.map((prod, index) => (
                           <div className='scp-wrapper' onClick={()=>{setProduct(prod); showPopup()}}>
                                <img className='scp-image-div' src={prod.imageUrl} height={30}  />
+                              
                               <div className='scp-desc'>
                                   <div className='scp-brand-name'><span>{(prod.title).toUpperCase()}</span></div>
                                   <div className='scp-price'><span className='actual-price' >{prod.initialPrice != null ? (
@@ -173,7 +195,16 @@ const Page4 = () => {
           {isPopupOpen && (
             <div className="popup">
               <div className="popup-content" ref={popupRef}>
-                 <Page3 product={product}/>
+              <div className='close-popup-btn'><a className='' onClick={closePopup}>x</a></div>
+                 <Page3 product={product}  onClose={closePopup}/>
+              </div>
+            </div>
+          )}
+
+        {isCatOpen && (
+            <div className="popup">
+              <div className="cat-popup-content" ref={catRef}>
+                <Catalog video={catProduct} onClose={toggleCatalog}/>
               </div>
             </div>
           )}
