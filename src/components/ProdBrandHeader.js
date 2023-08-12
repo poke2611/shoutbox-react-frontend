@@ -4,7 +4,7 @@ import instagram from '../images/instagram.png';
 
 
 function formatFollowerCount(count) {
-    console.log("formatFollowerCount", formatFollowerCount);
+  
     if (count >= 1000000) {
       return (count / 1000000).toFixed(1).replace('.0', '') + "m";
     } else if (count >= 1000) {
