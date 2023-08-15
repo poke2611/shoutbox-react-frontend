@@ -6,8 +6,8 @@ import Page3 from './Page3';
 import ProdBrandHeader from './ProdBrandHeader';
 import bag from '../images/BAG.png';
 import Carousel from './Carousel';
-import Footer from './Footer';
 import Catalog from './Catalog';
+import loader from '../images/down-arrow.png';
 
 const Page4 = () => {
 
@@ -39,9 +39,6 @@ const Page4 = () => {
       console.log("sortOn", sortOn, "sortCriteria");
       const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&lessThanPrice='+selectedPriceRange+'&creatorId='+selectedCreator+'&contentCategory='+selectedContentType+'&page=1');
       const json = await response.json();
-      setData(json);
-      var imageLinksArray = [];
-
       json.forEach(item => {
         item.imgArray = []; // Initialize an array for links within the item
         Object.keys(item).forEach(key => {
@@ -50,9 +47,9 @@ const Page4 = () => {
           }
         });
       });
-        console.log("imageLinksArray", json);
-     // setImages(imageLinksArray);
-      setUpcomingData(json);
+        setData(json);
+        setUpcomingData(json);
+        setPageNumber(1);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -63,19 +60,18 @@ const Page4 = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [sortOn, filterFlag, sortFlag, selectedCategory]);
  
-
+/*  
   useEffect(() => {
     const fetchData = async () => {
       try {
         if(pageNumber>1){
           const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=V&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&lessThanPrice='+selectedPriceRange+'&creatorId='+selectedCreator+'&contentCategory='+selectedContentType+'&page='+pageNumber);
-        const json = await response.json();
-        console.log("results Page 4", json);
-        setData(prevData => [...prevData, ...json]);
-       // setProduct(json[0]);
-       setUpcomingData(json);
-      
-        console.log("product page 4",json[0]);
+          const json = await response.json();
+          console.log("results Page 4", json);
+          setData(prevData => [...prevData, ...json]);
+          setUpcomingData(json);
+        
+          console.log("product page 4",json[0]);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -83,6 +79,7 @@ const Page4 = () => {
     };
     fetchData();
   }, []);
+  */
 
   const toggleCatalog = (product) => {
     console.log('Div toggleCatalogclicked!', product);
@@ -118,7 +115,6 @@ const Page4 = () => {
 
    document.addEventListener('mousedown', handleClickOutside);
 
-
    return () => {
      observer.unobserve(target);
      document.removeEventListener('mousedown', handleClickOutside);
@@ -133,6 +129,33 @@ const Page4 = () => {
   const closePopup = () => {
     setPopupOpen(false);
   };
+
+  const getMoreData = async () => {
+  
+    try {
+      if(pageNumber>1){
+        console.log("pageNumber", pageNumber);
+        const response = await fetch('https://cliptocart.co.in/content?brandId='+brandID+'&type=L&categoryId='+selectedCategory+'&'+sortOn+'='+sortFlag+'&lessThanPrice='+selectedPriceRange+'&creatorId='+selectedCreator+'&contentCategory='+selectedContentType+'&page='+pageNumber);
+        const json = await response.json();
+        console.log("results Page videos", json);
+       // setPageNumber(prevPageNumber => prevPageNumber + 1);
+        json.forEach(item => {
+          item.imgArray = []; // Initialize an array for links within the item
+          Object.keys(item).forEach(key => {
+            if (key.startsWith('link') && item[key] !== null) {
+              item.imgArray.push(item[key]);
+            }
+          });
+        });
+        setData(prevData => [...prevData, ...json]);
+        setUpcomingData(json);
+        
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+ }
+ 
 
 
   return (
@@ -181,17 +204,17 @@ const Page4 = () => {
               ))}
             </div>
       
-          { data.length>19?
+            { 
+              data.length>0?
                 (
                   upcomingData.length>0 ?
                       <div className='loadmore-div'>
-                          <a>Load More...</a>
+                          <a onClick={getMoreData}><img src={loader} height={30} width={30}/></a>
                       </div>:<div className='loadmore-div'></div>
-                      ):
-                      <div className='loadmore-div'>
-                          
-                      </div>
-                }
+                  ):
+                        <div className='loadmore-div'>                        
+                        </div>
+          }
           {isPopupOpen && (
             <div className="popup">
               <div className="popup-content" ref={popupRef}>
