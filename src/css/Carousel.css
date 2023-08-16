@@ -23,8 +23,9 @@
 
   .alice-carousel__prev-btn,
 .alice-carousel__next-btn {
-  color: #ffffff61;
-  font-size: 24px;
+  color: #fff;
+  font-size: 33px;;
+ 
   border: none;
   border-radius: 50%;
   width: 40px;
@@ -39,16 +40,22 @@
   transition: background-color 0.2s;
 }
 
+.alice-carousel__prev-btn-item, .alice-carousel__next-btn-item {
+  display: inline-block;
+  cursor: pointer;
+  padding: 5px;
+  margin: 0;
+  color: #ffffff;
+}
+
 .alice-carousel__prev-btn {
   left: 14px;
-
 }
 
 .alice-carousel__next-btn {
   right: 14px;
 
 }
-
 
 .alice-carousel__dots {
   display: none;
