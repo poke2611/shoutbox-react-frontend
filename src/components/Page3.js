@@ -101,7 +101,7 @@ const Page3 = (props) => {
       
       setVariants(variants);
 
-      if(variants.length==1){
+      if(variants.length==1) {
         setIsAddToCartDisabled(false);
       }
       // Get the unique sizes and colors from the variants data
@@ -421,7 +421,7 @@ const Page3 = (props) => {
                 
             </div>
             <div className='checkout-btn-wrapper'>
-              <a className='buy-now' href={'https://theaayna.com/cart/add?id='+varId+'&quantity=1'}>Buy Now</a>
+              <a className={`buy-now ${isAddToCartDisabled ? 'disabled' : ''}`} href={'https://theaayna.com/cart/add?items[][id]='+varId+'&quantity=1&items[][properties][POWERED_BY]=C2C'}>Buy Now</a>
               <a className={`buy-now ${isAddToCartDisabled ? 'disabled' : ''}`} 
                  disabled={isAddToCartDisabled} onClick={(e)=>isAddToCartDisabled?'':handleAddToCart(e)} >
                   Add to Cart
