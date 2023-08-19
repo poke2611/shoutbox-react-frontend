@@ -215,10 +215,10 @@ const Page2 = () => {
                                         )}</span>
                                       <span className='selling-price' > &#x20B9;{prod.finalPrice}</span>
                                       <span className='scp-discount'>{prod.discountPercentage}</span>
-                                      <div className='rating-div'> 
+                                      {/* <div className='rating-div'> 
                                         <span className='rating'>4</span> 
                                         <img src={star} height={12} width={12} />
-                                      </div>
+                                      </div> */}
                                   </div> 
                               </div> 
                           </div>
