@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../css/FixedHeader.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import bag from '../images/shopping-bag.png';
+import bag from '../images/foot-Bag.png';
 import heart from '../images/heart.png';
 import search from '../images/search-interface-symbol.png';
 import persona from '../images/user.png';
@@ -46,14 +46,16 @@ const FixedHeader = () => {
                     <img  src={data.logoUrl} className='fh-brand-image'/>
                 </a>
                 <div className='icons-div'>
-                    <img src={search} width={20} height={20}/>
-                    <img src={heart} width={20} height={20}/>
-                    <img src={persona} width={20} height={20}/>
-                    <a href= {apiUrl}><img src={bag} width={20} height={20}/></a>
+                    <img src={search} width={22} height={22}/>
+                    <img src={heart} width={22} height={22}/>
+                    <img src={persona} width={22} height={22}/>
+                    <a className='cart-count-header' href={apiUrl} data-count={cartCookie ? cartCookie.length : 0}><img src={bag} height={18} width={18} /></a>
+                   
                 </div>
             </div>
             {/*<div className='fh-brand-desc'>
                 <a> {data.brandName} </a>
+                 <a href= {apiUrl}><img src={bag} width={20} height={20}/></a>
                 <span onClick={()=>console.log("description")}>{data.brandDescription}</span>
             </div> */}
      

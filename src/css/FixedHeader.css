@@ -85,7 +85,33 @@
     line-height: 28px;
 }
 
+.cart-count-header{
+   border: 1.5px solid #393434;
+    /* height: 30px; */
+    border-radius: 7px;
+    padding: 3px 4px 3px 4px;
+    position: relative;
+    display: inline-block;
+    margin-left: 5px;
+}
 
+.cart-count-header img {
+  vertical-align: middle;
+}
+
+.cart-count-header::after {
+  content: attr(data-count);
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    /* left: -10px; */
+    font-size: 9px;
+    font-weight: bold;
+    background-color: #f00;
+    color: #fff;
+    border-radius: 50%;
+    padding: 4px 5px 4px 7px;
+}
 
 
 
