@@ -136,6 +136,8 @@ font-size: 14px;
     border-radius: 10px;
     text-decoration: none;
     text-align: center;
+    border: none;
+    margin: 0;
 }
 
 .disabled{

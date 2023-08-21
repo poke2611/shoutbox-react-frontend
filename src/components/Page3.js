@@ -12,7 +12,6 @@ import bag from '../images/foot-Bag.png';
 const Page3 = (props) => {
 
   const cartID = useSelector(state => state.cartID);
-  const [cart, setCart] = useState([]);
   const [images, setImages] = useState([]);
   const [addedToCart, setAddedToCart] = useState(false);
   const dispatch = useDispatch();
@@ -84,7 +83,8 @@ const Page3 = (props) => {
     console.log("productr", props.product);
     // Retrieve cart items from the cookie when the product page is loaded
     const existingCartItems = getCartItemsFromCookies();
-    setCart(existingCartItems);
+    dispatch({type:'SET_CART_ITEMS', payload: existingCartItems})
+
     
   }, []);
 
@@ -117,8 +117,7 @@ const Page3 = (props) => {
     }
   };
 
-  const handleAddToCart = (event) => {
-    event.preventDefault();
+  const handleAddToCart = () => {
     let variantId= varId;
    if(varId==''){
      variantId =  getVariantId();
@@ -180,7 +179,8 @@ const Page3 = (props) => {
             const existingCartItems = getCartItemsFromCookies();
   
             const updatedCartItems = [...existingCartItems, props.product];
-            setCart(updatedCartItems);
+          dispatch({type:'SET_CART_ITEMS', payload: updatedCartItems})
+
           //  Cookies.set('cart', JSON.stringify(updatedCartItems), { expires: 7 });    
             })
       .catch(error => {
@@ -232,7 +232,7 @@ const Page3 = (props) => {
           Cookies.set('cartIdentifier', data.id, { expires: 7 });
           const updatedCartItems = [props.product];
          
-          setCart(updatedCartItems);
+          dispatch({type:'SET_CART_ITEMS', payload: updatedCartItems})
      //     Cookies.set('cart', JSON.stringify(updatedCartItems), { expires: 7 });
          
           })
@@ -422,10 +422,10 @@ const Page3 = (props) => {
             </div>
             <div className='checkout-btn-wrapper'>
               <a className={`buy-now ${isAddToCartDisabled ? 'disabled' : ''}`} href={'https://theaayna.com/cart/add?items[][id]='+varId+'&quantity=1&items[][properties][POWERED_BY]=C2C'}>Buy Now</a>
-              <a className={`buy-now ${isAddToCartDisabled ? 'disabled' : ''}`} 
-                 disabled={isAddToCartDisabled} onClick={(e)=>isAddToCartDisabled?'':handleAddToCart(e)} >
+              <button className={`buy-now ${isAddToCartDisabled ? 'disabled' : ''}`} 
+                 disabled={isAddToCartDisabled} onClick={handleAddToCart} >
                   Add to Cart
-                </a>
+                </button>
               <a className='cart-count' href={apiUrl} data-count={cartCookie ? cartCookie.length : 0}><img src={bag} height={20} width={20} /></a>
             </div>
             {/*<a className='buy-now' href={props.product.productUrl}>Buy Now</a> */}

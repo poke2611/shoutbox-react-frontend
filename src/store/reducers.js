@@ -18,7 +18,8 @@ const initialState = {
   items: [],
   itemId:"",
   cartID:"",
-  muteFlag: false
+  muteFlag: false,
+  cart: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -137,6 +138,13 @@ const rootReducer = (state = initialState, action) => {
           return {
             ...state,
             cartID: action.payload,
+          };
+
+        case 'SET_CART_ITEMS':
+          console.log("SET_CART_ITEMS",  action.payload );
+          return {
+            ...state,
+            cart: action.payload
           };
           
 
