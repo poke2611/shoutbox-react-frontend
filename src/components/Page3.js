@@ -11,6 +11,7 @@ import bag from '../images/foot-Bag.png';
 
 const Page3 = (props) => {
 
+  useSelector(state => state.cart);
   const cartID = useSelector(state => state.cartID);
   const [images, setImages] = useState([]);
   const [addedToCart, setAddedToCart] = useState(false);
