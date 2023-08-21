@@ -11,6 +11,7 @@ import Cookies from 'js-cookie';
 
 const FixedHeader = () => {
 
+  useSelector(state => state.cart)
  const [data, setData] = useState([]);
  const [activePage, setActivePage] = useState('page1');
  const dispatch = useDispatch();
